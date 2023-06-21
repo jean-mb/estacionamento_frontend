@@ -22,6 +22,23 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "about" */ '../views/MarcasView.vue')
   },
   {
+    path: '/marca/formulario',
+    name: 'marca.form',
+    component: () => import(/* webpackChunkName: "about" */ '../views/marca/MarcaFormView.vue'),
+    children: [
+      {
+        path: '/marca/formulario',
+        name: 'marca.form.editar',
+        component: () => import(/* webpackChunkName: "about" */ '../views/MarcasView.vue')
+      },
+      {
+        path: '/marca/formulario',
+        name: 'marca.form.desativar',
+        component: () => import(/* webpackChunkName: "about" */ '../views/MarcasView.vue')
+      }
+    ]
+  },
+  {
     path: '/modelos',
     name: 'modelos',
     component: () => import(/* webpackChunkName: "about" */ '../views/ModelosView.vue')
