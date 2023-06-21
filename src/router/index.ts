@@ -24,7 +24,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/marca/formulario',
     name: 'marca.form',
-    component: () => import(/* webpackChunkName: "about" */ '../views/marca/MarcaFormView.vue'),
+    component: () => import(/* webpackChunkName: "about" */ '../views//MarcasView.vue'),
     children: [
       {
         path: '/marca/formulario',

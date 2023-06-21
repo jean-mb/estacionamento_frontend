@@ -38,11 +38,34 @@
             >Movimentação</router-link
           >
         </li>
-        <li class="nav-item">
-          <router-link class="nav-link p-0" to="/"><i class="home-icon bi bi-house-fill"></i></router-link>
-        </li>
+        <!-- <li class="nav-item dropdown">
+          <router-link
+          class="nav-link dropdown-toggle"
+          to="/veiculos"
+          role="button"
+          data-bs-toggle="dropdown"
+          >Veículos</router-link>
+          <ul class="dropdown-menu">
+            <li><router-link class="dropdown-item" to="/marcas">Marcas</router-link></li>
+            <li><outer-link class="dropdown-item" to="/modelos">Modelos</outer-link></li>
+          </ul>
+        </li> -->
+
         <li class="nav-item">
           <router-link class="nav-link" to="/veiculos">Veiculos</router-link>
+        </li>
+        <li class="nav-item">
+          <router-link class="nav-link p-0" to="/"
+            ><i class="home-icon bi bi-house-fill"></i
+          ></router-link>
+        </li>
+
+        <li class="nav-item">
+          <router-link class="nav-link" to="/modelos">Modelos</router-link>
+        </li>
+
+        <li class="nav-item">
+          <router-link class="nav-link" to="/marcas">Marcas</router-link>
         </li>
         <li class="nav-item">
           <router-link class="nav-link" to="/configs">Configuração</router-link>
@@ -65,7 +88,7 @@ export default defineComponent({
   font-weight: var(--font-weight-principal);
   color: white;
 }
-.home-icon{
+.home-icon {
   font-size: 1.5rem;
 }
 </style>
