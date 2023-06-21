@@ -1,32 +1,50 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <NavbarComponent></NavbarComponent>
+  <router-view />
 </template>
 
-<style lang="scss">
-@import'~bootstrap/dist/css/bootstrap.css';
+<script lang="ts">
+import { defineComponent } from 'vue';
+import NavbarComponent from '@/components/NavbarComponent.vue';
 
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+export default defineComponent({
+  name: 'HomeView',
+  components: {
+    NavbarComponent,
+  },
+});
+</script>
+
+<style lang="scss">
+/* Option 2: Import via CSS */
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css");
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap');
+
+$theme-colors: (
+  'dark': #111111,
+  // 'dark': black,
+  'primary': #515151,
+  'secondary': #C8C8C8,
+  'info': #A4A4A4
+);
+
+// // Then import Bootstrap and Boo tstrapVue SCSS files (order is important)
+@import 'node_modules/bootstrap/scss/bootstrap.scss';
+:root {
+  --font-principal: 'Inter', sans-serif;
+  --font-weight-leve: 400;
+  --font-weight-principal: 500;
+  --font-weight-destaque: 600;
+  --font-weight-forte: 800;
 }
 
-nav {
-  padding: 30px;
+* {
+  font-family: var(--font-principal);
+}
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+#app {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 </style>
