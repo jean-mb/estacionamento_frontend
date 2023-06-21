@@ -75,7 +75,7 @@ import { MarcaClient } from '@/client/marca.client'
 import { Marca } from '@/model/marca'
 
 export default defineComponent({
-  name: 'MarcaView',
+  name: 'MarcasView',
   data() {
     return {
       marcasList: new Array<Marca>()

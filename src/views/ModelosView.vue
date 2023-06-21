@@ -77,7 +77,7 @@ import { ModeloClient } from '@/client/modelo.client'
 import { Modelo } from '@/model/modelo'
 
 export default defineComponent({
-  name: 'MarcaView',
+  name: 'ModelosView',
   data() {
     return {
       modelosList: new Array<Modelo>()
