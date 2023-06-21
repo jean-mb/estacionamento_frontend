@@ -1,4 +1,5 @@
 import { Configuracao } from '@/model/configuracao'
+import { Movimentacao } from '@/model/movimentacao'
 import axios, { AxiosInstance } from 'axios'
 
 export class MovimentacaoClient {
@@ -11,18 +12,18 @@ export class MovimentacaoClient {
     })
   }
 
-  public async findById(id: number): Promise<Configuracao> {
+  public async findById(id: number): Promise<Movimentacao> {
     try {
-      const response = await this.axiosClient.get<Configuracao>(`?id=${id}`)
+      const response = await this.axiosClient.get<Movimentacao>(`?id=${id}`)
       return response.data
     } catch (error) {
       return Promise.reject(error)
     }
   }
 
-  public async listarAll(): Promise<Configuracao[]> {
+  public async listarAll(): Promise<Movimentacao[]> {
     try {
-      const response = await this.axiosClient.get<Configuracao[]>('/lista')
+      const response = await this.axiosClient.get<Movimentacao[]>('/lista')
       return response.data
     } catch (error) {
       console.error(error)
@@ -30,9 +31,9 @@ export class MovimentacaoClient {
     }
   }
 
-  public async listarAbertas(): Promise<Configuracao[]> {
+  public async listarAbertas(): Promise<Movimentacao[]> {
     try {
-      const response = await this.axiosClient.get<Configuracao[]>('/lista/abertas')
+      const response = await this.axiosClient.get<Movimentacao[]>('/lista/abertas')
       return response.data
     } catch (error) {
       console.error(error)
@@ -40,18 +41,18 @@ export class MovimentacaoClient {
     }
   }
 
-  public async novaMovimentacao(movimentacao: Configuracao): Promise<Configuracao> {
+  public async novaMovimentacao(movimentacao: Movimentacao): Promise<Movimentacao> {
     try {
-      const response = await this.axiosClient.post<Configuracao>('/nova', movimentacao)
+      const response = await this.axiosClient.post<Movimentacao>('/nova', movimentacao)
       return response.data
     } catch (error) {
       return Promise.reject(error)
     }
   }
 
-  public async editarMovimentacao(movimentacao: Configuracao): Promise<Configuracao> {
+  public async editarMovimentacao(movimentacao: Movimentacao): Promise<Movimentacao> {
     try {
-      const response = await this.axiosClient.put<Configuracao>(
+      const response = await this.axiosClient.put<Movimentacao>(
         `?/editar?id=${movimentacao.id}`,
         movimentacao
       )
@@ -61,9 +62,9 @@ export class MovimentacaoClient {
     }
   }
 
-  public async deletar(movimentacao: Configuracao): Promise<Configuracao> {
-    try {
-      const response = await this.axiosClient.delete<Configuracao>(
+  public async deletar(movimentacao: Movimentacao): Promise<Movimentacao> {
+    try {Movimentacao
+      const response = await this.axiosClient.delete<Movimentacao>(
         `?id=${movimentacao.id}`
       )
       return response.data
