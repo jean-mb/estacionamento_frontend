@@ -6,7 +6,7 @@ export class ModeloClient{
 
     constructor(){
         this.axiosClient = axios.create({
-            baseURL: "https://localhost:8080/api/modelo "
+            baseURL: "http://localhost:8080/api/modelo"
         })
     }
 
