@@ -40,9 +40,9 @@ export class MarcaClient {
     }
   }
 
-  public async cadastrarMarca(marca: Marca): Promise<Marca> {
+  public async cadastrarMarca(marca: Marca): Promise<string> {
     try {
-      const resposta = await this.axiosClient.post<Marca>('/', marca)
+      const resposta = await this.axiosClient.post<string>('', marca)
       return resposta.data
     } catch (error) {
       console.log(error)
@@ -50,9 +50,9 @@ export class MarcaClient {
     }
   }
 
-  public async atualizarMarca(id: number, marca: Marca): Promise<Marca> {
+  public async atualizarMarca(id: number, marca: Marca): Promise<string> {
     try {
-      const resposta = await this.axiosClient.put(`?id=${id}`, marca)
+      const resposta = await this.axiosClient.put<string>(`?id=${id}`, marca)
       return resposta.data
     } catch (error) {
       console.log(error)
@@ -60,9 +60,9 @@ export class MarcaClient {
     }
   }
 
-  public async desativar(id: number): Promise<Marca> {
+  public async desativar(id: number): Promise<string> {
     try {
-      const resposta = await this.axiosClient.delete(`?id=${id}`)
+      const resposta = await this.axiosClient.delete<string>(`?id=${id}`)
       return resposta.data
     } catch (error) {
       console.log(error)
