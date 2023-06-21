@@ -7,9 +7,34 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "about" */ '../views/HomeView.vue')
   },
   {
-    path: '/veiculo',
-    name: 'veiculo',
-    component: () => import(/* webpackChunkName: "about" */ '../views/VeiculoView.vue')
+    path: '/veiculos',
+    name: 'veiculos',
+    component: () => import(/* webpackChunkName: "about" */ '../views/VeiculosView.vue')
+  },
+  {
+    path: '/condutores',
+    name: 'condutores',
+    component: () => import(/* webpackChunkName: "about" */ '../views/CondutoresView.vue')
+  },
+  {
+    path: '/marcas',
+    name: 'marcas',
+    component: () => import(/* webpackChunkName: "about" */ '../views/MarcasView.vue')
+  },
+  {
+    path: '/modelos',
+    name: 'modelos',
+    component: () => import(/* webpackChunkName: "about" */ '../views/ModelosView.vue')
+  },
+  {
+    path: '/movimentacoes',
+    name: 'movimentacoes',
+    component: () => import(/* webpackChunkName: "about" */ '../views/MovimentacoesView.vue')
+  },
+  {
+    path: '/configs',
+    name: 'configuracoes',
+    component: () => import(/* webpackChunkName: "about" */ '../views/ConfigsView.vue')
   },
 ]
 

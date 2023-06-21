@@ -31,10 +31,10 @@
     <div class="container-fluid">
       <ul class="navbar-nav d-flex w-100 justify-content-around">
         <li class="nav-item">
-          <router-link class="nav-link" to="/condutor">Condutor</router-link>
+          <router-link class="nav-link" to="/condutores">Condutor</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/movimentacao"
+          <router-link class="nav-link" to="/movimentacoes"
             >Movimentação</router-link
           >
         </li>
@@ -42,10 +42,10 @@
           <router-link class="nav-link p-0" to="/"><i class="home-icon bi bi-house-fill"></i></router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/veiculo">Veiculos</router-link>
+          <router-link class="nav-link" to="/veiculos">Veiculos</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/config">Configuração</router-link>
+          <router-link class="nav-link" to="/configs">Configuração</router-link>
         </li>
       </ul>
     </div>
