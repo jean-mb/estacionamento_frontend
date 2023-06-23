@@ -1,13 +1,11 @@
 <template>
-  <div class="container" style="background: ">
-    <div class="row">
+  <div class="container w-50">
+    <div class="row mt-5">
       <div class="col-md-10 text-start">
-        <p class="fs-3">Cadastrar de Marca</p>
+        <p class="fs-4">Cadastrar de Marca</p>
       </div>
       <div class="col-md-2"></div>
     </div>
-
-    <hr />
 
     <div v-if="mensagem.ativo" class="row">
       <div class="col-md-12 text-start">
@@ -23,22 +21,22 @@
       </div>
     </div>
 
-    <div class="row">
-      <div class="col-md-12 text-start">
-        <label class="form-label">Nome da Marca *</label>
+    <div class="row w-100 d-flex justify-content-center m-0">
+      <div class="mb-3 mt-3 w-50 text-start">
+        <label class="form-label">Nome da Marca</label>
         <input
           type="text"
-          :disabled="this.form === 'excluir' ? '' : disabled"
+          :disabled="this.form === 'desativar' ? '' : disabled"
           class="form-control"
           v-model="marca.nome"
         />
       </div>
     </div>
 
-    <div class="row">
-      <div class="col-md-3 offset-md-6">
+    <div class="row d-flex justify-content-center">
+      <div class="col-md-3">
         <div class="d-grid gap-2">
-          <router-link type="button" class="btn btn-info" to="/marcas"
+          <router-link type="button" class="btn btn-secondary" to="/marcas"
             >Voltar
           </router-link>
         </div>
@@ -48,7 +46,7 @@
           <button
             v-if="this.form === undefined"
             type="button"
-            class="btn btn-success"
+            class="btn btn-primary"
             @click="onClickCadastrar()"
           >
             Cadastrar
@@ -62,7 +60,7 @@
             Editar
           </button>
           <button
-            v-if="this.form === 'excluir'"
+            v-if="this.form === 'desativar'"
             type="button"
             class="btn btn-danger"
             @click="onClickExcluir()"
@@ -82,7 +80,7 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'MarcaFormulario',
-  data() {
+  data(): any {
     return {
       marca: new Marca(),
       mensagem: {
@@ -97,7 +95,7 @@ export default defineComponent({
     id() {
       return this.$route.query.id
     },
-    form() {
+    form(): any {
       return this.$route.query.form
     }
   },
@@ -180,3 +178,15 @@ export default defineComponent({
   }
 })
 </script>
+
+<style lang="scss">
+$theme-colors: (
+  'dark': #111111,
+  // 'dark': black,
+  'primary': #515151,
+  'secondary': #C8C8C8,
+  'info': #A4A4A4
+);
+
+@import 'node_modules/bootstrap/scss/bootstrap.scss';
+</style>
