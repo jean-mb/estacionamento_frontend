@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row mt-5">
       <div class="col-md-10 text-start">
-        <p class="fs-3">Condutores</p>
+        <p class="fs-5">Condutores</p>
       </div>
       <div class="col-md-2 col-md-2 align-self-center">
         <div class="d-grid gap-2">

@@ -46,7 +46,24 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/movimentacoes',
     name: 'movimentacoes',
-    component: () => import(/* webpackChunkName: "about" */ '../views/MovimentacoesView.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/movimentacoes/MovimentacoesView.vue')
+  },
+  {
+    path: '/movimentacoes/formulario',
+    name: 'movimentacoes.form',
+    component: () => import(/* webpackChunkName: "about" */ '../views/movimentacoes/MovimentacoesFormView.vue'),
+    children: [
+      {
+        path: '/movimentacoes/formulario',
+        name: 'movimentacoes.form.editar',
+        component: () => import(/* webpackChunkName: "about" */ '../views/movimentacoes/MovimentacoesFormView.vue')
+      },
+      {
+        path: '/movimentacoes/formulario',
+        name: 'movimentacoes.form.desativar',
+        component: () => import(/* webpackChunkName: "about" */ '../views/movimentacoes/MovimentacoesFormView.vue')
+      }
+    ]
   },
   {
     path: '/configs',

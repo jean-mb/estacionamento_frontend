@@ -1,14 +1,14 @@
 <template>
   <div class="container w-50">
     <div class="row mt-5">
-      <div class="col-md-12 text-center">
-        <p class="fs-5">Cadastro de Marca</p>
+      <div class="col-md-10 text-start">
+        <p class="fs-5">Cadastrar de Marca</p>
       </div>
       <div class="col-md-2"></div>
     </div>
 
-    <div v-if="mensagem.ativo" class="row text-center justify-content-center">
-      <div class="col-md-12 text-center w-75">
+    <div v-if="mensagem.ativo" class="row">
+      <div class="col-md-12 text-start">
         <div :class="mensagem.css" role="alert">
           <strong>{{ mensagem.titulo }}</strong> {{ mensagem.mensagem }}
           <button
@@ -21,7 +21,7 @@
       </div>
     </div>
 
-    <div class="row w-100 d-flex justify-content-center m-0 mb-2">
+    <div class="row w-100 d-flex justify-content-center m-0">
       <div class="mb-3 mt-3 w-50 text-start">
         <label class="form-label">Nome da Marca</label>
         <input
@@ -185,8 +185,7 @@ $theme-colors: (
   // 'dark': black,
   'primary': #515151,
   'secondary': #C8C8C8,
-  'info': #A4A4A4,
-  'success': green
+  'info': #A4A4A4
 );
 
 @import 'node_modules/bootstrap/scss/bootstrap.scss';

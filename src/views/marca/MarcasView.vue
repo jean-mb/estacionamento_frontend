@@ -2,9 +2,9 @@
   <div class="container">
     <div class="row mt-5">
       <div class="col-md-10 text-start">
-        <p class="fs-3">Marcas</p>
+        <p class="fs-5 m-0">Marcas</p>
       </div>
-      <div class="col-md-2 col-md-2 align-self-center">
+      <div class="col-md-2 col-md-2 align-self-center mb-2">
         <div class="d-grid gap-2">
           <router-link
             type="button"
@@ -26,9 +26,9 @@
       </thead>
       <tbody>
         <tr v-for="item in marcasList" :key="item.id">
-          <th class="text-center col-md-1">{{ item.id }}</th>
-          <th class="col-md-2">{{ item.nome }}</th>
-          <th class="text-start col-md-2">
+          <th class="text-center align-middle col-md-1">{{ item.id }}</th>
+          <th class="col-md-2 align-middle">{{ item.nome }}</th>
+          <th class="text-start align-middle col-md-2">
             <span v-if="item.ativo" class="badge text-bg-success"> Ativo </span>
             <span v-if="!item.ativo" class="badge text-bg-danger">
               Inativo
@@ -38,17 +38,16 @@
             <div
               class="btn-group"
               role="group"
-              aria-label="Basic mixed styles example"
             >
               <router-link
                 type="button"
-                class="btn btn-sm btn-warning"
+                class="btn btn-sm btn-warning mr-2"
                 :to="{
                   name: 'marca.form.editar',
                   query: { id: item.id, form: 'editar' }
                 }"
               >
-                Editar
+                <i class="bi bi-pencil-square"></i>
               </router-link>
               <router-link
                 type="button"
@@ -58,7 +57,7 @@
                   query: { id: item.id, form: 'desativar' }
                 }"
               >
-                Excluir
+                <i class="bi bi-x-circle"></i>
               </router-link>
             </div>
           </th>
@@ -108,4 +107,10 @@ export default defineComponent({
 .btn {
   font-weight: var(--font-weight-forte);
 }
+
+i{
+  vertical-align: middle;
+  font-size: 1.2rem;
+}
+
 </style>

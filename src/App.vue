@@ -37,6 +37,9 @@ $theme-colors: (
   --font-weight-destaque: 600;
   --font-weight-forte: 800;
 }
+.fs-5{
+  font-weight: var(--font-weight-destaque);
+}
 
 * {
   font-family: var(--font-principal);
