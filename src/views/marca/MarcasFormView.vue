@@ -153,7 +153,9 @@ export default defineComponent({
         .then(sucess => {
           this.marca = new Marca()
           this.id = undefined
-          this.$router.push({ name: 'marcas' })
+          this.mensagem.mensagem = sucess
+          this.mensagem.status = false
+          this.mensagem.ativo = true
         })
         .catch(error => {
           this.mensagem.mensagem = error.response.data

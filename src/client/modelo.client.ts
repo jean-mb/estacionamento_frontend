@@ -60,10 +60,10 @@ export class ModeloClient{
         }
       }
     
-      public async desativar(modelo: Modelo): Promise<Modelo> {
+      public async desativar(id: number): Promise<Modelo> {
         try {
           const response = await this.axiosClient.delete<Modelo>(
-            `/modelo?id=${modelo.id}`
+            `/modelo?id=${id}`
           )
           return response.data
         } catch (error) {

@@ -182,9 +182,11 @@ export default defineComponent({
       modeloClient
         .desativar(this.modelo.id)
         .then(sucess => {
-          this.marca = new Marca()
+          this.modelo = new Modelo()
           this.id = undefined
-          this.$router.push({ name: 'modelos' })
+          this.mensagem.mensagem = sucess
+          this.mensagem.status = false
+          this.mensagem.ativo = true
         })
         .catch(error => {
           this.mensagem.mensagem = error.response.data
