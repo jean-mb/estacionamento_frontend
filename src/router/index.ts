@@ -41,27 +41,44 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/modelos',
     name: 'modelos',
-    component: () => import(/* webpackChunkName: "about" */ '../views/ModelosView.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/modelo/ModelosView.vue')
+  },
+  {
+    path: '/modelo/formulario',
+    name: 'modelo.form',
+    component: () => import(/* webpackChunkName: "about" */ '../views/modelo/ModelosFormView.vue'),
+    children: [
+      {
+        path: '/modelo/formulario',
+        name: 'modelo.form.editar',
+        component: () => import(/* webpackChunkName: "about" */ '../views/modelo/ModelosFormView.vue')
+      },
+      {
+        path: '/modelo/formulario',
+        name: 'modelo.form.desativar',
+        component: () => import(/* webpackChunkName: "about" */ '../views/modelo/ModelosFormView.vue')
+      }
+    ]
   },
   {
     path: '/movimentacoes',
     name: 'movimentacoes',
-    component: () => import(/* webpackChunkName: "about" */ '../views/movimentacoes/MovimentacoesView.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/movimentacao/MovimentacoesView.vue')
   },
   {
     path: '/movimentacao/formulario',
     name: 'movimentacao.form',
-    component: () => import(/* webpackChunkName: "about" */ '../views/movimentacoes/MovimentacoesFormView.vue'),
+    component: () => import(/* webpackChunkName: "about" */ '../views/movimentacao/MovimentacoesFormView.vue'),
     children: [
       {
         path: '/movimentacao/formulario',
         name: 'movimentacao.form.editar',
-        component: () => import(/* webpackChunkName: "about" */ '../views/movimentacoes/MovimentacoesFormView.vue')
+        component: () => import(/* webpackChunkName: "about" */ '../views/movimentacao/MovimentacoesFormView.vue')
       },
       {
         path: '/movimentacao/formulario',
         name: 'movimentacao.form.desativar',
-        component: () => import(/* webpackChunkName: "about" */ '../views/movimentacoes/MovimentacoesFormView.vue')
+        component: () => import(/* webpackChunkName: "about" */ '../views/movimentacao/MovimentacoesFormView.vue')
       }
     ]
   },
