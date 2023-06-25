@@ -6,11 +6,7 @@
       </div>
       <div class="col-md-2 col-md-2 align-self-center">
         <div class="d-grid gap-2">
-          <router-link
-            type="button"
-            class="btn btn-success"
-            to="/marca/formulario"
-            >Cadastrar
+          <router-link type="button" class="btn btn-success" to="/movimentacao/formulario">Cadastrar
           </router-link>
         </div>
       </div>
@@ -30,28 +26,23 @@
       <tbody>
         <tr v-for="item in movimentacoesList" :key="item.id">
           <th class="align-middle text-center col-md-1">{{ item.id }}</th>
-          <th class="align-middle col-md-2 text-center">{{ item.veiculo.placa }}</th>
-          <th class="align-middle col-md-2 text-center">{{ item.condutor.nome }}</th>
+          <th class="align-middle col-md-2 text-center">{{ item.veiculo.placa }} <span v-if="!item.veiculo.ativo"
+              class="badge text-bg-danger">Desativado</span>
+          </th>
+          <th class="align-middle col-md-2 text-center">{{ item.condutor.nome }} <span v-if="!item.condutor.ativo"
+              class="badge text-bg-danger">Desativado</span>
+          </th>
           <th class="align-middle col-md-2 text-center">
             {{ formatDate(item.dataEntrada) }}
           </th>
-          <th v-if="item.dataSaida != null" class="align-middle text-center col-md-2">
+          <th class="align-middle text-center col-md-2">
             {{ formatDate(item.dataSaida) }}
           </th>
-          <th v-if="item.dataSaida == null" class="align-middle col-md-2 text-center">
-            ---
-          </th>
           <th class="align-middle text-center col-md-2">
-            <span
-              v-if="item.ativo && item.dataSaida == null"
-              class="badge text-bg-success"
-            >
+            <span v-if="item.ativo && item.dataSaida == null" class="badge text-bg-success">
               Ativo
             </span>
-            <span
-              v-if="item.ativo && item.dataSaida != null"
-              class="badge text-bg-success"
-            >
+            <span v-if="item.ativo && item.dataSaida != null" class="badge text-bg-success">
               Concluído
             </span>
             <span v-if="!item.ativo" class="badge text-bg-danger">
@@ -59,11 +50,8 @@
             </span>
           </th>
           <th class="align-middle text-center col-md-2">
-            <BotoesAcoes
-              editarRoute="movimentacao.form.editar"
-              desativarRoute="movimentacao.form.desativar"
-              :id="item.id"
-            ></BotoesAcoes>
+            <BotoesAcoes editarRoute="movimentacao.form.editar" desativarRoute="movimentacao.form.desativar"
+              :id="item.id"></BotoesAcoes>
           </th>
         </tr>
       </tbody>
@@ -105,13 +93,17 @@ export default defineComponent({
         })
     },
     formatDate(dateString: string | number | Date) {
-      const dateTime = new Date(dateString)
-      const formattedDate = dateTime.toLocaleDateString()
-      const formattedTime = dateTime.toLocaleTimeString([], {
-        hour: '2-digit',
-        minute: '2-digit'
-      })
-      return `${formattedDate} ${formattedTime}`
+      if (dateString != null) {
+        const dateTime = new Date(dateString)
+        const formattedDate = dateTime.toLocaleDateString()
+        const formattedTime = dateTime.toLocaleTimeString([], {
+          hour: '2-digit',
+          minute: '2-digit'
+        })
+        return `${formattedDate} ${formattedTime}`
+      } else {
+        return '---'
+      }
     }
   }
 })
@@ -128,6 +120,7 @@ $theme-colors: (
   'danger': #dc3545
 );
 @import 'node_modules/bootstrap/scss/bootstrap.scss';
+
 .container {
   width: 200%;
 }

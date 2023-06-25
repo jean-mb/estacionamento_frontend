@@ -125,7 +125,6 @@ export default defineComponent({
     },
     onClickEditar() {
       const condutorClient = new CondutorClient()
-      console.log('aqui')
       condutorClient
         .editarCondutor(this.condutor)
         .then(sucess => {

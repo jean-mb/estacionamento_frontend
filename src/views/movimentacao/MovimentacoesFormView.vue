@@ -7,94 +7,49 @@
       <div class="col-md-2"></div>
     </div>
 
-    <AvisoComponent
-      :ativo="mensagem.ativo"
-      :sucesso="mensagem.status"
-      :mensagem="mensagem.mensagem"
-    ></AvisoComponent>
+    <AvisoComponent :ativo="mensagem.ativo" :sucesso="mensagem.status" :mensagem="mensagem.mensagem"></AvisoComponent>
 
     <div class="row w-100 d-flex justify-content-center m-0">
       <div class="mb-3 mt-3 w-50 text-start">
         <label for="condutor" class="form-label">Condutor</label>
-        <input
-          type="text"
-          :disabled="this.form === 'desativar' ? '' : disabled"
-          class="form-control"
-          id="condutor"
-          v-on:change="procuraCondutor()"
-          v-model="condutor"
-          required
-        />
+        <input type="text" :disabled="this.form === 'desativar' ? '' : disabled" class="form-control" id="condutor"
+          v-on:change="procuraCondutor()" v-model="condutor" required />
       </div>
       <div class="mb-3 mt-3 w-50 text-start">
         <label for="veiculo" class="form-label">Veiculo</label>
-        <input
-          type="text"
-          :disabled="this.form === 'desativar' ? '' : disabled"
-          class="form-control"
-          id="veiculo"
-          v-on:change="procuraVeiculos()"
-          v-model="veiculo"
-          required
-        />
+        <input type="text" :disabled="this.form === 'desativar' ? '' : disabled" class="form-control" id="veiculo"
+          v-on:change="procuraVeiculos()" v-model="veiculo" required />
       </div>
     </div>
     <div class="row w-100 d-flex justify-content-center m-0">
       <div class="mb-3 mt-3 w-50 text-start">
         <label for="dataEntrada" class="form-label">Data de Entrada</label>
-        <input
-          type="datetime-local"
-          :disabled="this.form === 'desativar' ? '' : disabled"
-          class="form-control"
-          id="dataEntrada"
-          v-model="movimentacao.dataEntrada"
-          required
-        />
+        <input type="datetime-local" :disabled="this.form === 'desativar' ? '' : disabled" class="form-control"
+          id="dataEntrada" v-model="movimentacao.dataEntrada" required />
       </div>
       <div class="mb-3 mt-3 w-50 text-start">
         <label for="dataSaida" class="form-label">Data de Saída</label>
-        <input
-          type="datetime-local"
-          :disabled="this.form === 'desativar' ? '' : disabled"
-          class="form-control"
-          id="dataSaida"
-          v-model="movimentacao.dataSaida"
-        />
+        <input type="datetime-local" :disabled="this.form === 'desativar' ? '' : disabled" class="form-control"
+          id="dataSaida" v-model="movimentacao.dataSaida" />
       </div>
     </div>
 
     <div class="row d-flex justify-content-center">
       <div class="col-md-3">
         <div class="d-grid gap-2">
-          <router-link type="button" class="btn btn-secondary" to="/marcas"
-            >Voltar
+          <router-link type="button" class="btn btn-secondary" to="/movimentacoes">Voltar
           </router-link>
         </div>
       </div>
       <div class="col-md-3">
         <div class="d-grid gap-2">
-          <button
-            v-if="this.form === undefined"
-            type="button"
-            class="btn btn-primary"
-            @click="onClickCadastrar()"
-          >
+          <button v-if="this.form === undefined" type="button" class="btn btn-primary" @click="onClickCadastrar()">
             Abrir
           </button>
-          <button
-            v-if="this.form === 'editar'"
-            type="button"
-            class="btn btn-warning"
-            @click="onClickEditar()"
-          >
+          <button v-if="this.form === 'editar'" type="button" class="btn btn-warning" @click="onClickEditar()">
             Editar
           </button>
-          <button
-            v-if="this.form === 'desativar'"
-            type="button"
-            class="btn btn-danger"
-            @click="onClickExcluir()"
-          >
+          <button v-if="this.form === 'desativar'" type="button" class="btn btn-danger" @click="onClickExcluir()">
             Excluir
           </button>
         </div>
@@ -219,7 +174,6 @@ export default defineComponent({
           this.mensagem.ativo = true
         })
         .catch(error => {
-          console.log(error.response)
           if (typeof error.response.data == 'object') {
             this.mensagem.mensagem = Object.values(error.response.data)[0]
           } else {
@@ -235,6 +189,9 @@ export default defineComponent({
         .findById(id)
         .then(sucess => {
           this.movimentacao = sucess
+          this.movimentacao.dataEntrada = this.formatDate(sucess.dataEntrada)
+          this.condutor = sucess.condutor.nome
+          this.veiculo = sucess.veiculo.placa
         })
         .catch(error => {
           this.mensagem.mensagem = error.response.data
@@ -270,20 +227,32 @@ export default defineComponent({
         .catch(error => {
           this.mensagemErro(error.response.data)
         })
+    },
+    formatDate(dateString: string | number | Date) {
+      if (dateString != null) {
+        const dateTime = new Date(dateString)
+        const formattedDate = dateTime.toLocaleDateString()
+        const formattedTime = dateTime.toLocaleTimeString([], {
+          hour: '2-digit',
+          minute: '2-digit'
+        })
+        return `${formattedDate} ${formattedTime}`
+      } else {
+        return '---'
+      }
     }
   }
 })
 </script>
-
 <style lang="scss">
 $theme-colors: (
   'dark': #111111,
   'primary': #515151,
   'secondary': #c8c8c8,
   'info': #a4a4a4,
-  'success': green,
-  'danger': red
+  'success': #198754,
+  'warning': #ffc107,
+  'danger': #dc3545
 );
-
 @import 'node_modules/bootstrap/scss/bootstrap.scss';
 </style>

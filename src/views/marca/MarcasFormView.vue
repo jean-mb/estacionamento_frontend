@@ -107,7 +107,6 @@ export default defineComponent({
     },
     onClickEditar() {
       const marcaClient = new MarcaClient()
-      console.log('aqui')
       marcaClient
         .atualizarMarca(this.marca.id, this.marca)
         .then(sucess => {

@@ -1,11 +1,7 @@
 <template>
   <div class="container mt-5">
     <div class="d-flex justify-content-center">
-      <router-link
-        type="button"
-        class="btn btn-primary w-25 fs-5"
-        to="/movimentacao/formulario"
-        >Registrar Entrada
+      <router-link type="button" class="btn btn-primary w-25 fs-5" to="/movimentacao/formulario">Registrar Entrada
       </router-link>
     </div>
 
@@ -27,17 +23,18 @@
       <tbody>
         <tr v-for="item in movimentacoesList" :key="item.id">
           <th class="align-middle text-center col-md-1">{{ item.id }}</th>
-          <th class="align-middle col-md-2 text-center">{{ item.veiculo.placa }}</th>
-          <th class="align-middle col-md-3 text-center">{{ item.condutor.nome }}</th>
+          <th class="align-middle col-md-2 text-center">{{ item.veiculo.placa }} <span v-if="!item.veiculo.ativo"
+              class="badge text-bg-danger">Desativado</span>
+          </th>
+          <th class="align-middle col-md-3 text-center">{{ item.condutor.nome }} <span v-if="!item.condutor.ativo"
+              class="badge text-bg-danger">Desativado</span>
+          </th>
           <th class="align-middle col-md-2 text-center">
             {{ formatDate(item.dataEntrada) }}
           </th>
           <th class="align-middle text-center col-md-3">
-            <BotoesAcoes
-              editarRoute="movimentacao.form.editar"
-              desativarRoute="movimentacao.form.desativar"
-              :id="item.id"
-            ></BotoesAcoes>
+            <BotoesAcoes editarRoute="movimentacao.form.editar" desativarRoute="movimentacao.form.desativar"
+              :id="item.id"></BotoesAcoes>
           </th>
         </tr>
       </tbody>
@@ -70,7 +67,6 @@ export default defineComponent({
         .listarAbertas()
         .then(sucess => {
           this.movimentacoesList = sucess
-          console.log(this.movimentacoesList[0].dataSaida)
         })
         .catch(error => {
           console.log(error)

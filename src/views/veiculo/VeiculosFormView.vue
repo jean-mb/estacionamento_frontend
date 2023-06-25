@@ -13,7 +13,8 @@
       <div class="mb-3 mt-3 w-50 text-start">
         <label for="placa" class="form-label">Placa do Veiculo</label>
         <input type="text" :disabled="this.form === 'desativar' ? '' : disabled" class="form-control" id="placa" v-maska
-          data-maska="***-****" v-model="veiculo.placa" />
+          data-maska="***-****" v-model="veiculo.placa"
+          v-on:change="formataPlaca()" />
       </div>
       <div class="mb-3 mt-3 w-50 text-start">
         <label for="categoria" class="form-label">Modelo</label>
@@ -123,6 +124,9 @@ export default defineComponent({
     this.fetchModelos()
   },
   methods: {
+    formataPlaca() {
+      this.veiculo.placa = this.veiculo.placa.toUpperCase() 
+    },
     fetchModelos() {
       const modeloClient = new ModeloClient()
       modeloClient.listarAtivos().then(sucess => {
