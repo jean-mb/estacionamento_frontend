@@ -15,22 +15,24 @@
 
     <div class="row w-100 d-flex justify-content-center m-0">
       <div class="mb-3 mt-3 w-50 text-start">
-        <label class="form-label">Condutor</label>
+        <label for="condutor" class="form-label">Condutor</label>
         <input
           type="text"
           :disabled="this.form === 'desativar' ? '' : disabled"
           class="form-control"
+          id="condutor"
           v-on:change="procuraCondutor()"
           v-model="condutor"
           required
         />
       </div>
       <div class="mb-3 mt-3 w-50 text-start">
-        <label class="form-label">Veiculo</label>
+        <label for="veiculo" class="form-label">Veiculo</label>
         <input
           type="text"
           :disabled="this.form === 'desativar' ? '' : disabled"
           class="form-control"
+          id="veiculo"
           v-on:change="procuraVeiculos()"
           v-model="veiculo"
           required
@@ -39,21 +41,23 @@
     </div>
     <div class="row w-100 d-flex justify-content-center m-0">
       <div class="mb-3 mt-3 w-50 text-start">
-        <label class="form-label">Data de Entrada</label>
+        <label for="dataEntrada" class="form-label">Data de Entrada</label>
         <input
           type="datetime-local"
           :disabled="this.form === 'desativar' ? '' : disabled"
           class="form-control"
+          id="dataEntrada"
           v-model="movimentacao.dataEntrada"
           required
         />
       </div>
       <div class="mb-3 mt-3 w-50 text-start">
-        <label class="form-label">Data de Saída</label>
+        <label for="dataSaida" class="form-label">Data de Saída</label>
         <input
           type="datetime-local"
           :disabled="this.form === 'desativar' ? '' : disabled"
           class="form-control"
+          id="dataSaida"
           v-model="movimentacao.dataSaida"
         />
       </div>

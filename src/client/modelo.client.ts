@@ -39,7 +39,7 @@ export class ModeloClient{
         }
       }
     
-      public async cadastrarCondutor(modelo: Modelo): Promise<Modelo> {
+      public async cadastrar(modelo: Modelo): Promise<Modelo> {
         try {
           const response = await this.axiosClient.post<Modelo>('', modelo)
           return response.data
@@ -48,7 +48,7 @@ export class ModeloClient{
         }
       }
     
-      public async editarCondutor(modelo: Modelo): Promise<Modelo> {
+      public async editar(modelo: Modelo): Promise<Modelo> {
         try {
           const response = await this.axiosClient.put<Modelo>(
             `?id=${modelo.id}`,
@@ -60,7 +60,7 @@ export class ModeloClient{
         }
       }
     
-      public async desativarCondutor(modelo: Modelo): Promise<Modelo> {
+      public async desativar(modelo: Modelo): Promise<Modelo> {
         try {
           const response = await this.axiosClient.delete<Modelo>(
             `?id=${modelo.id}`

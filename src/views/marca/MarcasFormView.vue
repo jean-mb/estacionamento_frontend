@@ -15,8 +15,9 @@
 
     <div class="row w-100 d-flex justify-content-center m-0 mb-2">
       <div class="mb-3 mt-3 w-50 text-start">
-        <label class="form-label">Nome da Marca</label>
+        <label for="nome" class="form-label">Nome da Marca</label>
         <input
+          id="nome"
           type="text"
           :disabled="this.form === 'desativar' ? '' : disabled"
           class="form-control"

@@ -25,8 +25,7 @@ export class MarcaClient {
       const resposta = await this.axiosClient.get<Marca[]>('/marca/lista')
       return resposta.data
     } catch (error) {
-      console.log(error)
-      return []
+      return Promise.reject(error)
     }
   }
 

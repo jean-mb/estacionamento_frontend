@@ -2,7 +2,7 @@
   <div class="container w-50">
     <div class="row mt-5">
       <div class="col-md-12 text-center">
-        <p class="fs-5">Cadastro de Marca</p>
+        <p class="fs-5">Cadastro de Modelo</p>
       </div>
       <div class="col-md-2"></div>
     </div>
@@ -15,20 +15,34 @@
 
     <div class="row w-100 d-flex justify-content-center m-0 mb-2">
       <div class="mb-3 mt-3 w-50 text-start">
-        <label class="form-label">Nome da Marca</label>
+        <label class="form-label">Nome do Modelo</label>
         <input
           type="text"
           :disabled="this.form === 'desativar' ? '' : disabled"
           class="form-control"
-          v-model="marca.nome"
+          v-model="modelo.nome"
         />
+      </div>
+      <div class="mb-3 mt-3 w-50 text-start">
+        <label for="categoria" class="form-label">Marca</label>
+        <select
+          :disabled="this.form === 'desativar' ? '' : disabled"
+          class="form-select"
+          id="categoria"
+          v-model="modelo.marca"
+        >
+          <option value="" selected>Selecione uma marca</option>
+          <option v-for="marca in marcas" :value="marca">
+            {{ marca.nome }}
+          </option>
+        </select>
       </div>
     </div>
 
     <div class="row d-flex justify-content-center">
       <div class="col-md-3">
         <div class="d-grid gap-2">
-          <router-link type="button" class="btn btn-secondary" to="/marcas"
+          <router-link type="button" class="btn btn-secondary" to="/modelos"
             >Voltar
           </router-link>
         </div>
@@ -70,12 +84,16 @@ import AvisoComponent from '@/components/AvisoComponent.vue'
 import { MarcaClient } from '@/client/marca.client'
 import { Marca } from '@/model/marca'
 import { defineComponent } from 'vue'
+import { Modelo } from '@/model/modelo'
+import { ModeloClient } from '@/client/modelo.client'
 
 export default defineComponent({
-  name: 'MarcaFormulario',
+  name: 'ModeloFormulario',
   data(): any {
     return {
-      marca: new Marca(),
+      modeloClient: new ModeloClient(),
+      modelo: new Modelo(),
+      marcas: [] as Marca[],
       mensagem: {
         ativo: false as boolean,
         status: false as boolean,
@@ -98,14 +116,25 @@ export default defineComponent({
     if (this.id !== undefined) {
       this.findById(Number(this.id))
     }
+    this.fetchMarcas()
   },
   methods: {
-    onClickCadastrar() {
+    fetchMarcas(){
       const marcaClient = new MarcaClient()
-      marcaClient
-        .cadastrarMarca(this.marca)
+      marcaClient.listarAll().then(sucess => {
+        this.marcas = sucess
+      }).catch(error => {
+        this.mensagem.mensagem = error.response.data
+        this.mensagem.status = false
+        this.mensagem.ativo = true
+      })
+    },
+    onClickCadastrar() {
+      const modeloClient = new ModeloClient()
+      modeloClient
+        .cadastrar(this.modelo)
         .then(sucess => {
-          this.marca = new Marca()
+          this.modelo = new Modelo()
           this.mensagem.mensagem = sucess
           this.mensagem.status = true
           this.mensagem.ativo = true
@@ -117,8 +146,8 @@ export default defineComponent({
         })
     },
     findById(id: number) {
-      const marcaClient = new MarcaClient()
-      marcaClient
+      const modeloClient = new ModeloClient()
+      modeloClient
         .findById(id)
         .then(sucess => {
           this.marca = sucess
@@ -130,10 +159,10 @@ export default defineComponent({
         })
     },
     onClickEditar() {
-      const marcaClient = new MarcaClient()
+      const modeloClient = new ModeloClient()
       console.log('aqui')
-      marcaClient
-        .atualizarMarca(this.marca.id, this.marca)
+      modeloClient
+        .editar(this.modelo)
         .then(sucess => {
           this.mensagem.mensagem = sucess
           this.mensagem.status = true
@@ -146,13 +175,13 @@ export default defineComponent({
         })
     },
     onClickExcluir() {
-      const marcaClient = new MarcaClient()
-      marcaClient
-        .desativar(this.marca.id)
+      const modeloClient = new ModeloClient()
+      modeloClient
+        .desativar(this.modelo.id)
         .then(sucess => {
           this.marca = new Marca()
           this.id = undefined
-          this.$router.push({ name: 'marcas' })
+          this.$router.push({ name: 'modelos' })
         })
         .catch(error => {
           this.mensagem.mensagem = error.response.data

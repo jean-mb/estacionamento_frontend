@@ -9,7 +9,7 @@
           <router-link
             type="button"
             class="btn btn-success"
-            to="/marca/formulario"
+            to="/modelo/formulario"
             >Cadastrar
           </router-link>
         </div>
@@ -46,7 +46,7 @@
                 type="button"
                 class="btn btn-sm btn-warning"
                 :to="{
-                  name: 'marca.form.editar',
+                  name: 'modelo.form.editar',
                   query: { id: item.id, form: 'editar' }
                 }"
               >
@@ -56,7 +56,7 @@
                 type="button"
                 class="btn btn-sm btn-danger"
                 :to="{
-                  name: 'marca.form.desativar',
+                  name: 'modelo.form.desativar',
                   query: { id: item.id, form: 'desativar' }
                 }"
               >
