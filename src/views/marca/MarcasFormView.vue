@@ -118,7 +118,6 @@ export default defineComponent({
     },
     findById(id: number) {
       const marcaClient = new MarcaClient()
-      console.log('aqui a')
       marcaClient
         .findById(id)
         .then(sucess => {
@@ -136,7 +135,6 @@ export default defineComponent({
       marcaClient
         .atualizarMarca(this.marca.id, this.marca)
         .then(sucess => {
-          this.marca = new Marca()
           this.mensagem.mensagem = sucess
           this.mensagem.status = true
           this.mensagem.ativo = true
@@ -153,7 +151,8 @@ export default defineComponent({
         .desativar(this.marca.id)
         .then(sucess => {
           this.marca = new Marca()
-          this.$router.push({ name: 'marca-lista-view' })
+          this.id = undefined
+          this.$router.push({ name: 'marcas' })
         })
         .catch(error => {
           this.mensagem.mensagem = error.response.data
