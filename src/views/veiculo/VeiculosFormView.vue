@@ -155,14 +155,6 @@ export default defineComponent({
     form(): any {
       return this.$route.query.form
     },
-    // cores(): string[] {
-    //   const cores = Object.values(Cor);
-    //   return cores.map((cor) => cor.toUpperCase());
-    // },
-    // tipos(): string[] {
-    //   const tipos = Object.values(Tipo);
-    //   return tipos.map((cor) => cor.toUpperCase());
-    // },
   },
   mounted() {
     if (this.id !== undefined) {
@@ -192,7 +184,15 @@ export default defineComponent({
           this.mensagem.ativo = true
         })
         .catch(error => {
-          this.mensagem.mensagem = error.response.data
+          if (typeof error.response.data == 'object') {
+            this.mensagem.mensagem = Object.values(error.response.data)[0]
+          }else{
+            if (this.veiculo.modelo == "" || this.veiculo.cor == "" || this.veiculo.tipo == "" ){
+              this.mensagem.mensagem = "Selecione todas as opções!"
+            }else{
+              this.mensagem.mensagem = error.response.data
+            }
+          }
           this.mensagem.status = false
           this.mensagem.ativo = true
         })
@@ -202,10 +202,10 @@ export default defineComponent({
       veiculoClient
         .findById(id)
         .then(sucess => {
-          this.modelo  = sucess
+          this.veiculo  = sucess
         })
         .catch(error => {
-          this.mensagem.mensagem = error.response.data
+          this.mensagem.mensagem = error.response.data[0]
           this.mensagem.status = false
           this.mensagem.ativo = true
         })
@@ -220,8 +220,8 @@ export default defineComponent({
           this.mensagem.ativo = true
         })
         .catch(error => {
-          if (this.veiculo.modelo == ""){
-            this.mensagem.mensagem = "Selecione um modelo!"
+          if (this.veiculo.modelo == "" || this.veiculo.cor == "" || this.veiculo.tipo == "" ){
+            this.mensagem.mensagem = "Selecione todas as opções!"
           }else{
             this.mensagem.mensagem = error.response.data
           }
