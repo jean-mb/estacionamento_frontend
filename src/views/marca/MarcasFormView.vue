@@ -92,7 +92,7 @@ export default defineComponent({
     }
   },
   computed: {
-    id() {
+    id(): any {
       return this.$route.query.id
     },
     form(): any {
@@ -114,7 +114,7 @@ export default defineComponent({
 
           this.mensagem.ativo = true
           this.mensagem.mensagem = sucess
-          this.mensagem.titulo = 'Parabens. '
+          this.mensagem.titulo = 'Ok!'
           this.mensagem.css = 'alert alert-success alert-dismissible fade show'
         })
         .catch(error => {
@@ -149,7 +149,7 @@ export default defineComponent({
 
           this.mensagem.ativo = true
           this.mensagem.mensagem = sucess
-          this.mensagem.titulo = 'Parabens. '
+          this.mensagem.titulo = 'Ok!  '
           this.mensagem.css = 'alert alert-success alert-dismissible fade show'
         })
         .catch(error => {

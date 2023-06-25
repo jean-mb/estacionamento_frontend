@@ -41,9 +41,9 @@ export class MovimentacaoClient {
     }
   }
 
-  public async novaMovimentacao(movimentacao: Movimentacao): Promise<Movimentacao> {
+  public async novaMovimentacao(movimentacao: Movimentacao): Promise<string> {
     try {
-      const response = await this.axiosClient.post<Movimentacao>('/nova', movimentacao)
+      const response = await this.axiosClient.post<string>('/nova', movimentacao)
       return response.data
     } catch (error) {
       return Promise.reject(error)

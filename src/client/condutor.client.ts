@@ -6,33 +6,50 @@ export class CondutorClient {
 
   constructor() {
     this.axiosClient = axios.create({
-      baseURL: 'http://localhost:8080/api/condutor',
+      baseURL: 'http://localhost:8080/api',
       headers: { 'Content-type': 'application/json' }
     })
   }
 
   public async findById(id: number): Promise<Condutor> {
     try {
-      const response = await this.axiosClient.get<Condutor>(`?id=${id}`)
+      const response = await this.axiosClient.get<Condutor>(`/condutor?id=${id}`)
       return response.data
     } catch (error) {
+      console.log(error)
       return Promise.reject(error)
     }
   }
 
   public async lista(): Promise<Condutor[]> {
     try {
-      const response = await this.axiosClient.get<Condutor[]>('/lista')
+      const response = await this.axiosClient.get<Condutor[]>('/condutor/lista')
       return response.data
     } catch (error) {
       console.error(error)
       return []
     }
   }
+  public async findByNome(nome: string): Promise<Condutor[]> {
+    try {
+      const response = await this.axiosClient.get<Condutor[]>(`/condutor/nome?nome=${nome}`)
+      return response.data
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  }
+  public async findByCpf(cpf: string): Promise<Condutor[]> {
+    try {
+      const response = await this.axiosClient.get<Condutor[]>(`/condutor/cpf?cpf=${cpf}`)
+      return response.data
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  }
 
   public async listaAtivos(): Promise<Condutor[]> {
     try {
-      const response = await this.axiosClient.get<Condutor[]>('/lista/ativos')
+      const response = await this.axiosClient.get<Condutor[]>('/condutor/lista/ativos')
       return response.data
     } catch (error) {
       console.error(error)
@@ -42,7 +59,7 @@ export class CondutorClient {
 
   public async cadastrarCondutor(condutor: Condutor): Promise<Condutor> {
     try {
-      const response = await this.axiosClient.post<Condutor>('', condutor)
+      const response = await this.axiosClient.post<Condutor>('/condutor', condutor)
       return response.data
     } catch (error) {
       return Promise.reject(error)
@@ -52,7 +69,7 @@ export class CondutorClient {
   public async editarCondutor(condutor: Condutor): Promise<Condutor> {
     try {
       const response = await this.axiosClient.put<Condutor>(
-        `?id=${condutor.id}`,
+        `/condutor?id=${condutor.id}`,
         condutor
       )
       return response.data
@@ -64,7 +81,7 @@ export class CondutorClient {
   public async desativarCondutor(condutor: Condutor): Promise<Condutor> {
     try {
       const response = await this.axiosClient.delete<Condutor>(
-        `?id=${condutor.id}`
+        `/condutor?id=${condutor.id}`
       )
       return response.data
     } catch (error) {

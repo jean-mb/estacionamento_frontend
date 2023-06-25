@@ -6,14 +6,14 @@ export class VeiculoClient {
 
   constructor() {
     this.axiosClient = axios.create({
-      baseURL: 'http://localhost:8080/api/veiculo',
+      baseURL: 'http://localhost:8080/api',
       headers: { 'Content-type': 'application/json' }
     })
   }
 
   public async findById(id: number): Promise<Veiculo> {
     try {
-      const response = await this.axiosClient.get<Veiculo>(`?id=${id}`)
+      const response = await this.axiosClient.get<Veiculo>(`/veiculo?id=${id}`)
       return response.data
     } catch (error) {
       return Promise.reject(error)
@@ -22,17 +22,25 @@ export class VeiculoClient {
 
   public async listarAll(): Promise<Veiculo[]> {
     try {
-      const response = await this.axiosClient.get<Veiculo[]>('/lista')
+      const response = await this.axiosClient.get<Veiculo[]>('/veiculo/lista')
       return response.data
     } catch (error) {
       console.error(error)
       return []
     }
   }
+  public async findByPlaca(placa: string): Promise<Veiculo[]> {
+    try {
+      const response = await this.axiosClient.get<Veiculo[]>(`/veiculo/placa?placa=${placa}`)
+      return response.data
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  }
 
   public async listarAllAtivos(): Promise<Veiculo[]> {
     try {
-      const response = await this.axiosClient.get<Veiculo[]>('/lista/ativos')
+      const response = await this.axiosClient.get<Veiculo[]>('/veiculo/lista/ativos')
       return response.data
     } catch (error) {
       console.error(error)
@@ -42,7 +50,7 @@ export class VeiculoClient {
 
   public async cadastrar(veiculo: Veiculo): Promise<Veiculo> {
     try {
-      const response = await this.axiosClient.post<Veiculo>('', veiculo)
+      const response = await this.axiosClient.post<Veiculo>('/veiculo', veiculo)
       return response.data
     } catch (error) {
       return Promise.reject(error)
@@ -52,7 +60,7 @@ export class VeiculoClient {
   public async atualizar(veiculo: Veiculo): Promise<Veiculo> {
     try {
       const response = await this.axiosClient.put<Veiculo>(
-        `?id=${veiculo.id}`,
+        `/veiculo?id=${veiculo.id}`,
         veiculo
       )
       return response.data
@@ -64,7 +72,7 @@ export class VeiculoClient {
   public async desativar(veiculo: Veiculo): Promise<Veiculo> {
     try {
       const response = await this.axiosClient.delete<Veiculo>(
-        `?id=${veiculo.id}`
+        `/veiculo?id=${veiculo.id}`
       )
       return response.data
     } catch (error) {

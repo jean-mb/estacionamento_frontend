@@ -25,7 +25,9 @@ $theme-colors: (
   // 'dark': black,
   'primary': #515151,
   'secondary': #C8C8C8,
-  'info': #A4A4A4
+  'info': #A4A4A4,
+  'success': green,
+  'danger': red
 );
 
 // // Then import Bootstrap and Boo tstrapVue SCSS files (order is important)

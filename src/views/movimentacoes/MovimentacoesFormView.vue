@@ -2,12 +2,18 @@
   <div class="container w-50">
     <div class="row mt-5">
       <div class="col-md-10 text-start">
-        <p class="fs-5">Cadastrar de Marca</p>
+        <p class="fs-5">Nova Movimentação</p>
       </div>
       <div class="col-md-2"></div>
     </div>
 
-    <div v-if="mensagem.ativo" class="row">
+    <AvisoComponent
+      :ativo="mensagem.ativo"
+      :sucesso="mensagem.status"
+      :mensagem="mensagem.mensagem"
+    ></AvisoComponent>
+
+    <!-- <div v-if="mensagem.ativo" class="row">
       <div class="col-md-12 text-start">
         <div :class="mensagem.css" role="alert">
           <strong>{{ mensagem.titulo }}</strong> {{ mensagem.mensagem }}
@@ -16,19 +22,54 @@
             class="btn-close"
             data-bs-dismiss="alert"
             aria-label="Close"
+            v-on:click="limpaMensagem()"
           ></button>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div class="row w-100 d-flex justify-content-center m-0">
       <div class="mb-3 mt-3 w-50 text-start">
-        <label class="form-label">Nome da Marca</label>
+        <label class="form-label">Condutor</label>
         <input
           type="text"
           :disabled="this.form === 'desativar' ? '' : disabled"
           class="form-control"
-          v-model="marca.nome"
+          v-on:change="procuraCondutor()"
+          v-model="condutor"
+          required
+        />
+      </div>
+      <div class="mb-3 mt-3 w-50 text-start">
+        <label class="form-label">Veiculo</label>
+        <input
+          type="text"
+          :disabled="this.form === 'desativar' ? '' : disabled"
+          class="form-control"
+          v-on:change="procuraVeiculos()"
+          v-model="veiculo"
+          required
+        />
+      </div>
+    </div>
+    <div class="row w-100 d-flex justify-content-center m-0">
+      <div class="mb-3 mt-3 w-50 text-start">
+        <label class="form-label">Data de Entrada</label>
+        <input
+          type="datetime-local"
+          :disabled="this.form === 'desativar' ? '' : disabled"
+          class="form-control"
+          v-model="movimentacao.dataEntrada"
+          required
+        />
+      </div>
+      <div class="mb-3 mt-3 w-50 text-start">
+        <label class="form-label">Data de Saída</label>
+        <input
+          type="datetime-local"
+          :disabled="this.form === 'desativar' ? '' : disabled"
+          class="form-control"
+          v-model="movimentacao.dataSaida"
         />
       </div>
     </div>
@@ -74,22 +115,29 @@
 </template>
 
 <script lang="ts">
-import { MarcaClient } from '@/client/marca.client'
-import { Marca } from '@/model/marca'
+import AvisoComponent from '@/components/AvisoComponent.vue'
+import { CondutorClient } from '@/client/condutor.client'
+import { MovimentacaoClient } from '@/client/movimentacao.client'
+import { VeiculoClient } from '@/client/veiculo.client'
+import { Movimentacao } from '@/model/movimentacao'
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'MarcaFormulario',
+  name: 'MovimentacaoFormulario',
   data(): any {
     return {
-      marca: new Marca(),
+      movimentacao: new Movimentacao(),
+      condutor: '' as string,
+      veiculo: '' as string,
       mensagem: {
         ativo: false as boolean,
-        titulo: '' as string,
-        mensagem: '' as string,
-        css: '' as string
+        status: false as boolean,
+        mensagem: '' as string
       }
     }
+  },
+  components: {
+    AvisoComponent
   },
   computed: {
     id() {
@@ -105,74 +153,133 @@ export default defineComponent({
     }
   },
   methods: {
+    procuraCondutor() {
+      const condutorClient = new CondutorClient()
+      if (this.condutor.trim() != '') {
+        if (Number(this.condutor)) {
+          condutorClient
+            .findById(Number(this.condutor))
+            .then(sucess => {
+              this.movimentacao.condutor = sucess
+            })
+            .catch(error => {
+              this.mensagem.mensagem = error.response.data
+              this.mensagem.status = false
+              this.mensagem.ativo = true
+            })
+        } else {
+          condutorClient
+            .findByCpf(this.condutor)
+            .then(sucess => {
+              this.movimentacao.condutor = sucess[0]
+            })
+            .catch(error => {
+              condutorClient
+                .findByNome(this.condutor)
+                .then(sucess => {
+                  this.movimentacao.condutor = sucess[0]
+                })
+                .catch(error => {
+                  this.mensagem.mensagem = error.response.data
+                  this.mensagem.status = false
+                  this.mensagem.ativo = true
+                })
+            })
+        }
+      }
+      this.mensagem.ativo = false
+    },
+    procuraVeiculos() {
+      const veiculosClient = new VeiculoClient()
+      if (this.veiculo.trim() != '') {
+        if (Number(this.veiculo)) {
+          veiculosClient
+            .findById(Number(this.veiculo))
+            .then(sucess => {
+              this.movimentacao.veiculo = sucess
+            })
+            .catch(error => {
+              this.mensagem.mensagem = error.response.data
+              this.mensagem.status = false
+              this.mensagem.ativo = true
+            })
+        } else {
+          veiculosClient
+            .findByPlaca(this.veiculo)
+            .then(sucess => {
+              this.movimentacao.veiculo = sucess[0]
+            })
+            .catch(error => {
+              this.mensagem.mensagem = error.response.data
+              this.mensagem.status = false
+              this.mensagem.ativo = true
+            })
+        }
+      }
+      this.mensagem.ativo = false
+    },
     onClickCadastrar() {
-      const marcaClient = new MarcaClient()
-      marcaClient
-        .cadastrarMarca(this.marca)
+      const movimentacaoClient = new MovimentacaoClient()
+      movimentacaoClient
+        .novaMovimentacao(this.movimentacao)
         .then(sucess => {
-          this.marca = new Marca()
-
+          this.movimentacao = new Movimentacao()
+          this.condutor = this.veiculo = ''
+          this.movimentacao.mensagem = sucess
+          this.mensagem.status = true
           this.mensagem.ativo = true
-          this.mensagem.mensagem = sucess
-          this.mensagem.titulo = 'Parabens. '
-          this.mensagem.css = 'alert alert-success alert-dismissible fade show'
         })
         .catch(error => {
+          console.log(error.response)
+          if (typeof error.response.data == 'object') {
+            this.mensagem.mensagem = Object.values(error.response.data)[0]
+          } else {
+            this.mensagem.mensagem = error.response.data
+          }
+          this.mensagem.status = false
           this.mensagem.ativo = true
-          this.mensagem.mensagem = error
-          this.mensagem.titulo = 'Error. '
-          this.mensagem.css = 'alert alert-danger alert-dismissible fade show'
         })
     },
     findById(id: number) {
-      const marcaClient = new MarcaClient()
-      console.log('aqui a')
-      marcaClient
+      const movimentacaoClient = new MovimentacaoClient()
+      movimentacaoClient
         .findById(id)
         .then(sucess => {
-          this.marca = sucess
+          this.movimentacao = sucess
         })
         .catch(error => {
+          this.mensagem.mensagem = error.response.data
+          this.mensagem.status = false
           this.mensagem.ativo = true
-          this.mensagem.mensagem = error
-          this.mensagem.titulo = 'Error. '
-          this.mensagem.css = 'alert alert-danger alert-dismissible fade show'
         })
     },
     onClickEditar() {
-      const marcaClient = new MarcaClient()
-      console.log('aqui')
-      marcaClient
-        .atualizarMarca(this.marca.id, this.marca)
+      const movimentacaoClient = new MovimentacaoClient()
+      movimentacaoClient
+        .editarMovimentacao(this.movimentacao)
         .then(sucess => {
-          this.marca = new Marca()
-
-          this.mensagem.ativo = true
+          this.movimentacao = new Movimentacao()
           this.mensagem.mensagem = sucess
-          this.mensagem.titulo = 'Parabens. '
-          this.mensagem.css = 'alert alert-success alert-dismissible fade show'
+          this.mensagem.status = true
+          this.mensagem.ativo = true
         })
         .catch(error => {
+          this.mensagem.mensagem = error.response.data
+          this.mensagem.status = false
           this.mensagem.ativo = true
-          this.mensagem.mensagem = error
-          this.mensagem.titulo = 'Erro. '
-          this.mensagem.css = 'alert alert-danger alert-dismissible fade show'
         })
     },
     onClickExcluir() {
-      const marcaClient = new MarcaClient()
-      marcaClient
-        .desativar(this.marca.id)
+      const movimentacaoClient = new MovimentacaoClient()
+      movimentacaoClient
+        .deletar(this.marca.id)
         .then(sucess => {
-          this.marca = new Marca()
+          this.movimentacao = new Movimentacao()
 
           this.$router.push({ name: 'marca-lista-view' })
         })
         .catch(error => {
-          this.mensagem.ativo = true
-          this.mensagem.mensagem = error
-          this.mensagem.titulo = 'Error. '
-          this.mensagem.css = 'alert alert-danger alert-dismissible fade show'
+          this.mensagemErro(error.response.data)
         })
     }
   }
@@ -182,10 +289,11 @@ export default defineComponent({
 <style lang="scss">
 $theme-colors: (
   'dark': #111111,
-  // 'dark': black,
   'primary': #515151,
-  'secondary': #C8C8C8,
-  'info': #A4A4A4
+  'secondary': #c8c8c8,
+  'info': #a4a4a4,
+  'success': green,
+  'danger': red
 );
 
 @import 'node_modules/bootstrap/scss/bootstrap.scss';
