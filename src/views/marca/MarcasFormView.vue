@@ -147,21 +147,23 @@ export default defineComponent({
         })
     },
     onClickExcluir() {
-      const marcaClient = new MarcaClient()
-      marcaClient
-        .desativar(this.marca.id)
-        .then(sucess => {
-          this.marca = new Marca()
-          this.id = undefined
-          this.mensagem.mensagem = sucess
-          this.mensagem.status = false
-          this.mensagem.ativo = true
-        })
-        .catch(error => {
-          this.mensagem.mensagem = error.response.data
-          this.mensagem.status = false
-          this.mensagem.ativo = true
-        })
+      if(confirm("Tem certeza que deseja desativar essa marca?")){
+        const marcaClient = new MarcaClient()
+        marcaClient
+          .desativar(this.marca.id)
+          .then(sucess => {
+            this.marca = new Marca()
+            this.id = undefined
+            this.mensagem.mensagem = sucess
+            this.mensagem.status = false
+            this.mensagem.ativo = true
+          })
+          .catch(error => {
+            this.mensagem.mensagem = error.response.data
+            this.mensagem.status = false
+            this.mensagem.ativo = true
+          })
+      }
     }
   }
 })
