@@ -140,7 +140,15 @@ export default defineComponent({
           this.mensagem.ativo = true
         })
         .catch(error => {
-          this.mensagem.mensagem = error.response.data
+          if (typeof(error.response.data) == 'object') {
+            this.mensagem.mensagem = Object.values(error.response.data)[0]
+          }else{
+            if (this.modelo.marca == ""){
+              this.mensagem.mensagem = "Selecione uma marca!"
+            }else{
+              this.mensagem.mensagem = error.response.data
+            }
+          }
           this.mensagem.status = false
           this.mensagem.ativo = true
         })

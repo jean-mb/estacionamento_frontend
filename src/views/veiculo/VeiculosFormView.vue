@@ -184,7 +184,7 @@ export default defineComponent({
           this.mensagem.ativo = true
         })
         .catch(error => {
-          if (typeof error.response.data == 'object') {
+          if (typeof (error.response.data) == 'object') {
             this.mensagem.mensagem = Object.values(error.response.data)[0]
           }else{
             if (this.veiculo.modelo == "" || this.veiculo.cor == "" || this.veiculo.tipo == "" ){
