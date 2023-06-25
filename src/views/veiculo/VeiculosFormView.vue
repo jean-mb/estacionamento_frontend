@@ -12,8 +12,8 @@
     <div class="row w-100 d-flex justify-content-center m-0 mb-2">
       <div class="mb-3 mt-3 w-50 text-start">
         <label for="placa" class="form-label">Placa do Veiculo</label>
-        <input type="text" :disabled="this.form === 'desativar' ? '' : disabled" class="form-control" id="placa"
-          v-model="veiculo.placa" />
+        <input type="text" :disabled="this.form === 'desativar' ? '' : disabled" class="form-control" id="placa" v-maska
+          data-maska="***-****" v-model="veiculo.placa" />
       </div>
       <div class="mb-3 mt-3 w-50 text-start">
         <label for="categoria" class="form-label">Modelo</label>
@@ -77,7 +77,9 @@
     </div>
   </div>
 </template>
-
+<script lang="ts" setup>
+import { vMaska } from "maska"
+</script>
 <script lang="ts">
 import AvisoComponent from '@/components/AvisoComponent.vue'
 import { defineComponent } from 'vue'

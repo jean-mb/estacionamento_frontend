@@ -12,9 +12,9 @@
     "bootstrap-icons-vue": "^1.10.3",
     "bootstrap-vue": "^2.23.1",
     "core-js": "^3.8.3",
+    "maska": "^2.1.9",
     "moment": "^2.29.4",
     "moment-timezone": "^0.5.43",
-    "v-mask": "^2.3.0",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3"
   },

@@ -18,14 +18,14 @@
       <div class="mb-3 mt-3 w-50 text-start">
         <label for="telefone" class="form-label">Telefone</label>
         <input id="telefone" type="text" :disabled="this.form === 'desativar' ? '' : disabled" class="form-control"
-          v-model="condutor.telefone" />
+          v-maska data-maska="(##) # ####-####" v-model="condutor.telefone" />
       </div>
     </div>
     <div class="row w-100 d-flex justify-content-center m-0 mb-2">
       <div class="mb-3 mt-3 w-50 text-start">
         <label for="cpf" class="form-label">CPF do Condutor</label>
-        <input id="cpf" type="text" :disabled="this.form === 'desativar' ? '' : disabled" class="form-control"
-          v-mask="'###.###.###-##'" v-model="condutor.cpf" />
+        <input id="cpf" type="text" :disabled="this.form === 'desativar' ? '' : disabled" class="form-control" v-maska
+          data-maska="###.###.###-##" v-model="condutor.cpf" />
       </div>
     </div>
 
@@ -52,7 +52,9 @@
     </div>
   </div>
 </template>
-
+<script lang="ts" setup>
+import { vMaska } from "maska"
+</script>
 <script lang="ts">
 import AvisoComponent from '@/components/AvisoComponent.vue'
 import { defineComponent } from 'vue'
