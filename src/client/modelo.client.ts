@@ -6,13 +6,13 @@ export class ModeloClient{
 
     constructor(){
         this.axiosClient = axios.create({
-            baseURL: "http://localhost:8080/api/modelo"
+            baseURL: "http://localhost:8080/api"
         })
     }
 
     public async findById(id: number): Promise<Modelo> {
         try {
-          const response = await this.axiosClient.get<Modelo>(`?id=${id}`)
+          const response = await this.axiosClient.get<Modelo>(`/modelo?id=${id}`)
           return response.data
         } catch (error) {
           return Promise.reject(error)
@@ -21,7 +21,7 @@ export class ModeloClient{
     
       public async listaCompleta(): Promise<Modelo[]> {
         try {
-          const response = await this.axiosClient.get<Modelo[]>('/lista')
+          const response = await this.axiosClient.get<Modelo[]>('/modelo/lista')
           return response.data
         } catch (error) {
           console.error(error)
@@ -31,7 +31,7 @@ export class ModeloClient{
     
       public async listarAtivos(): Promise<Modelo[]> {
         try {
-          const response = await this.axiosClient.get<Modelo[]>('/lista/ativos')
+          const response = await this.axiosClient.get<Modelo[]>('/modelo/lista/ativos')
           return response.data
         } catch (error) {
           console.error(error)
@@ -41,7 +41,7 @@ export class ModeloClient{
     
       public async cadastrar(modelo: Modelo): Promise<Modelo> {
         try {
-          const response = await this.axiosClient.post<Modelo>('', modelo)
+          const response = await this.axiosClient.post<Modelo>('/modelo', modelo)
           return response.data
         } catch (error) {
           return Promise.reject(error)
@@ -51,7 +51,7 @@ export class ModeloClient{
       public async editar(modelo: Modelo): Promise<Modelo> {
         try {
           const response = await this.axiosClient.put<Modelo>(
-            `?id=${modelo.id}`,
+            `/modelo?id=${modelo.id}`,
             modelo
           )
           return response.data
@@ -63,7 +63,7 @@ export class ModeloClient{
       public async desativar(modelo: Modelo): Promise<Modelo> {
         try {
           const response = await this.axiosClient.delete<Modelo>(
-            `?id=${modelo.id}`
+            `/modelo?id=${modelo.id}`
           )
           return response.data
         } catch (error) {

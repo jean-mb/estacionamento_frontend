@@ -150,7 +150,7 @@ export default defineComponent({
       modeloClient
         .findById(id)
         .then(sucess => {
-          this.marca = sucess
+          this.modelo  = sucess
         })
         .catch(error => {
           this.mensagem.mensagem = error.response.data
@@ -160,7 +160,6 @@ export default defineComponent({
     },
     onClickEditar() {
       const modeloClient = new ModeloClient()
-      console.log('aqui')
       modeloClient
         .editar(this.modelo)
         .then(sucess => {
@@ -169,7 +168,11 @@ export default defineComponent({
           this.mensagem.ativo = true
         })
         .catch(error => {
-          this.mensagem.mensagem = error.response.data
+          if (this.modelo.marca == ""){
+            this.mensagem.mensagem = "Selecione uma marca!"
+          }else{
+            this.mensagem.mensagem = error.response.data
+          }
           this.mensagem.status = false
           this.mensagem.ativo = true
         })
