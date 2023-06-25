@@ -26,13 +26,13 @@
       </thead>
       <tbody>
         <tr v-for="item in movimentacoesList" :key="item.id">
-          <th class="text-center col-md-1">{{ item.id }}</th>
-          <th class="col-md-2 text-center">{{ item.veiculo.placa }}</th>
-          <th class="col-md-3 text-center">{{ item.condutor.nome }}</th>
-          <th class="col-md-2 text-center">
+          <th class="align-middle text-center col-md-1">{{ item.id }}</th>
+          <th class="align-middle col-md-2 text-center">{{ item.veiculo.placa }}</th>
+          <th class="align-middle col-md-3 text-center">{{ item.condutor.nome }}</th>
+          <th class="align-middle col-md-2 text-center">
             {{ formatDate(item.dataEntrada) }}
           </th>
-          <th class="text-center col-md-3">
+          <th class="align-middle text-center col-md-3">
             <BotoesAcoes
               editarRoute="movimentacao.form.editar"
               desativarRoute="movimentacao.form.desativar"
@@ -93,15 +93,10 @@ $theme-colors: (
   'dark': #111111,
   'primary': #515151,
   'secondary': #c8c8c8,
-  'info': #a4a4a4
+  'info': #a4a4a4,
+  'success': #198754,
+  'warning': #ffc107,
+  'danger': #dc3545
 );
-
 @import 'node_modules/bootstrap/scss/bootstrap.scss';
-
-.fs-5 {
-  font-weight: var(--font-weight-destaque);
-}
-th {
-  vertical-align: middle;
-}
 </style>

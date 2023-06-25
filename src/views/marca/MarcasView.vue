@@ -35,7 +35,7 @@
             </span>
           </th>
 
-          <th class="text-center col-md-2">
+          <th class="align-middle text-center col-md-2">
             <BotoesAcoes
               editarRoute="marca.form.editar"
               desativarRoute="marca.form.desativar"

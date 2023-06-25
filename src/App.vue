@@ -22,16 +22,15 @@ export default defineComponent({
 
 $theme-colors: (
   'dark': #111111,
-  // 'dark': black,
   'primary': #515151,
-  'secondary': #C8C8C8,
-  'info': #A4A4A4,
-  'success': green,
-  'danger': red
+  'secondary': #c8c8c8,
+  'info': #a4a4a4,
+  'success': #198754,
+  'warning': #ffc107,
+  'danger': #dc3545
 );
-
-// // Then import Bootstrap and Boo tstrapVue SCSS files (order is important)
 @import 'node_modules/bootstrap/scss/bootstrap.scss';
+
 :root {
   --font-principal: 'Inter', sans-serif;
   --font-weight-leve: 400;
@@ -45,6 +44,9 @@ $theme-colors: (
 
 * {
   font-family: var(--font-principal);
+}
+.btn {
+  font-weight: var(--font-weight-destaque) !important;
 }
 
 #app {

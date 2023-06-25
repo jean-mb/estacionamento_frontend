@@ -29,19 +29,19 @@
       </thead>
       <tbody>
         <tr v-for="item in movimentacoesList" :key="item.id">
-          <th class="text-center col-md-1">{{ item.id }}</th>
-          <th class="col-md-2 text-center">{{ item.veiculo.placa }}</th>
-          <th class="col-md-2 text-center">{{ item.condutor.nome }}</th>
-          <th class="col-md-2 text-center">
+          <th class="align-middle text-center col-md-1">{{ item.id }}</th>
+          <th class="align-middle col-md-2 text-center">{{ item.veiculo.placa }}</th>
+          <th class="align-middle col-md-2 text-center">{{ item.condutor.nome }}</th>
+          <th class="align-middle col-md-2 text-center">
             {{ formatDate(item.dataEntrada) }}
           </th>
-          <th v-if="item.dataSaida != null" class="text-center col-md-2">
+          <th v-if="item.dataSaida != null" class="align-middle text-center col-md-2">
             {{ formatDate(item.dataSaida) }}
           </th>
-          <th v-if="item.dataSaida == null" class="col-md-2 text-center">
+          <th v-if="item.dataSaida == null" class="align-middle col-md-2 text-center">
             ---
           </th>
-          <th class="text-center col-md-2">
+          <th class="align-middle text-center col-md-2">
             <span
               v-if="item.ativo && item.dataSaida == null"
               class="badge text-bg-success"
@@ -58,7 +58,7 @@
               Cancelado
             </span>
           </th>
-          <th class="text-center col-md-2">
+          <th class="align-middle text-center col-md-2">
             <BotoesAcoes
               editarRoute="movimentacao.form.editar"
               desativarRoute="movimentacao.form.desativar"
@@ -118,15 +118,17 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+$theme-colors: (
+  'dark': #111111,
+  'primary': #515151,
+  'secondary': #c8c8c8,
+  'info': #a4a4a4,
+  'success': #198754,
+  'warning': #ffc107,
+  'danger': #dc3545
+);
 @import 'node_modules/bootstrap/scss/bootstrap.scss';
 .container {
   width: 200%;
-}
-.btn {
-  font-weight: var(--font-weight-forte);
-}
-
-th{
-  vertical-align: middle;
 }
 </style>

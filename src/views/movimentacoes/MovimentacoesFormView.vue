@@ -75,7 +75,7 @@
             class="btn btn-primary"
             @click="onClickCadastrar()"
           >
-            Cadastrar
+            Abrir
           </button>
           <button
             v-if="this.form === 'editar'"

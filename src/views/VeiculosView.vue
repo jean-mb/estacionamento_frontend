@@ -28,17 +28,19 @@
       </thead>
       <tbody>
         <tr v-for="item in veiculosList" :key="item.id">
-          <th class="text-center col-md-1">{{ item.id }}</th>
-          <th class="col-md-2">{{ item.placa }}</th>
-          <th class="col-md-2">{{ item.tipo }}</th>
-          <th class="text-start col-md-3">{{ item.modelo.marca.nome }} - {{ item.modelo.nome }}</th>
-          <th class="text-start col-md-2">
+          <th class="align-middle text-center col-md-1">{{ item.id }}</th>
+          <th class="align-middle col-md-2">{{ item.placa }}</th>
+          <th class="align-middle col-md-2">{{ item.tipo }}</th>
+          <th class="align-middle text-start col-md-3">
+            {{ item.modelo.marca.nome }} - {{ item.modelo.nome }}
+          </th>
+          <th class="align-middle text-start col-md-2">
             <span v-if="item.ativo" class="badge text-bg-success"> Ativo </span>
             <span v-if="!item.ativo" class="badge text-bg-danger">
               Inativo
             </span>
           </th>
-          <th class="text-center col-md-2">
+          <th class="align-middle text-center col-md-2">
             <div
               class="btn-group"
               role="group"
@@ -105,11 +107,17 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+$theme-colors: (
+  'dark': #111111,
+  'primary': #515151,
+  'secondary': #c8c8c8,
+  'info': #a4a4a4,
+  'success': #198754,
+  'warning': #ffc107,
+  'danger': #dc3545
+);
 @import 'node_modules/bootstrap/scss/bootstrap.scss';
 .container {
   width: 100%;
-}
-.btn {
-  font-weight: var(--font-weight-forte);
 }
 </style>
