@@ -6,11 +6,7 @@
       </div>
       <div class="col-md-2 col-md-2 align-self-center">
         <div class="d-grid gap-2">
-          <router-link
-            type="button"
-            class="btn btn-success"
-            to="/modelo/formulario"
-            >Cadastrar
+          <router-link type="button" class="btn btn-success" to="/modelo/formulario">Cadastrar
           </router-link>
         </div>
       </div>
@@ -40,11 +36,8 @@
             </span>
           </th>
           <th class="align-middle text-center col-md-2">
-            <BotoesAcoes
-              editarRoute="modelo.form.editar"
-              desativarRoute="modelo.form.desativar"
-              :id="item.id"
-            ></BotoesAcoes>
+            <BotoesAcoes editarRoute="modelo.form.editar" desativarRoute="modelo.form.desativar" :id="item.id">
+            </BotoesAcoes>
           </th>
         </tr>
       </tbody>
@@ -68,7 +61,7 @@ export default defineComponent({
   mounted() {
     this.findAll()
   },
-  components:{
+  components: {
     BotoesAcoes
   },
   methods: {
@@ -98,6 +91,7 @@ $theme-colors: (
   'danger': #dc3545
 );
 @import 'node_modules/bootstrap/scss/bootstrap.scss';
+
 .container {
   width: 70%;
 }

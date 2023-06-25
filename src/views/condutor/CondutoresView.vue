@@ -6,11 +6,7 @@
       </div>
       <div class="col-md-2 col-md-2 align-self-center">
         <div class="d-grid gap-2">
-          <router-link
-            type="button"
-            class="btn btn-success"
-            to="/marca/formulario"
-            >Cadastrar
+          <router-link type="button" class="btn btn-success" to="/condutor/formulario">Cadastrar
           </router-link>
         </div>
       </div>
@@ -37,32 +33,8 @@
             </span>
           </th>
           <th class="align-middle text-center col-md-2">
-            <div
-              class="btn-group"
-              role="group"
-              aria-label="Basic mixed styles example"
-            >
-              <router-link
-                type="button"
-                class="btn btn-sm btn-warning"
-                :to="{
-                  name: 'marca.form.editar',
-                  query: { id: item.id, form: 'editar' }
-                }"
-              >
-                Editar
-              </router-link>
-              <router-link
-                type="button"
-                class="btn btn-sm btn-danger"
-                :to="{
-                  name: 'marca.form.desativar',
-                  query: { id: item.id, form: 'desativar' }
-                }"
-              >
-                Excluir
-              </router-link>
-            </div>
+            <BotoesAcoes editarRoute="condutor.form.editar" desativarRoute="condutor.form.desativar" :id="item.id">
+            </BotoesAcoes>
           </th>
         </tr>
       </tbody>
@@ -72,6 +44,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import BotoesAcoes from '@/components/BotoesAcoes.vue'
 import { Condutor } from '@/model/condutor'
 import { CondutorClient } from '@/client/condutor.client'
 
@@ -84,6 +57,9 @@ export default defineComponent({
   },
   mounted() {
     this.findAll()
+  },
+  components: {
+    BotoesAcoes
   },
   methods: {
     findAll() {
@@ -112,6 +88,7 @@ $theme-colors: (
   'danger': #dc3545
 );
 @import 'node_modules/bootstrap/scss/bootstrap.scss';
+
 .container {
   width: 70%;
 }

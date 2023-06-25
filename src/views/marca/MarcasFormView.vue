@@ -7,57 +7,32 @@
       <div class="col-md-2"></div>
     </div>
 
-    <AvisoComponent
-      :ativo="mensagem.ativo"
-      :sucesso="mensagem.status"
-      :mensagem="mensagem.mensagem"
-    ></AvisoComponent>
+    <AvisoComponent :ativo="mensagem.ativo" :sucesso="mensagem.status" :mensagem="mensagem.mensagem"></AvisoComponent>
 
     <div class="row w-100 d-flex justify-content-center m-0 mb-2">
       <div class="mb-3 mt-3 w-50 text-start">
         <label for="nome" class="form-label">Nome da Marca</label>
-        <input
-          id="nome"
-          type="text"
-          :disabled="this.form === 'desativar' ? '' : disabled"
-          class="form-control"
-          v-model="marca.nome"
-        />
+        <input id="nome" type="text" :disabled="this.form === 'desativar' ? '' : disabled" class="form-control"
+          v-model="marca.nome" />
       </div>
     </div>
 
     <div class="row d-flex justify-content-center">
       <div class="col-md-3">
         <div class="d-grid gap-2">
-          <router-link type="button" class="btn btn-secondary" to="/marcas"
-            >Voltar
+          <router-link type="button" class="btn btn-secondary" to="/marcas">Voltar
           </router-link>
         </div>
       </div>
       <div class="col-md-3">
         <div class="d-grid gap-2">
-          <button
-            v-if="this.form === undefined"
-            type="button"
-            class="btn btn-primary"
-            @click="onClickCadastrar()"
-          >
+          <button v-if="this.form === undefined" type="button" class="btn btn-primary" @click="onClickCadastrar()">
             Cadastrar
           </button>
-          <button
-            v-if="this.form === 'editar'"
-            type="button"
-            class="btn btn-warning"
-            @click="onClickEditar()"
-          >
+          <button v-if="this.form === 'editar'" type="button" class="btn btn-warning" @click="onClickEditar()">
             Editar
           </button>
-          <button
-            v-if="this.form === 'desativar'"
-            type="button"
-            class="btn btn-danger"
-            @click="onClickExcluir()"
-          >
+          <button v-if="this.form === 'desativar'" type="button" class="btn btn-danger" @click="onClickExcluir()">
             Excluir
           </button>
         </div>
@@ -147,7 +122,7 @@ export default defineComponent({
         })
     },
     onClickExcluir() {
-      if(confirm("Tem certeza que deseja desativar essa marca?")){
+      if (confirm("Tem certeza que deseja desativar essa marca?")) {
         const marcaClient = new MarcaClient()
         marcaClient
           .desativar(this.marca.id)

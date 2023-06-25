@@ -78,10 +78,10 @@ export class CondutorClient {
     }
   }
 
-  public async desativarCondutor(condutor: Condutor): Promise<Condutor> {
+  public async desativarCondutor(id: number): Promise<Condutor> {
     try {
       const response = await this.axiosClient.delete<Condutor>(
-        `/condutor?id=${condutor.id}`
+        `/condutor?id=${id}`
       )
       return response.data
     } catch (error) {

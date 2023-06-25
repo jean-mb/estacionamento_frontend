@@ -7,34 +7,21 @@
       <div class="col-md-2"></div>
     </div>
 
-    <AvisoComponent
-      :ativo="mensagem.ativo"
-      :sucesso="mensagem.status"
-      :mensagem="mensagem.mensagem"
-    ></AvisoComponent>
+    <AvisoComponent :ativo="mensagem.ativo" :sucesso="mensagem.status" :mensagem="mensagem.mensagem"></AvisoComponent>
 
     <div class="row w-100 d-flex justify-content-center m-0 mb-2">
       <div class="mb-3 mt-3 w-50 text-start">
         <label for="placa" class="form-label">Placa do Veiculo</label>
-        <input
-          type="text"
-          :disabled="this.form === 'desativar' ? '' : disabled"
-          class="form-control"
-          id="placa"
-          v-model="veiculo.placa"
-        />
+        <input type="text" :disabled="this.form === 'desativar' ? '' : disabled" class="form-control" id="placa"
+          v-model="veiculo.placa" />
       </div>
       <div class="mb-3 mt-3 w-50 text-start">
         <label for="categoria" class="form-label">Modelo</label>
-        <select
-          :disabled="this.form === 'desativar' ? '' : disabled"
-          class="form-select"
-          id="categoria"
-          v-model="veiculo.modelo"
-        >
+        <select :disabled="this.form === 'desativar' ? '' : disabled" class="form-select" id="categoria"
+          v-model="veiculo.modelo">
           <option value="" selected>Selecione um modelo</option>
           <option v-for="modelo in modelos" :value="modelo">
-            {{ modelo.nome }} - {{ modelo.marca.nome  }}
+            {{ modelo.nome }} - {{ modelo.marca.nome }}
           </option>
         </select>
       </div>
@@ -42,22 +29,13 @@
     <div class="row w-100 d-flex justify-content-center m-0 mb-2">
       <div class="mb-3 mt-3 w-25 text-start">
         <label for="ano" class="form-label">Ano</label>
-        <input
-          type="number"
-          id="ano"
-          :disabled="this.form === 'desativar' ? '' : disabled"
-          class="form-control"
-          v-model="veiculo.ano"
-        />
+        <input type="number" id="ano" :disabled="this.form === 'desativar' ? '' : disabled" class="form-control"
+          v-model="veiculo.ano" />
       </div>
       <div class="mb-3 mt-3 w-25 text-start">
         <label for="categoria" class="form-label">Cor</label>
-        <select
-          :disabled="this.form === 'desativar' ? '' : disabled"
-          class="form-select"
-          id="categoria"
-          v-model="veiculo.cor"
-        >
+        <select :disabled="this.form === 'desativar' ? '' : disabled" class="form-select" id="categoria"
+          v-model="veiculo.cor">
           <option value="" selected>Selecione uma cor</option>
           <option v-for="cor in cores" :value="cor">
             {{ cor }}
@@ -66,12 +44,8 @@
       </div>
       <div class="mb-3 mt-3 w-25 text-start">
         <label for="tipo" class="form-label">Tipo</label>
-        <select
-          :disabled="this.form === 'desativar' ? '' : disabled"
-          class="form-select"
-          id="tipo"
-          v-model="veiculo.tipo"
-        >
+        <select :disabled="this.form === 'desativar' ? '' : disabled" class="form-select" id="tipo"
+          v-model="veiculo.tipo">
           <option value="" selected>Selecione um tipo</option>
           <option v-for="tipo in tipos" :value="tipo">
             {{ tipo }}
@@ -83,35 +57,19 @@
     <div class="row d-flex justify-content-center">
       <div class="col-md-3">
         <div class="d-grid gap-2">
-          <router-link type="button" class="btn btn-secondary" to="/veiculos"
-            >Voltar
+          <router-link type="button" class="btn btn-secondary" to="/veiculos">Voltar
           </router-link>
         </div>
       </div>
       <div class="col-md-3">
         <div class="d-grid gap-2">
-          <button
-            v-if="this.form === undefined"
-            type="button"
-            class="btn btn-primary"
-            @click="onClickCadastrar()"
-          >
+          <button v-if="this.form === undefined" type="button" class="btn btn-primary" @click="onClickCadastrar()">
             Cadastrar
           </button>
-          <button
-            v-if="this.form === 'editar'"
-            type="button"
-            class="btn btn-warning"
-            @click="onClickEditar()"
-          >
+          <button v-if="this.form === 'editar'" type="button" class="btn btn-warning" @click="onClickEditar()">
             Editar
           </button>
-          <button
-            v-if="this.form === 'desativar'"
-            type="button"
-            class="btn btn-danger"
-            @click="onClickExcluir()"
-          >
+          <button v-if="this.form === 'desativar'" type="button" class="btn btn-danger" @click="onClickExcluir()">
             Excluir
           </button>
         </div>
@@ -131,13 +89,13 @@ import { Cor } from '@/model/cor'
 import { Tipo } from '@/model/tipo'
 
 export default defineComponent({
-  name: 'ModeloFormulario',
+  name: 'VeiculoFormulario',
   data(): any {
     return {
       veiculo: new Veiculo(),
       modelos: [] as Modelo[],
-      cores:  Object.values(Cor),
-      tipos:  Object.values(Tipo),
+      cores: Object.values(Cor),
+      tipos: Object.values(Tipo),
       mensagem: {
         ativo: false as boolean,
         status: false as boolean,
@@ -163,7 +121,7 @@ export default defineComponent({
     this.fetchModelos()
   },
   methods: {
-    fetchModelos(){
+    fetchModelos() {
       const modeloClient = new ModeloClient()
       modeloClient.listarAtivos().then(sucess => {
         this.modelos = sucess
@@ -186,10 +144,10 @@ export default defineComponent({
         .catch(error => {
           if (typeof (error.response.data) == 'object') {
             this.mensagem.mensagem = Object.values(error.response.data)[0]
-          }else{
-            if (this.veiculo.modelo == "" || this.veiculo.cor == "" || this.veiculo.tipo == "" ){
+          } else {
+            if (this.veiculo.modelo == "" || this.veiculo.cor == "" || this.veiculo.tipo == "") {
               this.mensagem.mensagem = "Selecione todas as opções!"
-            }else{
+            } else {
               this.mensagem.mensagem = error.response.data
             }
           }
@@ -202,7 +160,7 @@ export default defineComponent({
       veiculoClient
         .findById(id)
         .then(sucess => {
-          this.veiculo  = sucess
+          this.veiculo = sucess
         })
         .catch(error => {
           this.mensagem.mensagem = error.response.data[0]
@@ -220,9 +178,9 @@ export default defineComponent({
           this.mensagem.ativo = true
         })
         .catch(error => {
-          if (this.veiculo.modelo == "" || this.veiculo.cor == "" || this.veiculo.tipo == "" ){
+          if (this.veiculo.modelo == "" || this.veiculo.cor == "" || this.veiculo.tipo == "") {
             this.mensagem.mensagem = "Selecione todas as opções!"
-          }else{
+          } else {
             this.mensagem.mensagem = error.response.data
           }
           this.mensagem.status = false
@@ -230,21 +188,23 @@ export default defineComponent({
         })
     },
     onClickExcluir() {
-      const veiculoClient = new VeiculoClient()
-      veiculoClient
-        .desativar(this.veiculo.id)
-        .then(sucess => {
-          this.veiculo = new Veiculo()
-          this.id = undefined
-          this.mensagem.mensagem = sucess
-          this.mensagem.status = false
-          this.mensagem.ativo = true
-        })
-        .catch(error => {
-          this.mensagem.mensagem = error.response.data
-          this.mensagem.status = false
-          this.mensagem.ativo = true
-        })
+      if (confirm("Tem certeza que deseja desativar esse veiculo?")) {
+        const veiculoClient = new VeiculoClient()
+        veiculoClient
+          .desativar(this.veiculo.id)
+          .then(sucess => {
+            this.veiculo = new Veiculo()
+            this.id = undefined
+            this.mensagem.mensagem = sucess
+            this.mensagem.status = false
+            this.mensagem.ativo = true
+          })
+          .catch(error => {
+            this.mensagem.mensagem = error.response.data
+            this.mensagem.status = false
+            this.mensagem.ativo = true
+          })
+      }
     }
   }
 })

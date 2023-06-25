@@ -7,30 +7,18 @@
       <div class="col-md-2"></div>
     </div>
 
-    <AvisoComponent
-      :ativo="mensagem.ativo"
-      :sucesso="mensagem.status"
-      :mensagem="mensagem.mensagem"
-    ></AvisoComponent>
+    <AvisoComponent :ativo="mensagem.ativo" :sucesso="mensagem.status" :mensagem="mensagem.mensagem"></AvisoComponent>
 
     <div class="row w-100 d-flex justify-content-center m-0 mb-2">
       <div class="mb-3 mt-3 w-50 text-start">
         <label class="form-label">Nome do Modelo</label>
-        <input
-          type="text"
-          :disabled="this.form === 'desativar' ? '' : disabled"
-          class="form-control"
-          v-model="modelo.nome"
-        />
+        <input type="text" :disabled="this.form === 'desativar' ? '' : disabled" class="form-control"
+          v-model="modelo.nome" />
       </div>
       <div class="mb-3 mt-3 w-50 text-start">
         <label for="categoria" class="form-label">Marca</label>
-        <select
-          :disabled="this.form === 'desativar' ? '' : disabled"
-          class="form-select"
-          id="categoria"
-          v-model="modelo.marca"
-        >
+        <select :disabled="this.form === 'desativar' ? '' : disabled" class="form-select" id="categoria"
+          v-model="modelo.marca">
           <option value="" selected>Selecione uma marca</option>
           <option v-for="marca in marcas" :value="marca">
             {{ marca.nome }}
@@ -42,35 +30,19 @@
     <div class="row d-flex justify-content-center">
       <div class="col-md-3">
         <div class="d-grid gap-2">
-          <router-link type="button" class="btn btn-secondary" to="/modelos"
-            >Voltar
+          <router-link type="button" class="btn btn-secondary" to="/modelos">Voltar
           </router-link>
         </div>
       </div>
       <div class="col-md-3">
         <div class="d-grid gap-2">
-          <button
-            v-if="this.form === undefined"
-            type="button"
-            class="btn btn-primary"
-            @click="onClickCadastrar()"
-          >
+          <button v-if="this.form === undefined" type="button" class="btn btn-primary" @click="onClickCadastrar()">
             Cadastrar
           </button>
-          <button
-            v-if="this.form === 'editar'"
-            type="button"
-            class="btn btn-warning"
-            @click="onClickEditar()"
-          >
+          <button v-if="this.form === 'editar'" type="button" class="btn btn-warning" @click="onClickEditar()">
             Editar
           </button>
-          <button
-            v-if="this.form === 'desativar'"
-            type="button"
-            class="btn btn-danger"
-            @click="onClickExcluir()"
-          >
+          <button v-if="this.form === 'desativar'" type="button" class="btn btn-danger" @click="onClickExcluir()">
             Excluir
           </button>
         </div>
@@ -119,7 +91,7 @@ export default defineComponent({
     this.fetchMarcas()
   },
   methods: {
-    fetchMarcas(){
+    fetchMarcas() {
       const marcaClient = new MarcaClient()
       marcaClient.listarAtivos().then(sucess => {
         this.marcas = sucess
@@ -140,12 +112,12 @@ export default defineComponent({
           this.mensagem.ativo = true
         })
         .catch(error => {
-          if (typeof(error.response.data) == 'object') {
+          if (typeof (error.response.data) == 'object') {
             this.mensagem.mensagem = Object.values(error.response.data)[0]
-          }else{
-            if (this.modelo.marca == ""){
+          } else {
+            if (this.modelo.marca == "") {
               this.mensagem.mensagem = "Selecione uma marca!"
-            }else{
+            } else {
               this.mensagem.mensagem = error.response.data
             }
           }
@@ -158,7 +130,7 @@ export default defineComponent({
       modeloClient
         .findById(id)
         .then(sucess => {
-          this.modelo  = sucess
+          this.modelo = sucess
         })
         .catch(error => {
           this.mensagem.mensagem = error.response.data
@@ -176,9 +148,9 @@ export default defineComponent({
           this.mensagem.ativo = true
         })
         .catch(error => {
-          if (this.modelo.marca == ""){
+          if (this.modelo.marca == "") {
             this.mensagem.mensagem = "Selecione uma marca!"
-          }else{
+          } else {
             this.mensagem.mensagem = error.response.data
           }
           this.mensagem.status = false
@@ -186,21 +158,23 @@ export default defineComponent({
         })
     },
     onClickExcluir() {
-      const modeloClient = new ModeloClient()
-      modeloClient
-        .desativar(this.modelo.id)
-        .then(sucess => {
-          this.modelo = new Modelo()
-          this.id = undefined
-          this.mensagem.mensagem = sucess
-          this.mensagem.status = false
-          this.mensagem.ativo = true
-        })
-        .catch(error => {
-          this.mensagem.mensagem = error.response.data
-          this.mensagem.status = false
-          this.mensagem.ativo = true
-        })
+      if (confirm("Tem certeza que deseja desativar esse modelo?")) {
+        const modeloClient = new ModeloClient()
+        modeloClient
+          .desativar(this.modelo.id)
+          .then(sucess => {
+            this.modelo = new Modelo()
+            this.id = undefined
+            this.mensagem.mensagem = sucess
+            this.mensagem.status = false
+            this.mensagem.ativo = true
+          })
+          .catch(error => {
+            this.mensagem.mensagem = error.response.data
+            this.mensagem.status = false
+            this.mensagem.ativo = true
+          })
+      }
     }
   }
 })
