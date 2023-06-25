@@ -9,7 +9,24 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/veiculos',
     name: 'veiculos',
-    component: () => import(/* webpackChunkName: "about" */ '../views/VeiculosView.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/veiculo/VeiculosView.vue')
+  },
+  {
+    path: '/veiculo/formulario',
+    name: 'veiculo.form',
+    component: () => import(/* webpackChunkName: "about" */ '../views/veiculo/VeiculosFormView.vue'),
+    children: [
+      {
+        path: '/veiculo/formulario',
+        name: 'veiculo.form.editar',
+        component: () => import(/* webpackChunkName: "about" */ '../views/veiculo/VeiculosFormView.vue'),
+      },
+      {
+        path: '/veiculo/formulario',
+        name: 'veiculo.form.desativar',
+        component: () => import(/* webpackChunkName: "about" */ '../views/veiculo/VeiculosFormView.vue'),
+      }
+    ]
   },
   {
     path: '/condutores',

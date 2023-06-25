@@ -9,7 +9,7 @@
           <router-link
             type="button"
             class="btn btn-success"
-            to="/marca/formulario"
+            to="/veiculo/formulario"
             >Cadastrar
           </router-link>
         </div>
@@ -19,54 +19,34 @@
       <thead class="table-dark">
         <tr>
           <th class="text-center">ID</th>
-          <th>Placa</th>
-          <th>Tipo</th>
-          <th>Modelo</th>
-          <th>Status</th>
+          <th class="text-center">Placa</th>
+          <th class="text-center">Tipo</th>
+          <th class="text-center">Modelo</th>
+          <th class="text-center">Status</th>
           <th class="text-center">Opções</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="item in veiculosList" :key="item.id">
           <th class="align-middle text-center col-md-1">{{ item.id }}</th>
-          <th class="align-middle col-md-2">{{ item.placa }}</th>
-          <th class="align-middle col-md-2">{{ item.tipo }}</th>
-          <th class="align-middle text-start col-md-3">
+          <th class="align-middle text-center col-md-2">{{ item.placa }}</th>
+          <th class="align-middle text-center col-md-2">{{ item.tipo }}</th>
+          <th class="align-middle text-center col-md-3">
             {{ item.modelo.marca.nome }} - {{ item.modelo.nome }}
+            <span v-if="!item.modelo.ativo" class="badge text-bg-danger">Desativado</span>
           </th>
-          <th class="align-middle text-start col-md-2">
+          <th class="align-middle text-center col-md-2">
             <span v-if="item.ativo" class="badge text-bg-success"> Ativo </span>
             <span v-if="!item.ativo" class="badge text-bg-danger">
               Inativo
             </span>
           </th>
           <th class="align-middle text-center col-md-2">
-            <div
-              class="btn-group"
-              role="group"
-              aria-label="Basic mixed styles example"
-            >
-              <router-link
-                type="button"
-                class="btn btn-sm btn-warning"
-                :to="{
-                  name: 'marca.form.editar',
-                  query: { id: item.id, form: 'editar' }
-                }"
-              >
-                Editar
-              </router-link>
-              <router-link
-                type="button"
-                class="btn btn-sm btn-danger"
-                :to="{
-                  name: 'marca.form.desativar',
-                  query: { id: item.id, form: 'desativar' }
-                }"
-              >
-                Excluir
-              </router-link>
-            </div>
+            <BotoesAcoes
+              editarRoute="veiculo.form.editar"
+              desativarRoute="veiculo.form.desativar"
+              :id="item.id"
+            ></BotoesAcoes>
           </th>
         </tr>
       </tbody>
@@ -76,7 +56,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-
+import BotoesAcoes from '@/components/BotoesAcoes.vue'
 import { Veiculo } from '@/model/veiculo'
 import { VeiculoClient } from '@/client/veiculo.client'
 
@@ -86,6 +66,9 @@ export default defineComponent({
     return {
       veiculosList: new Array<Veiculo>()
     }
+  },
+  components:{
+    BotoesAcoes
   },
   mounted() {
     this.findAll()

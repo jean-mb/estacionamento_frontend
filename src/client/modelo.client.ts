@@ -24,8 +24,7 @@ export class ModeloClient{
           const response = await this.axiosClient.get<Modelo[]>('/modelo/lista')
           return response.data
         } catch (error) {
-          console.error(error)
-          return []
+          return Promise.reject(error)
         }
       }
     
@@ -34,8 +33,7 @@ export class ModeloClient{
           const response = await this.axiosClient.get<Modelo[]>('/modelo/lista/ativos')
           return response.data
         } catch (error) {
-          console.error(error)
-          return []
+          return Promise.reject(error)
         }
       }
     
