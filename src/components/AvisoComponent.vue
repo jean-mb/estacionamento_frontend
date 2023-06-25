@@ -1,8 +1,11 @@
 <template>
   <div v-if="ativo" class="row">
     <div class="col-md-12 text-start">
-      <div :class="status.css" role="alert">
-        <strong>{{ status.titulo }}</strong> {{ mensagem }}
+      <div v-if="sucesso" class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Ok! </strong> {{ mensagem }}
+      </div>
+      <div v-if="!sucesso" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Erro: </strong> {{ mensagem }}
       </div>
     </div>
   </div>
@@ -26,32 +29,17 @@ export default defineComponent({
       type: Boolean,
       required: true
     }
-  },
-  data(): any {
-    return {
-      status: {
-        ativo: this.ativo as boolean,
-        titulo: '' as string,
-        css: '' as string
-      }
-    }
-  },
-  mounted() {
-    if (this.sucesso) {
-      this.mensagemSucesso()
-    } else {
-      this.mensagemErro()
-    }
-  },
-  methods: {
-    mensagemErro() {
-      this.status.titulo = 'Erro: '
-      this.status.css = 'alert alert-danger alert-dismissible fade show'
-    },
-    mensagemSucesso() {
-      this.status.titulo = 'Ok! '
-      this.status.css = 'alert alert-success alert-dismissible fade show'
-    }
   }
 })
 </script>
+<style lang="scss" scoped>
+$theme-colors: (
+  'dark': #111111,
+  'primary': #515151,
+  'secondary': #c8c8c8,
+  'info': #a4a4a4,
+  'success': green,
+  'danger': red
+);
+@import 'node_modules/bootstrap/scss/bootstrap.scss';
+</style>

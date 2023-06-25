@@ -60,8 +60,8 @@
           </th>
           <th class="text-center col-md-2">
             <BotoesAcoes
-              editarRoute="movimentacoes.form.editar"
-              desativarRoute="movimentacoes.form.desativar"
+              editarRoute="movimentacao.form.editar"
+              desativarRoute="movimentacao.form.desativar"
               :id="item.id"
             ></BotoesAcoes>
           </th>

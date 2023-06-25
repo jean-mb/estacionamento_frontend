@@ -37,8 +37,8 @@
 
           <th class="text-center col-md-2">
             <BotoesAcoes
-              editarRoute="marcas.form.editar"
-              desativarRoute="marcas.form.desativar"
+              editarRoute="marca.form.editar"
+              desativarRoute="marca.form.desativar"
               :id="item.id"
             ></BotoesAcoes>
           </th>

@@ -13,21 +13,6 @@
       :mensagem="mensagem.mensagem"
     ></AvisoComponent>
 
-    <!-- <div v-if="mensagem.ativo" class="row">
-      <div class="col-md-12 text-start">
-        <div :class="mensagem.css" role="alert">
-          <strong>{{ mensagem.titulo }}</strong> {{ mensagem.mensagem }}
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="alert"
-            aria-label="Close"
-            v-on:click="limpaMensagem()"
-          ></button>
-        </div>
-      </div>
-    </div> -->
-
     <div class="row w-100 d-flex justify-content-center m-0">
       <div class="mb-3 mt-3 w-50 text-start">
         <label class="form-label">Condutor</label>
@@ -225,7 +210,7 @@ export default defineComponent({
         .then(sucess => {
           this.movimentacao = new Movimentacao()
           this.condutor = this.veiculo = ''
-          this.movimentacao.mensagem = sucess
+          this.mensagem.mensagem = sucess
           this.mensagem.status = true
           this.mensagem.ativo = true
         })

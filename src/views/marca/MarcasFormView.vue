@@ -7,19 +7,11 @@
       <div class="col-md-2"></div>
     </div>
 
-    <div v-if="mensagem.ativo" class="row text-center justify-content-center">
-      <div class="col-md-12 text-center w-75">
-        <div :class="mensagem.css" role="alert">
-          <strong>{{ mensagem.titulo }}</strong> {{ mensagem.mensagem }}
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="alert"
-            aria-label="Close"
-          ></button>
-        </div>
-      </div>
-    </div>
+    <AvisoComponent
+      :ativo="mensagem.ativo"
+      :sucesso="mensagem.status"
+      :mensagem="mensagem.mensagem"
+    ></AvisoComponent>
 
     <div class="row w-100 d-flex justify-content-center m-0 mb-2">
       <div class="mb-3 mt-3 w-50 text-start">
@@ -74,6 +66,7 @@
 </template>
 
 <script lang="ts">
+import AvisoComponent from '@/components/AvisoComponent.vue'
 import { MarcaClient } from '@/client/marca.client'
 import { Marca } from '@/model/marca'
 import { defineComponent } from 'vue'
@@ -85,11 +78,13 @@ export default defineComponent({
       marca: new Marca(),
       mensagem: {
         ativo: false as boolean,
-        titulo: '' as string,
-        mensagem: '' as string,
-        css: '' as string
+        status: false as boolean,
+        mensagem: '' as string
       }
     }
+  },
+  components: {
+    AvisoComponent
   },
   computed: {
     id(): any {
@@ -111,17 +106,14 @@ export default defineComponent({
         .cadastrarMarca(this.marca)
         .then(sucess => {
           this.marca = new Marca()
-
-          this.mensagem.ativo = true
           this.mensagem.mensagem = sucess
-          this.mensagem.titulo = 'Ok!'
-          this.mensagem.css = 'alert alert-success alert-dismissible fade show'
+          this.mensagem.status = true
+          this.mensagem.ativo = true
         })
         .catch(error => {
+          this.mensagem.mensagem = error.response.data
+          this.mensagem.status = false
           this.mensagem.ativo = true
-          this.mensagem.mensagem = error
-          this.mensagem.titulo = 'Error. '
-          this.mensagem.css = 'alert alert-danger alert-dismissible fade show'
         })
     },
     findById(id: number) {
@@ -133,10 +125,9 @@ export default defineComponent({
           this.marca = sucess
         })
         .catch(error => {
+          this.mensagem.mensagem = error.response.data
+          this.mensagem.status = false
           this.mensagem.ativo = true
-          this.mensagem.mensagem = error
-          this.mensagem.titulo = 'Error. '
-          this.mensagem.css = 'alert alert-danger alert-dismissible fade show'
         })
     },
     onClickEditar() {
@@ -146,17 +137,14 @@ export default defineComponent({
         .atualizarMarca(this.marca.id, this.marca)
         .then(sucess => {
           this.marca = new Marca()
-
-          this.mensagem.ativo = true
           this.mensagem.mensagem = sucess
-          this.mensagem.titulo = 'Ok!  '
-          this.mensagem.css = 'alert alert-success alert-dismissible fade show'
+          this.mensagem.status = true
+          this.mensagem.ativo = true
         })
         .catch(error => {
+          this.mensagem.mensagem = error.response.data
+          this.mensagem.status = false
           this.mensagem.ativo = true
-          this.mensagem.mensagem = error
-          this.mensagem.titulo = 'Erro. '
-          this.mensagem.css = 'alert alert-danger alert-dismissible fade show'
         })
     },
     onClickExcluir() {
@@ -165,14 +153,12 @@ export default defineComponent({
         .desativar(this.marca.id)
         .then(sucess => {
           this.marca = new Marca()
-
           this.$router.push({ name: 'marca-lista-view' })
         })
         .catch(error => {
+          this.mensagem.mensagem = error.response.data
+          this.mensagem.status = false
           this.mensagem.ativo = true
-          this.mensagem.mensagem = error
-          this.mensagem.titulo = 'Error. '
-          this.mensagem.css = 'alert alert-danger alert-dismissible fade show'
         })
     }
   }
@@ -184,9 +170,10 @@ $theme-colors: (
   'dark': #111111,
   // 'dark': black,
   'primary': #515151,
-  'secondary': #C8C8C8,
-  'info': #A4A4A4,
-  'success': green
+  'secondary': #c8c8c8,
+  'info': #a4a4a4,
+  'success': green,
+  'warning': rgb(252, 252, 45)
 );
 
 @import 'node_modules/bootstrap/scss/bootstrap.scss';

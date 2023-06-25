@@ -1,12 +1,12 @@
 <template>
   <div class="container mt-5">
     <div class="d-flex justify-content-center">
-        <router-link
-          type="button"
-          class="btn btn-primary w-25 fs-5"
-          to="/movimentacoes/formulario"
-          >Registrar Entrada
-        </router-link>
+      <router-link
+        type="button"
+        class="btn btn-primary w-25 fs-5"
+        to="/movimentacao/formulario"
+        >Registrar Entrada
+      </router-link>
     </div>
 
     <div class="row mt-5">
@@ -33,32 +33,11 @@
             {{ formatDate(item.dataEntrada) }}
           </th>
           <th class="text-center col-md-3">
-            <div
-              class="btn-group"
-              role="group"
-              aria-label="Basic mixed styles example"
-            >
-              <router-link
-                type="button"
-                class="btn btn-sm btn-warning"
-                :to="{
-                  name: 'marca.form.editar',
-                  query: { id: item.id, form: 'editar' }
-                }"
-              >
-                Editar
-              </router-link>
-              <router-link
-                type="button"
-                class="btn btn-sm btn-danger"
-                :to="{
-                  name: 'marca.form.desativar',
-                  query: { id: item.id, form: 'desativar' }
-                }"
-              >
-                Excluir
-              </router-link>
-            </div>
+            <BotoesAcoes
+              editarRoute="movimentacao.form.editar"
+              desativarRoute="movimentacao.form.desativar"
+              :id="item.id"
+            ></BotoesAcoes>
           </th>
         </tr>
       </tbody>
@@ -67,6 +46,7 @@
 </template>
 
 <script lang="ts">
+import BotoesAcoes from '@/components/BotoesAcoes.vue'
 import { defineComponent } from 'vue'
 import { Movimentacao } from '@/model/movimentacao'
 import { MovimentacaoClient } from '@/client/movimentacao.client'
@@ -79,6 +59,9 @@ export default defineComponent({
   },
   mounted() {
     this.findAll()
+  },
+  components: {
+    BotoesAcoes
   },
   methods: {
     findAll() {
@@ -106,18 +89,19 @@ export default defineComponent({
 })
 </script>
 <style lang="scss">
-
 $theme-colors: (
   'dark': #111111,
   'primary': #515151,
-  'secondary': #C8C8C8,
-  'info': #A4A4A4
+  'secondary': #c8c8c8,
+  'info': #a4a4a4
 );
 
 @import 'node_modules/bootstrap/scss/bootstrap.scss';
 
-.fs-5{
+.fs-5 {
   font-weight: var(--font-weight-destaque);
 }
-
+th {
+  vertical-align: middle;
+}
 </style>
