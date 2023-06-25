@@ -232,9 +232,9 @@ export default defineComponent({
     onClickExcluir() {
       const veiculoClient = new VeiculoClient()
       veiculoClient
-        .desativar(this.modelo.id)
+        .desativar(this.veiculo.id)
         .then(sucess => {
-          this.modelo = new Modelo()
+          this.veiculo = new Veiculo()
           this.id = undefined
           this.mensagem.mensagem = sucess
           this.mensagem.status = false
