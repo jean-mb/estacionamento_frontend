@@ -31,7 +31,21 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/condutores',
     name: 'condutores',
-    component: () => import(/* webpackChunkName: "about" */ '../views/CondutoresView.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/condutor/CondutoresView.vue')
+  },
+  {
+    path: '/condutor/formulario',
+    name: 'condutor.form',
+    component: () => import(/* webpackChunkName: "about" */ '../views/condutor/CondutoresFormView.vue'),
+    children: [{
+      path: '/condutor/formulario',
+      name: 'condutor.form.editar',
+      component: () => import(/* webpackChunkName: "about" */ '../views/condutor/CondutoresFormView.vue'),
+    },{
+      path: '/condutor/formulario',
+      name: 'condutor.form.desativar',
+      component: () => import(/* webpackChunkName: "about" */ '../views/condutor/CondutoresFormView.vue'),
+    }]
   },
   {
     path: '/marcas',
