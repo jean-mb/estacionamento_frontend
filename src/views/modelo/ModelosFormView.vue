@@ -121,7 +121,7 @@ export default defineComponent({
   methods: {
     fetchMarcas(){
       const marcaClient = new MarcaClient()
-      marcaClient.listarAll().then(sucess => {
+      marcaClient.listarAtivos().then(sucess => {
         this.marcas = sucess
       }).catch(error => {
         this.mensagem.mensagem = error.response.data

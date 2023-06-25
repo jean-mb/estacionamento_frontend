@@ -19,50 +19,32 @@
       <thead class="table-dark">
         <tr>
           <th class="text-center">ID</th>
-          <th>Nome</th>
-          <th>Marca</th>
-          <th>Status</th>
+          <th class="text-center">Nome</th>
+          <th class="text-center">Marca</th>
+          <th class="text-center">Status</th>
           <th class="text-center">Opções</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="item in modelosList" :key="item.id">
           <th class="align-middle text-center col-md-1">{{ item.id }}</th>
-          <th class="align-middle col-md-3">{{ item.nome }}</th>
-          <th class="align-middle text-start col-md-3">
+          <th class="align-middle text-center col-md-3">{{ item.nome }}</th>
+          <th class="align-middle text-center col-md-3">
+            {{ item.marca.nome }}
+            <span v-if="!item.marca.ativo" class="badge text-bg-danger">Desativada</span>
+          </th>
+          <th class="align-middle text-center col-md-3">
             <span v-if="item.ativo" class="badge text-bg-success"> Ativo </span>
             <span v-if="!item.ativo" class="badge text-bg-danger">
               Inativo
             </span>
           </th>
-          <th class="align-middletext-start col-md-3">{{ item.marca.nome }}</th>
-          <th class="align-middletext-center col-md-2">
-            <div
-              class="btn-group"
-              role="group"
-              aria-label="Basic mixed styles example"
-            >
-              <router-link
-                type="button"
-                class="btn btn-sm btn-warning"
-                :to="{
-                  name: 'modelo.form.editar',
-                  query: { id: item.id, form: 'editar' }
-                }"
-              >
-                Editar
-              </router-link>
-              <router-link
-                type="button"
-                class="btn btn-sm btn-danger"
-                :to="{
-                  name: 'modelo.form.desativar',
-                  query: { id: item.id, form: 'desativar' }
-                }"
-              >
-                Excluir
-              </router-link>
-            </div>
+          <th class="align-middle text-center col-md-2">
+            <BotoesAcoes
+              editarRoute="modelo.form.editar"
+              desativarRoute="modelo.form.desativar"
+              :id="item.id"
+            ></BotoesAcoes>
           </th>
         </tr>
       </tbody>
@@ -72,7 +54,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-
+import BotoesAcoes from '@/components/BotoesAcoes.vue'
 import { ModeloClient } from '@/client/modelo.client'
 import { Modelo } from '@/model/modelo'
 
@@ -85,6 +67,9 @@ export default defineComponent({
   },
   mounted() {
     this.findAll()
+  },
+  components:{
+    BotoesAcoes
   },
   methods: {
     findAll() {
