@@ -32,42 +32,38 @@
           <th class="text-center col-md-1">{{ item.id }}</th>
           <th class="col-md-2 text-center">{{ item.veiculo.placa }}</th>
           <th class="col-md-2 text-center">{{ item.condutor.nome }}</th>
-          <th class="col-md-2 text-center">{{ formatDate(item.dataEntrada) }}</th>
-          <th v-if="item.dataSaida != null" class="text-center col-md-2">{{ formatDate(item.dataSaida) }}</th>
-          <th v-if="item.dataSaida == null" class="col-md-2 text-center">---</th>
+          <th class="col-md-2 text-center">
+            {{ formatDate(item.dataEntrada) }}
+          </th>
+          <th v-if="item.dataSaida != null" class="text-center col-md-2">
+            {{ formatDate(item.dataSaida) }}
+          </th>
+          <th v-if="item.dataSaida == null" class="col-md-2 text-center">
+            ---
+          </th>
           <th class="text-center col-md-2">
-            <span v-if="item.ativo" class="badge text-bg-success"> Ativo </span>
+            <span
+              v-if="item.ativo && item.dataSaida == null"
+              class="badge text-bg-success"
+            >
+              Ativo
+            </span>
+            <span
+              v-if="item.ativo && item.dataSaida != null"
+              class="badge text-bg-success"
+            >
+              Concluído
+            </span>
             <span v-if="!item.ativo" class="badge text-bg-danger">
-              Inativo
+              Cancelado
             </span>
           </th>
           <th class="text-center col-md-2">
-            <div
-              class="btn-group"
-              role="group"
-              aria-label="Basic mixed styles example"
-            >
-              <router-link
-                type="button"
-                class="btn btn-sm btn-warning"
-                :to="{
-                  name: 'marca.form.editar',
-                  query: { id: item.id, form: 'editar' }
-                }"
-              >
-                Editar
-              </router-link>
-              <router-link
-                type="button"
-                class="btn btn-sm btn-danger"
-                :to="{
-                  name: 'marca.form.desativar',
-                  query: { id: item.id, form: 'desativar' }
-                }"
-              >
-                Excluir
-              </router-link>
-            </div>
+            <BotoesAcoes
+              editarRoute="movimentacoes.form.editar"
+              desativarRoute="movimentacoes.form.desativar"
+              :id="item.id"
+            ></BotoesAcoes>
           </th>
         </tr>
       </tbody>
@@ -76,6 +72,8 @@
 </template>
 
 <script lang="ts">
+import BotoesAcoes from '@/components/BotoesAcoes.vue'
+
 import { defineComponent } from 'vue'
 import { Movimentacao } from '@/model/movimentacao'
 import { MovimentacaoClient } from '@/client/movimentacao.client'
@@ -86,6 +84,9 @@ export default defineComponent({
     return {
       movimentacoesList: new Array<Movimentacao>()
     }
+  },
+  components: {
+    BotoesAcoes
   },
   mounted() {
     this.findAll()
@@ -119,9 +120,13 @@ export default defineComponent({
 <style lang="scss" scoped>
 @import 'node_modules/bootstrap/scss/bootstrap.scss';
 .container {
-  width: 100%;
+  width: 200%;
 }
 .btn {
   font-weight: var(--font-weight-forte);
+}
+
+th{
+  vertical-align: middle;
 }
 </style>

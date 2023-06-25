@@ -34,32 +34,13 @@
               Inativo
             </span>
           </th>
+
           <th class="text-center col-md-2">
-            <div
-              class="btn-group"
-              role="group"
-            >
-              <router-link
-                type="button"
-                class="btn btn-sm btn-warning mr-2"
-                :to="{
-                  name: 'marca.form.editar',
-                  query: { id: item.id, form: 'editar' }
-                }"
-              >
-                <i class="bi bi-pencil-square"></i>
-              </router-link>
-              <router-link
-                type="button"
-                class="btn btn-sm btn-danger"
-                :to="{
-                  name: 'marca.form.desativar',
-                  query: { id: item.id, form: 'desativar' }
-                }"
-              >
-                <i class="bi bi-x-circle"></i>
-              </router-link>
-            </div>
+            <BotoesAcoes
+              editarRoute="marcas.form.editar"
+              desativarRoute="marcas.form.desativar"
+              :id="item.id"
+            ></BotoesAcoes>
           </th>
         </tr>
       </tbody>
@@ -69,7 +50,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-
+import BotoesAcoes from '@/components/BotoesAcoes.vue'
 import { MarcaClient } from '@/client/marca.client'
 import { Marca } from '@/model/marca'
 
@@ -79,6 +60,9 @@ export default defineComponent({
     return {
       marcasList: new Array<Marca>()
     }
+  },
+  components: {
+    BotoesAcoes
   },
   mounted() {
     this.findAll()
@@ -104,13 +88,4 @@ export default defineComponent({
 .container {
   width: 60%;
 }
-.btn {
-  font-weight: var(--font-weight-forte);
-}
-
-i{
-  vertical-align: middle;
-  font-size: 1.2rem;
-}
-
 </style>

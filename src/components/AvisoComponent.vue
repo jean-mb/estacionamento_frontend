@@ -37,12 +37,10 @@ export default defineComponent({
     }
   },
   mounted() {
-    console.log(this.sucesso)
-    if (this.sucesso){
-        console.log(this.sucesso)
-        this.mensagemSucesso()
-    }else{
-        this.mensagemErro()
+    if (this.sucesso) {
+      this.mensagemSucesso()
+    } else {
+      this.mensagemErro()
     }
   },
   methods: {
