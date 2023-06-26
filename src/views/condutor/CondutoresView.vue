@@ -33,7 +33,7 @@
             </span>
           </th>
           <th class="align-middle text-center col-md-2">
-            <BotoesAcoes editarRoute="condutor.form.editar" desativarRoute="condutor.form.desativar" :id="item.id">
+            <BotoesAcoes listarRoute="condutor.form.listar" editarRoute="condutor.form.editar" toggleRoute="condutor.form.toggle" :isAtivo="item.ativo" :id="item.id">
             </BotoesAcoes>
           </th>
         </tr>

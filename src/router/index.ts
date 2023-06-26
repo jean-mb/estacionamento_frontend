@@ -23,7 +23,7 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: '/veiculo/formulario',
-        name: 'veiculo.form.desativar',
+        name: 'veiculo.form.toggle',
         component: () => import(/* webpackChunkName: "about" */ '../views/veiculo/VeiculosFormView.vue'),
       }
     ]
@@ -37,13 +37,20 @@ const routes: Array<RouteRecordRaw> = [
     path: '/condutor/formulario',
     name: 'condutor.form',
     component: () => import(/* webpackChunkName: "about" */ '../views/condutor/CondutoresFormView.vue'),
-    children: [{
+    children: [
+    {
       path: '/condutor/formulario',
       name: 'condutor.form.editar',
       component: () => import(/* webpackChunkName: "about" */ '../views/condutor/CondutoresFormView.vue'),
-    },{
+    },
+    {
       path: '/condutor/formulario',
-      name: 'condutor.form.desativar',
+      name: 'condutor.form.listar',
+      component: () => import(/* webpackChunkName: "about" */ '../views/condutor/CondutoresFormView.vue'),
+    },
+    {
+      path: '/condutor/formulario',
+      name: 'condutor.form.toggle',
       component: () => import(/* webpackChunkName: "about" */ '../views/condutor/CondutoresFormView.vue'),
     }]
   },
@@ -64,7 +71,7 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: '/marca/formulario',
-        name: 'marca.form.desativar',
+        name: 'marca.form.toggle',
         component: () => import(/* webpackChunkName: "about" */ '../views/marca/MarcasFormView.vue')
       }
     ]
@@ -86,7 +93,7 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: '/modelo/formulario',
-        name: 'modelo.form.desativar',
+        name: 'modelo.form.toggle',
         component: () => import(/* webpackChunkName: "about" */ '../views/modelo/ModelosFormView.vue')
       }
     ]
@@ -108,7 +115,17 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: '/movimentacao/formulario',
-        name: 'movimentacao.form.desativar',
+        name: 'movimentacao.form.listar',
+        component: () => import(/* webpackChunkName: "about" */ '../views/movimentacao/MovimentacoesFormView.vue')
+      },
+      {
+        path: '/movimentacao/formulario',
+        name: 'movimentacao.form.confirmar',
+        component: () => import(/* webpackChunkName: "about" */ '../views/movimentacao/MovimentacoesFormView.vue')
+      },
+      {
+        path: '/movimentacao/formulario',
+        name: 'movimentacao.form.toggle',
         component: () => import(/* webpackChunkName: "about" */ '../views/movimentacao/MovimentacoesFormView.vue')
       }
     ]

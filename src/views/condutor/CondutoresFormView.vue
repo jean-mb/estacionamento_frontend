@@ -12,19 +12,19 @@
     <div class="row w-100 d-flex justify-content-center m-0 mb-2">
       <div class="mb-3 mt-3 w-50 text-start">
         <label for="nome" class="form-label">Nome do Condutor</label>
-        <input id="nome" type="text" :disabled="this.form === 'desativar' ? '' : disabled" class="form-control"
+        <input id="nome" type="text" :disabled="this.form === 'toggle' ? '' : disabled" class="form-control"
           v-model="condutor.nome" />
       </div>
       <div class="mb-3 mt-3 w-50 text-start">
         <label for="telefone" class="form-label">Telefone</label>
-        <input id="telefone" type="text" :disabled="this.form === 'desativar' ? '' : disabled" class="form-control"
-          v-maska data-maska="(##) # ####-####" v-model="condutor.telefone" />
+        <input id="telefone" type="text" :disabled="this.form === 'toggle' ? '' : disabled" class="form-control" v-maska
+          data-maska="(##) # ####-####" v-model="condutor.telefone" />
       </div>
     </div>
     <div class="row w-100 d-flex justify-content-center m-0 mb-2">
       <div class="mb-3 mt-3 w-50 text-start">
         <label for="cpf" class="form-label">CPF do Condutor</label>
-        <input id="cpf" type="text" :disabled="this.form === 'desativar' ? '' : disabled" class="form-control" v-maska
+        <input id="cpf" type="text" :disabled="this.form === 'toggle' ? '' : disabled" class="form-control" v-maska
           data-maska="###.###.###-##" v-model="condutor.cpf" />
       </div>
     </div>
@@ -44,8 +44,11 @@
           <button v-if="this.form === 'editar'" type="button" class="btn btn-warning" @click="onClickEditar()">
             Editar
           </button>
-          <button v-if="this.form === 'desativar'" type="button" class="btn btn-danger" @click="onClickExcluir()">
+          <button v-if="this.form === 'toggle' && this.condutor.ativo === true" type="button" class="btn btn-danger" @click="onClickExcluir()">
             Excluir
+          </button>
+          <button v-if="this.form === 'toggle' && this.condutor.ativo === false" type="button" class="btn btn-success" @click="onClickAtivar()">
+            Ativar
           </button>
         </div>
       </div>
@@ -138,6 +141,25 @@ export default defineComponent({
           this.mensagem.ativo = true
         })
     },
+    onClickAtivar() {
+      if (confirm("Tem certeza que deseja reativar esse condutor?")) {
+
+        this.condutor.ativo = true
+        const condutorClient = new CondutorClient()
+        condutorClient
+          .editarCondutor(this.condutor)
+          .then(sucess => {
+            this.mensagem.mensagem = "Condutor reativado com sucesso!"
+            this.mensagem.status = true
+            this.mensagem.ativo = true
+          })
+          .catch(error => {
+            this.mensagem.mensagem = error.response.data
+            this.mensagem.status = false
+            this.mensagem.ativo = true
+          })
+      }
+    },
     onClickExcluir() {
       if (confirm("Tem certeza que deseja desativar esse condutor?")) {
         const condutorClient = new CondutorClient()
@@ -147,7 +169,7 @@ export default defineComponent({
             this.marca = new Condutor()
             this.id = undefined
             this.mensagem.mensagem = sucess
-            this.mensagem.status = false
+            this.mensagem.status = true
             this.mensagem.ativo = true
           })
           .catch(error => {
@@ -156,7 +178,7 @@ export default defineComponent({
             this.mensagem.ativo = true
           })
       }
-    }
+    },
   }
 })
 </script>
