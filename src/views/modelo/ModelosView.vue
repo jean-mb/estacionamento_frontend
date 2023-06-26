@@ -36,7 +36,7 @@
             </span>
           </th>
           <th class="align-middle text-center col-md-2">
-            <BotoesAcoes editarRoute="modelo.form.editar" desativarRoute="modelo.form.desativar" :id="item.id">
+            <BotoesAcoes listarRoute="modelo.form.listar" editarRoute="modelo.form.editar" toggleRoute="modelo.form.toggle" :isAtivo="item.ativo" :id="item.id">
             </BotoesAcoes>
           </th>
         </tr>

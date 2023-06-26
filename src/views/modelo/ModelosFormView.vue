@@ -12,12 +12,12 @@
     <div class="row w-100 d-flex justify-content-center m-0 mb-2">
       <div class="mb-3 mt-3 w-50 text-start">
         <label class="form-label">Nome do Modelo</label>
-        <input type="text" :disabled="this.form === 'desativar' ? '' : disabled" class="form-control"
+        <input type="text" :disabled="this.form === 'toggle' ? '' : disabled" class="form-control"
           v-model="modelo.nome" />
       </div>
       <div class="mb-3 mt-3 w-50 text-start">
         <label for="categoria" class="form-label">Marca</label>
-        <select :disabled="this.form === 'desativar' ? '' : disabled" class="form-select" id="categoria"
+        <select :disabled="this.form === 'toggle' ? '' : disabled" class="form-select" id="categoria"
           v-model="modelo.marca">
           <option value="" selected>Selecione uma marca</option>
           <option v-for="marca in marcas" :value="marca">
@@ -42,8 +42,11 @@
           <button v-if="this.form === 'editar'" type="button" class="btn btn-warning" @click="onClickEditar()">
             Editar
           </button>
-          <button v-if="this.form === 'desativar'" type="button" class="btn btn-danger" @click="onClickExcluir()">
+          <button v-if="this.form === 'toggle' && modelo.ativo == true" type="button" class="btn btn-danger" @click="onClickExcluir()">
             Excluir
+          </button>
+          <button v-if="this.form === 'toggle' && modelo.ativo == false" type="button" class="btn btn-success" @click="onClickAtivar()">
+            Ativar
           </button>
         </div>
       </div>
@@ -163,10 +166,26 @@ export default defineComponent({
         modeloClient
           .desativar(this.modelo.id)
           .then(sucess => {
-            this.modelo = new Modelo()
-            this.id = undefined
             this.mensagem.mensagem = sucess
+            this.mensagem.status = true
+            this.mensagem.ativo = true
+          })
+          .catch(error => {
+            this.mensagem.mensagem = error.response.data
             this.mensagem.status = false
+            this.mensagem.ativo = true
+          })
+      }
+    },
+    onClickAtivar() {
+      if (confirm("Tem certeza que reativar desativar esse modelo?")) {
+        this.modelo.ativo = true
+        const modeloClient = new ModeloClient()
+        modeloClient
+          .editar(this.modelo)
+          .then(sucess => {
+            this.mensagem.mensagem = sucess
+            this.mensagem.status = true
             this.mensagem.ativo = true
           })
           .catch(error => {

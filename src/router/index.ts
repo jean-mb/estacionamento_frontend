@@ -98,6 +98,11 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: '/modelo/formulario',
+        name: 'modelo.form.listar',
+        component: () => import(/* webpackChunkName: "about" */ '../views/modelo/ModelosFormView.vue')
+      },
+      {
+        path: '/modelo/formulario',
         name: 'modelo.form.toggle',
         component: () => import(/* webpackChunkName: "about" */ '../views/modelo/ModelosFormView.vue')
       }
