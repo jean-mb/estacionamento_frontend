@@ -12,13 +12,12 @@
     <div class="row w-100 d-flex justify-content-center m-0 mb-2">
       <div class="mb-3 mt-3 w-50 text-start">
         <label for="placa" class="form-label">Placa do Veiculo</label>
-        <input type="text" :disabled="this.form === 'desativar' ? '' : disabled" class="form-control" id="placa" v-maska
-          data-maska="***-****" v-model="veiculo.placa"
-          v-on:change="formataPlaca()" />
+        <input type="text" :disabled="this.form === 'toggle' ? '' : disabled" class="form-control" id="placa" v-maska
+          data-maska="***-****" v-model="veiculo.placa" v-on:change="formataPlaca()" />
       </div>
       <div class="mb-3 mt-3 w-50 text-start">
         <label for="categoria" class="form-label">Modelo</label>
-        <select :disabled="this.form === 'desativar' ? '' : disabled" class="form-select" id="categoria"
+        <select :disabled="this.form === 'toggle' ? '' : disabled" class="form-select" id="categoria"
           v-model="veiculo.modelo">
           <option value="" selected>Selecione um modelo</option>
           <option v-for="modelo in modelos" :value="modelo">
@@ -30,12 +29,12 @@
     <div class="row w-100 d-flex justify-content-center m-0 mb-2">
       <div class="mb-3 mt-3 w-25 text-start">
         <label for="ano" class="form-label">Ano</label>
-        <input type="number" id="ano" :disabled="this.form === 'desativar' ? '' : disabled" class="form-control"
+        <input type="number" id="ano" :disabled="this.form === 'toggle' ? '' : disabled" class="form-control"
           v-model="veiculo.ano" />
       </div>
       <div class="mb-3 mt-3 w-25 text-start">
         <label for="categoria" class="form-label">Cor</label>
-        <select :disabled="this.form === 'desativar' ? '' : disabled" class="form-select" id="categoria"
+        <select :disabled="this.form === 'toggle' ? '' : disabled" class="form-select" id="categoria"
           v-model="veiculo.cor">
           <option value="" selected>Selecione uma cor</option>
           <option v-for="cor in cores" :value="cor">
@@ -45,8 +44,7 @@
       </div>
       <div class="mb-3 mt-3 w-25 text-start">
         <label for="tipo" class="form-label">Tipo</label>
-        <select :disabled="this.form === 'desativar' ? '' : disabled" class="form-select" id="tipo"
-          v-model="veiculo.tipo">
+        <select :disabled="this.form === 'toggle' ? '' : disabled" class="form-select" id="tipo" v-model="veiculo.tipo">
           <option value="" selected>Selecione um tipo</option>
           <option v-for="tipo in tipos" :value="tipo">
             {{ tipo }}
@@ -70,8 +68,11 @@
           <button v-if="this.form === 'editar'" type="button" class="btn btn-warning" @click="onClickEditar()">
             Editar
           </button>
-          <button v-if="this.form === 'desativar'" type="button" class="btn btn-danger" @click="onClickExcluir()">
+          <button v-if="this.form === 'toggle' && veiculo.ativo === true" type="button" class="btn btn-danger" @click="onClickExcluir()">
             Excluir
+          </button>
+          <button v-if="this.form === 'toggle' && veiculo.ativo === false" type="button" class="btn btn-success" @click="onClickAtivar()">
+            Ativar
           </button>
         </div>
       </div>
@@ -125,7 +126,7 @@ export default defineComponent({
   },
   methods: {
     formataPlaca() {
-      this.veiculo.placa = this.veiculo.placa.toUpperCase() 
+      this.veiculo.placa = this.veiculo.placa.toUpperCase()
     },
     fetchModelos() {
       const modeloClient = new ModeloClient()
@@ -199,10 +200,27 @@ export default defineComponent({
         veiculoClient
           .desativar(this.veiculo.id)
           .then(sucess => {
-            this.veiculo = new Veiculo()
-            this.id = undefined
+            this.veiculo.ativo = false
             this.mensagem.mensagem = sucess
+            this.mensagem.status = true
+            this.mensagem.ativo = true
+          })
+          .catch(error => {
+            this.mensagem.mensagem = error.response.data
             this.mensagem.status = false
+            this.mensagem.ativo = true
+          })
+      }
+    },
+    onClickAtivar() {
+      if (confirm("Tem certeza que deseja reativar esse veiculo?")) {
+        this.veiculo.ativo = true
+        const veiculoClient = new VeiculoClient()
+        veiculoClient
+          .atualizar(this.veiculo)
+          .then(sucess => {
+            this.mensagem.mensagem = "Veículo reativado com sucesso!"
+            this.mensagem.status = true
             this.mensagem.ativo = true
           })
           .catch(error => {

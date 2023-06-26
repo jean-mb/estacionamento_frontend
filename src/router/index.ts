@@ -23,6 +23,11 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: '/veiculo/formulario',
+        name: 'veiculo.form.listar',
+        component: () => import(/* webpackChunkName: "about" */ '../views/veiculo/VeiculosFormView.vue'),
+      },
+      {
+        path: '/veiculo/formulario',
         name: 'veiculo.form.toggle',
         component: () => import(/* webpackChunkName: "about" */ '../views/veiculo/VeiculosFormView.vue'),
       }
