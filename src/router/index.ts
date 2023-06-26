@@ -71,6 +71,11 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: '/marca/formulario',
+        name: 'marca.form.listar',
+        component: () => import(/* webpackChunkName: "about" */ '../views/marca/MarcasFormView.vue')
+      },
+      {
+        path: '/marca/formulario',
         name: 'marca.form.toggle',
         component: () => import(/* webpackChunkName: "about" */ '../views/marca/MarcasFormView.vue')
       }

@@ -12,7 +12,7 @@
     <div class="row w-100 d-flex justify-content-center m-0 mb-2">
       <div class="mb-3 mt-3 w-50 text-start">
         <label for="nome" class="form-label">Nome da Marca</label>
-        <input id="nome" type="text" :disabled="this.form === 'desativar' ? '' : disabled" class="form-control"
+        <input id="nome" type="text" :disabled="this.form === 'toggle' ? '' : disabled" class="form-control"
           v-model="marca.nome" />
       </div>
     </div>
@@ -32,8 +32,13 @@
           <button v-if="this.form === 'editar'" type="button" class="btn btn-warning" @click="onClickEditar()">
             Editar
           </button>
-          <button v-if="this.form === 'desativar'" type="button" class="btn btn-danger" @click="onClickExcluir()">
+          <button v-if="this.form === 'toggle' && marca.ativo == true" type="button" class="btn btn-danger"
+            @click="onClickExcluir()">
             Excluir
+          </button>
+          <button v-if="this.form === 'toggle' && marca.ativo == false" type="button" class="btn btn-success"
+            @click="onClickAtivar()">
+            Ativar
           </button>
         </div>
       </div>
@@ -120,16 +125,32 @@ export default defineComponent({
           this.mensagem.ativo = true
         })
     },
+    onClickAtivar() {
+      if (confirm("Tem certeza que deseja reativar essa marca?")) {
+        this.marca.ativo = true
+        const marcaClient = new MarcaClient()
+        marcaClient
+          .atualizarMarca(this.marca.id, this.marca)
+          .then(sucess => {
+            this.mensagem.mensagem = "Marca reativada com sucesso!"
+            this.mensagem.status = true
+            this.mensagem.ativo = true
+          })
+          .catch(error => {
+            this.mensagem.mensagem = error.response.data
+            this.mensagem.status = false
+            this.mensagem.ativo = true
+          })
+      }
+    },
     onClickExcluir() {
       if (confirm("Tem certeza que deseja desativar essa marca?")) {
         const marcaClient = new MarcaClient()
         marcaClient
           .desativar(this.marca.id)
           .then(sucess => {
-            this.marca = new Marca()
-            this.id = undefined
             this.mensagem.mensagem = sucess
-            this.mensagem.status = false
+            this.mensagem.status = true
             this.mensagem.ativo = true
           })
           .catch(error => {
@@ -153,5 +174,4 @@ $theme-colors: (
   'warning': #ffc107,
   'danger': #dc3545
 );
-@import 'node_modules/bootstrap/scss/bootstrap.scss';
-</style>
+@import 'node_modules/bootstrap/scss/bootstrap.scss';</style>
