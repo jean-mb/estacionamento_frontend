@@ -166,6 +166,7 @@ export default defineComponent({
         modeloClient
           .desativar(this.modelo.id)
           .then(sucess => {
+            this.modelo.ativo = false
             this.mensagem.mensagem = sucess
             this.mensagem.status = true
             this.mensagem.ativo = true

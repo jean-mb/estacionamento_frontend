@@ -149,6 +149,7 @@ export default defineComponent({
         marcaClient
           .desativar(this.marca.id)
           .then(sucess => {
+            this.marca.ativo = false
             this.mensagem.mensagem = sucess
             this.mensagem.status = true
             this.mensagem.ativo = true

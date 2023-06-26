@@ -166,8 +166,7 @@ export default defineComponent({
         condutorClient
           .desativarCondutor(this.condutor.id)
           .then(sucess => {
-            this.marca = new Condutor()
-            this.id = undefined
+            this.condutor.ativo = false
             this.mensagem.mensagem = sucess
             this.mensagem.status = true
             this.mensagem.ativo = true

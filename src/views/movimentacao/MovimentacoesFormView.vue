@@ -243,6 +243,7 @@ export default defineComponent({
         movimentacaoClient
           .deletar(this.movimentacao)
           .then(sucess => {
+            this.movimentacao.ativo = false
             this.mensagem.mensagem = sucess
             this.mensagem.status = true
             this.mensagem.ativo = true
