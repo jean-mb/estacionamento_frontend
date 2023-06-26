@@ -32,7 +32,7 @@
           </th>
 
           <th class="align-middle text-center col-md-2">
-            <BotoesAcoes listarRoute="marca.form.listar" editarRoute="marca.form.editar" toggleRoute="marca.form.toggle" :isAtivo="item.ativo" :id="item.id">
+            <BotoesAcoes listarRoute="marca.listar" editarRoute="marca.form.editar" toggleRoute="marca.form.toggle" :isAtivo="item.ativo" :id="item.id">
             </BotoesAcoes>
           </th>
         </tr>

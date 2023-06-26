@@ -45,7 +45,7 @@ $theme-colors: (
 * {
   font-family: var(--font-principal);
 }
-.btn {
+.btn, .dado {
   font-weight: var(--font-weight-destaque) !important;
 }
 

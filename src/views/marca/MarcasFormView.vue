@@ -1,19 +1,25 @@
 <template>
-  <div class="container w-50">
+  <div v-if="this.form == 'listar'" class="container w-50">
     <div class="row mt-5">
-      <div class="col-md-12 text-center">
-        <p class="fs-5">Cadastro de Marca</p>
+      <div class="col-md-12 text-start">
+        <p v-if="this.form == 'listar'" class="fs-5">Detalhes da Marca</p>
       </div>
       <div class="col-md-2"></div>
     </div>
 
-    <AvisoComponent :ativo="mensagem.ativo" :sucesso="mensagem.status" :mensagem="mensagem.mensagem"></AvisoComponent>
-
-    <div class="row w-100 d-flex justify-content-center m-0 mb-2">
-      <div class="mb-3 mt-3 w-50 text-start">
-        <label for="nome" class="form-label">Nome da Marca</label>
-        <input id="nome" type="text" :disabled="this.form === 'toggle' ? '' : disabled" class="form-control"
-          v-model="marca.nome" />
+    <div class="row w-100 d-flex justify-content-center m-0">
+      <div class="mt-3 w-100 text-start">
+        <p class="fs-6">Nome: <span class="dado">{{ marca.nome }}</span></p>
+      </div>
+    </div>
+    <div class="row w-100 d-flex justify-content-center m-0">
+      <div class="w-100 text-start">
+        <p class="fs-6">Data de Cadastro: <span class="dado">{{ formatDate(marca.cadastro) }}</span></p>
+      </div>
+    </div>
+    <div class="row w-100 d-flex justify-content-center m-0">
+      <div class="w-100 text-start">
+        <p class="fs-6">Última edição: <span class="dado">{{ formatDate(marca.edicao) }}</span></p>
       </div>
     </div>
 
@@ -24,7 +30,37 @@
           </router-link>
         </div>
       </div>
+    </div>
+  </div>
+
+  <div v-if="this.form != 'listar'" class="container w-50">
+    <div class="row mt-5">
+      <div class="col-md-12 text-center">
+        <p v-if="this.form == undefined" class="fs-5">Cadastro de Marca</p>
+        <p v-if="this.form == 'editar'" class="fs-5">Editar Marca</p>
+        <p v-if="this.form == 'toggle' && marca.ativo === true" class="fs-5">Excluir Marca</p>
+        <p v-if="this.form == 'toggle' && marca.ativo === false" class="fs-5">Ativar Marca</p>
+      </div>
+      <div class="col-md-2"></div>
+    </div>
+
+    <AvisoComponent :ativo="mensagem.ativo" :sucesso="mensagem.status" :mensagem="mensagem.mensagem"></AvisoComponent>
+
+    <div v-if="this.form != 'listar'" class="row w-100 d-flex justify-content-center m-0 mb-2">
+      <div class="mb-3 mt-3 w-50 text-start">
+        <label for="nome" class="form-label">Nome da Marca</label>
+        <input id="nome" type="text" :disabled="this.form === 'toggle' ? '' : disabled" class="form-control"
+          v-model="marca.nome" />
+      </div>
+    </div>
+    <div class="row d-flex justify-content-center">
       <div class="col-md-3">
+        <div class="d-grid gap-2">
+          <router-link type="button" class="btn btn-secondary" to="/marcas">Voltar
+          </router-link>
+        </div>
+      </div>
+      <div v-if="this.form != 'listar'" class="col-md-3">
         <div class="d-grid gap-2">
           <button v-if="this.form === undefined" type="button" class="btn btn-primary" @click="onClickCadastrar()">
             Cadastrar
@@ -81,6 +117,19 @@ export default defineComponent({
     }
   },
   methods: {
+    formatDate(dateString: string | number | Date) {
+      if (dateString != null) {
+        const dateTime = new Date(dateString)
+        const formattedDate = dateTime.toLocaleDateString()
+        const formattedTime = dateTime.toLocaleTimeString([], {
+          hour: '2-digit',
+          minute: '2-digit'
+        })
+        return `${formattedDate} ${formattedTime}`
+      } else {
+        return '---'
+      }
+    },
     onClickCadastrar() {
       const marcaClient = new MarcaClient()
       marcaClient

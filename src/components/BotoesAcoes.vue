@@ -3,7 +3,7 @@
     <div class="btn-group" role="group">
       <router-link v-if="listarRoute != null" type="button" class="btn btn-sm btn-info" :to="{
         name: listarRoute,
-        query: { id: id, form: 'listar' }
+        query: { id: id }
       }">
         <i class="bi bi-info-square"></i> </router-link>
       <router-link v-if="editarRoute != null" type="button" class="btn btn-sm btn-warning mr-2" :to="{

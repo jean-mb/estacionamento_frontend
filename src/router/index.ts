@@ -65,6 +65,11 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "about" */ '../views/marca/MarcasView.vue')
   },
   {
+    path: '/marca/listar',
+    name: 'marca.listar',
+    component: () => import(/* webpackChunkName: "about" */ '../views/marca/MarcaInfoView.vue')
+  },
+  {
     path: '/marca/formulario',
     name: 'marca.form',
     component: () => import(/* webpackChunkName: "about" */ '../views/marca/MarcasFormView.vue'),
@@ -72,11 +77,6 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: '/marca/formulario',
         name: 'marca.form.editar',
-        component: () => import(/* webpackChunkName: "about" */ '../views/marca/MarcasFormView.vue')
-      },
-      {
-        path: '/marca/formulario',
-        name: 'marca.form.listar',
         component: () => import(/* webpackChunkName: "about" */ '../views/marca/MarcasFormView.vue')
       },
       {
