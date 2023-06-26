@@ -35,15 +35,27 @@
     </div>
     <div class="row w-100 d-flex justify-content-center m-0 mb-2">
       <div class="mb-3 mt-3 w-50 text-start">
+        <label for="horasParaDesconto" class="form-label">Horas para Gerar Desconto</label>
+        <input type="number" class="form-control" id="horasParaDesconto" v-model="configuracoes.horasParaDesconto" />
+      </div>
+      <div class="mb-3 mt-3 w-50 text-start">
+        <label for="horasDesconto" class="form-label">Horas de Desconto geradas</label>
+        <input type="number" class="form-control" id="horasDesconto" v-model="configuracoes.horasDesconto" />
+      </div>
+    </div>
+    <div class="row w-100 d-flex justify-content-center m-0 mb-2">
+      <div class="mb-3 mt-3 w-50 text-start">
         <label for="horaAbertura" class="form-label">Horário de Abertura</label>
-        <input type="text" class="form-control" id="horaAbertura" v-model="configuracoes.horaAbertura" />
+        <input v-maska data-maska="##:##:##" type="text" class="form-control" id="horaAbertura"
+          v-model="configuracoes.horaAbertura" />
       </div>
       <div class="mb-3 mt-3 w-50 text-start">
         <label for="horaFechamento" class="form-label">Horário de Fechamento</label>
-        <input type="text" class="form-control" id="horaFechamento" v-model="configuracoes.horaFechamento" />
+        <input v-maska data-maska="##:##:##" type="text" class="form-control" id="horaFechamento"
+          v-model="configuracoes.horaFechamento" />
       </div>
     </div>
-    <div class="row d-flex justify-content-center">
+    <div class="row d-flex mb-5 justify-content-center">
       <div class="col-md-3">
         <div class="d-grid gap-2">
           <router-link type="button" class="btn btn-secondary" to="/">Voltar
@@ -52,11 +64,11 @@
       </div>
       <div class="col-md-3">
         <div class="d-grid gap-2">
-          <button v-if="this.configuracao === undefined" type="button" class="btn btn-primary"
+          <button v-if="this.configuracoes === undefined" type="button" class="btn btn-primary"
             @click="onClickConfigurar()">
             Configurar
           </button>
-          <button v-if="this.configuracao === 'atualizar'" type="button" class="btn btn-warning" @click="onClickEditar()">
+          <button v-if="this.configuracoes != undefined" type="button" class="btn btn-warning" @click="onClickEditar()">
             Editar
           </button>
         </div>
@@ -109,7 +121,7 @@ export default defineComponent({
     onClickConfigurar() {
       const configuracaoClient = new ConfiguracaoClient()
       configuracaoClient
-        .primeiraConfiguracao(this.configuracao)
+        .primeiraConfiguracao(this.configuracoes)
         .then(sucess => {
           this.mensagem.mensagem = sucess
           this.mensagem.status = true
@@ -126,17 +138,17 @@ export default defineComponent({
         })
     },
     onClickEditar() {
-      const veiculoClient = new VeiculoClient()
-      veiculoClient
-        .atualizar(this.veiculo)
+      const configuracaoClient = new ConfiguracaoClient()
+      configuracaoClient
+        .editar(this.configuracoes)
         .then(sucess => {
           this.mensagem.mensagem = sucess
           this.mensagem.status = true
           this.mensagem.ativo = true
         })
         .catch(error => {
-          if (this.veiculo.modelo == "" || this.veiculo.cor == "" || this.veiculo.tipo == "") {
-            this.mensagem.mensagem = "Selecione todas as opções!"
+          if (typeof (error.response.data) == 'object') {
+            this.mensagem.mensagem = Object.values(error.response.data)[0]
           } else {
             this.mensagem.mensagem = error.response.data
           }
