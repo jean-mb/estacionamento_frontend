@@ -56,6 +56,9 @@
         </tr>
       </tbody>
     </table>
+    <div v-if="movimentacoesList.length == 0" class="alert alert-secondary" role="alert">
+      Nenhuma movimentação encontrada
+    </div>
   </div>
 </template>
 

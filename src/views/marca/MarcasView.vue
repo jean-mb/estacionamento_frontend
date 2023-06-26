@@ -38,6 +38,9 @@
         </tr>
       </tbody>
     </table>
+    <div v-if="marcasList.length == 0" class="alert alert-secondary" role="alert">
+      Nenhuma marca encontrada
+    </div>
   </div>
 </template>
 

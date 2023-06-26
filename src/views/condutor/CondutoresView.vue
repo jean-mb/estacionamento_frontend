@@ -39,6 +39,9 @@
         </tr>
       </tbody>
     </table>
+    <div v-if="condutoresList.length == 0" class="alert alert-secondary" role="alert">
+      Nenhum condutor encontrado
+    </div>
   </div>
 </template>
 

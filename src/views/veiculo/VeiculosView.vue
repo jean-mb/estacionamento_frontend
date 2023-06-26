@@ -44,6 +44,9 @@
         </tr>
       </tbody>
     </table>
+    <div v-if="veiculosList.length == 0" class="alert alert-secondary" role="alert">
+      Nenhum veículo encontrado
+    </div>
   </div>
 </template>
 

@@ -64,11 +64,11 @@
       </div>
       <div class="col-md-3">
         <div class="d-grid gap-2">
-          <button v-if="this.configuracoes === undefined" type="button" class="btn btn-primary"
+          <button v-if="this.configuracoes.id === undefined" type="button" class="btn btn-primary"
             @click="onClickConfigurar()">
             Configurar
           </button>
-          <button v-if="this.configuracoes != undefined" type="button" class="btn btn-warning" @click="onClickEditar()">
+          <button v-if="this.configuracoes.id != undefined" type="button" class="btn btn-warning" @click="onClickEditar()">
             Editar
           </button>
         </div>
@@ -82,8 +82,6 @@ import { vMaska } from "maska"
 <script lang="ts">
 import AvisoComponent from '@/components/AvisoComponent.vue'
 import { defineComponent } from 'vue'
-import { Veiculo } from '@/model/veiculo'
-import { VeiculoClient } from '@/client/veiculo.client'
 import { Configuracao } from "@/model/configuracao"
 import { ConfiguracaoClient } from "@/client/configuracao.client"
 

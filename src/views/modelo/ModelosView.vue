@@ -42,6 +42,9 @@
         </tr>
       </tbody>
     </table>
+    <div v-if="modelosList.length == 0" class="alert alert-secondary" role="alert">
+      Nenhum modelo encontrado
+    </div>
   </div>
 </template>
 

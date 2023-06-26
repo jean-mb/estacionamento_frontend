@@ -39,6 +39,9 @@
         </tr>
       </tbody>
     </table>
+    <div v-if="movimentacoesList.length == 0" class="alert alert-secondary" role="alert">
+      Nenhuma vaga ocupada no momento
+    </div>
   </div>
 </template>
 
