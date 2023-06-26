@@ -1,11 +1,11 @@
 <template>
   <div v-if="ativo" class="row">
     <div class="col-md-12 text-start">
-      <div v-if="sucesso" class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong>Ok! </strong> <p>{{ mensagem }}</p>
+      <div v-if="sucesso" class="d-flex w-100 justify-content-center align-items-center alert alert-success alert-dismissible fade show" role="alert">
+        <p class="m-0">{{ mensagem }}</p>
       </div>
       <div v-if="!sucesso" class="alert alert-danger alert-dismissible fade show" role="alert">
-        <strong>Erro: </strong>{{ mensagem }}
+        {{ mensagem }}
       </div>
     </div>
   </div>

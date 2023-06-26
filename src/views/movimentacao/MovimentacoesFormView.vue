@@ -30,11 +30,11 @@
       <div class="mb-3 mt-3 w-50 text-start">
         <label for="dataSaida" class="form-label">Data de Saída</label>
         <input type="datetime-local" :disabled="this.form === 'toggle' ? '' : disabled" class="form-control"
-          id="dataSaida" v-model="movimentacao.dataSaida" />
+          id="dataSaida" v-model="dataSaida" />
       </div>
     </div>
 
-    <div class="row d-flex justify-content-center">
+    <div class="row d-flex mb-3 justify-content-center">
       <div class="col-md-3">
         <div class="d-grid gap-2">
           <router-link type="button" class="btn btn-secondary" to="/movimentacoes">Voltar
@@ -57,6 +57,10 @@
             @click="onClickAtivar()">
             Ativar
           </button>
+          <button v-if="this.form === 'confirmar' && movimentacao.ativo === false" type="button" class="btn btn-success"
+            @click="onClickEditar()">
+            Concluir
+          </button>
         </div>
       </div>
     </div>
@@ -77,6 +81,7 @@ export default defineComponent({
   data(): any {
     return {
       movimentacao: new Movimentacao(),
+      dataSaida: null,
       condutor: '' as string,
       veiculo: '' as string,
       mensagem: {
@@ -100,6 +105,20 @@ export default defineComponent({
   mounted() {
     if (this.id !== undefined) {
       this.findById(Number(this.id))
+    }
+    if (this.form === undefined || this.form === 'confirmar') {
+      let hoje = new Date()
+      const timezone = hoje.getTimezoneOffset()
+      hoje.setMinutes(hoje.getMinutes() - timezone )
+      const dataHoje = hoje.toISOString().replace(/[TZ]/g, " ").trim().slice(0, -4)
+
+      if(this.form === undefined){
+        this.movimentacao.dataEntrada = dataHoje
+      }else if(this.form === 'confirmar'){
+        this.dataSaida = dataHoje
+      }else{
+        this.dataSaida = this.movimentacao.dataSaida
+      }
     }
   },
   methods: {
@@ -139,23 +158,6 @@ export default defineComponent({
       }
       this.mensagem.ativo = false
     },
-    download() {
-      var element = document.getElementById("element-to-print");
-
-      var opt = {
-        margin: 0,
-        filename: "myfile.pdf",
-        image: { type: "jpeg", quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: {
-          unit: "mm",
-          format: [280, 350],
-          orientation: "portrait",
-        },
-      };
-
-      html2pdf().set(opt).from(element).save();
-    },
     procuraVeiculos() {
       const veiculosClient = new VeiculoClient()
       if (this.veiculo.trim() != '') {
@@ -186,6 +188,7 @@ export default defineComponent({
       this.mensagem.ativo = false
     },
     onClickCadastrar() {
+      this.movimentacao.dataSaida = this.dataSaida
       const movimentacaoClient = new MovimentacaoClient()
       movimentacaoClient
         .novaMovimentacao(this.movimentacao)
@@ -222,6 +225,7 @@ export default defineComponent({
         })
     },
     onClickEditar() {
+      this.movimentacao.dataSaida = this.dataSaida
       const movimentacaoClient = new MovimentacaoClient()
       movimentacaoClient
         .editarMovimentacao(this.movimentacao)
