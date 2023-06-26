@@ -2,24 +2,39 @@
   <div class="container w-50">
     <div class="row mt-5">
       <div class="col-md-12 text-start">
-        <p class="fs-5">Detalhes da Marca</p>
+        <p class="fs-5">Detalhes da Movimentação</p>
       </div>
       <div class="col-md-2"></div>
     </div>
 
     <div class="row w-100 d-flex justify-content-center m-0">
       <div class="mt-3 w-100 text-start">
-        <p class="fs-6">Nome: <span class="dado">{{ marca.nome }}</span></p>
+        <p class="fs-6">Condutor: <span class="dado">{{ movimentacao.condutor.nome }} - {{ movimentacao.condutor.cpf }}</span></p>
       </div>
     </div>
     <div class="row w-100 d-flex justify-content-center m-0">
       <div class="w-100 text-start">
-        <p class="fs-6">Data de Cadastro: <span class="dado">{{ formatDate(marca.cadastro) }}</span></p>
+        <p class="fs-6">Veiculo: <span class="dado">{{ movimentacao.veiculo.tipo }} - {{ movimentacao.veiculo.placa }}</span></p>
       </div>
     </div>
     <div class="row w-100 d-flex justify-content-center m-0">
       <div class="w-100 text-start">
-        <p class="fs-6">Última edição: <span class="dado">{{ formatDate(marca.edicao) }}</span></p>
+        <p class="fs-6">Entrada: <span class="dado">{{ formatDate(movimentacao.dataEntrada) }}</span></p>
+      </div>
+    </div>
+    <div class="row w-100 d-flex justify-content-center m-0">
+      <div class="w-100 text-start">
+        <p class="fs-6">Saída: <span class="dado">{{ formatDate(movimentacao.dataSaida) }}</span></p>
+      </div>
+    </div>
+    <div class="row w-100 d-flex justify-content-center m-0">
+      <div class="w-100 text-start">
+        <p class="fs-6">Criação: <span class="dado">{{ formatDate(movimentacao.criacao) }}</span></p>
+      </div>
+    </div>
+    <div class="row w-100 d-flex justify-content-center m-0">
+      <div class="w-100 text-start">
+        <p class="fs-6">Criação: <span class="dado">{{ formatDate(movimentacao.edicao) }}</span></p>
       </div>
     </div>
 
@@ -35,15 +50,15 @@
 </template>
 
 <script lang="ts">
-import { MarcaClient } from '@/client/marca.client'
-import { Marca } from '@/model/marca'
+import { MovimentacaoClient } from '@/client/movimentacao.client'
+import { Movimentacao } from '@/model/movimentacao'
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'MarcaInfo',
+  name: 'MovimentacaoInfo',
   data(): any {
     return {
-      marca: new Marca(),
+      movimentacao: new Movimentacao(),
     }
   },
   computed: {
@@ -71,10 +86,11 @@ export default defineComponent({
       }
     },
     findById(id: number) {
-      const marcaClient = new MarcaClient()
-      marcaClient
+      const movimentacaoClient = new MovimentacaoClient()
+      movimentacaoClient
         .findById(id)
         .then(sucess => {
+          console.log(sucess)
           this.marca = sucess
         })
         .catch(error => {

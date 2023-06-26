@@ -119,6 +119,11 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "about" */ '../views/movimentacao/MovimentacoesView.vue')
   },
   {
+    path: '/movimentacao/listar',
+    name: 'movimentacao.listar',
+    component: () => import(/* webpackChunkName: "about" */ '../views/movimentacao/MovimentacaoInfoView.vue')
+  },
+  {
     path: '/movimentacao/formulario',
     name: 'movimentacao.form',
     component: () => import(/* webpackChunkName: "about" */ '../views/movimentacao/MovimentacoesFormView.vue'),

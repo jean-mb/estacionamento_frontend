@@ -50,7 +50,7 @@
             </span>
           </th>
           <th class="align-middle text-center col-md-2">
-            <BotoesAcoes listarRoute="movimentacao.form.listar" editarRoute="movimentacao.form.editar" toggleRoute="movimentacao.form.toggle" :isAtivo="item.ativo" :id="item.id">
+            <BotoesAcoes listarRoute="movimentacao.listar" editarRoute="movimentacao.form.editar" toggleRoute="movimentacao.form.toggle" :isAtivo="item.ativo" :id="item.id">
             </BotoesAcoes>
           </th>
         </tr>
