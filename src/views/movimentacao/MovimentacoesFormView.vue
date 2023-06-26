@@ -12,24 +12,24 @@
     <div class="row w-100 d-flex justify-content-center m-0">
       <div class="mb-3 mt-3 w-50 text-start">
         <label for="condutor" class="form-label">Condutor</label>
-        <input type="text" :disabled="this.form === 'desativar' ? '' : disabled" class="form-control" id="condutor"
+        <input type="text" :disabled="this.form === 'toggle' ? '' : disabled" class="form-control" id="condutor"
           v-on:change="procuraCondutor()" v-model="condutor" required />
       </div>
       <div class="mb-3 mt-3 w-50 text-start">
         <label for="veiculo" class="form-label">Veiculo</label>
-        <input type="text" :disabled="this.form === 'desativar' ? '' : disabled" class="form-control" id="veiculo"
+        <input type="text" :disabled="this.form === 'toggle' ? '' : disabled" class="form-control" id="veiculo"
           v-on:change="procuraVeiculos()" v-model="veiculo" required />
       </div>
     </div>
     <div class="row w-100 d-flex justify-content-center m-0">
       <div class="mb-3 mt-3 w-50 text-start">
         <label for="dataEntrada" class="form-label">Data de Entrada</label>
-        <input type="datetime-local" :disabled="this.form === 'desativar' ? '' : disabled" class="form-control"
-          id="dataEntrada" v-model="movimentacao.dataEntrada" required />
+        <input type="datetime-local" :disabled="this.form === 'toggle' ? '' : disabled" class="form-control"
+          id="dataEntrada" v-model="movimentacao.dataEntrada" />
       </div>
       <div class="mb-3 mt-3 w-50 text-start">
         <label for="dataSaida" class="form-label">Data de Saída</label>
-        <input type="datetime-local" :disabled="this.form === 'desativar' ? '' : disabled" class="form-control"
+        <input type="datetime-local" :disabled="this.form === 'toggle' ? '' : disabled" class="form-control"
           id="dataSaida" v-model="movimentacao.dataSaida" />
       </div>
     </div>
@@ -49,8 +49,13 @@
           <button v-if="this.form === 'editar'" type="button" class="btn btn-warning" @click="onClickEditar()">
             Editar
           </button>
-          <button v-if="this.form === 'desativar'" type="button" class="btn btn-danger" @click="onClickExcluir()">
-            Excluir
+          <button v-if="this.form === 'toggle' && movimentacao.ativo === true" type="button" class="btn btn-danger"
+            @click="onClickExcluir()">
+            Cancelar
+          </button>
+          <button v-if="this.form === 'toggle' && movimentacao.ativo === false" type="button" class="btn btn-success"
+            @click="onClickAtivar()">
+            Ativar
           </button>
         </div>
       </div>
@@ -189,7 +194,6 @@ export default defineComponent({
         .findById(id)
         .then(sucess => {
           this.movimentacao = sucess
-          this.movimentacao.dataEntrada = this.formatDate(sucess.dataEntrada)
           this.condutor = sucess.condutor.nome
           this.veiculo = sucess.veiculo.placa
         })
@@ -215,30 +219,39 @@ export default defineComponent({
           this.mensagem.ativo = true
         })
     },
-    onClickExcluir() {
-      const movimentacaoClient = new MovimentacaoClient()
-      movimentacaoClient
-        .deletar(this.marca.id)
-        .then(sucess => {
-          this.movimentacao = new Movimentacao()
-
-          this.$router.push({ name: 'marca-lista-view' })
-        })
-        .catch(error => {
-          this.mensagemErro(error.response.data)
-        })
+    onClickAtivar() {
+      if (confirm("Tem certeza que deseja reativar essa movimentação?")) {
+        this.movimentacao.ativo = true
+        const movimentacaoClient = new MovimentacaoClient()
+        movimentacaoClient
+          .editarMovimentacao(this.movimentacao)
+          .then(sucess => {
+            this.mensagem.mensagem = "Movimentação reativada com sucesso!"
+            this.mensagem.status = true
+            this.mensagem.ativo = true
+          })
+          .catch(error => {
+            this.mensagem.mensagem = error.response.data
+            this.mensagem.status = false
+            this.mensagem.ativo = true
+          })
+      }
     },
-    formatDate(dateString: string | number | Date) {
-      if (dateString != null) {
-        const dateTime = new Date(dateString)
-        const formattedDate = dateTime.toLocaleDateString()
-        const formattedTime = dateTime.toLocaleTimeString([], {
-          hour: '2-digit',
-          minute: '2-digit'
-        })
-        return `${formattedDate} ${formattedTime}`
-      } else {
-        return '---'
+    onClickExcluir() {
+      if (confirm("Tem certeza que deseja cancelar essa movimentação?")) {
+        const movimentacaoClient = new MovimentacaoClient()
+        movimentacaoClient
+          .deletar(this.movimentacao)
+          .then(sucess => {
+            this.mensagem.mensagem = sucess
+            this.mensagem.status = true
+            this.mensagem.ativo = true
+          })
+          .catch(error => {
+            this.mensagem.mensagem = error.response.data
+            this.mensagem.status = false
+            this.mensagem.ativo = true
+          })
       }
     }
   }

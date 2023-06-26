@@ -38,7 +38,7 @@
           <th class="align-middle text-center col-md-2">
             {{ formatDate(item.dataSaida) }}
           </th>
-          <th class="align-middle text-center col-md-2">
+          <th class="align-middle text-center col-md-1">
             <span v-if="item.ativo && item.dataSaida == null" class="badge text-bg-success">
               Ativo
             </span>
@@ -50,8 +50,8 @@
             </span>
           </th>
           <th class="align-middle text-center col-md-2">
-            <BotoesAcoes editarRoute="movimentacao.form.editar" desativarRoute="movimentacao.form.desativar"
-              :id="item.id"></BotoesAcoes>
+            <BotoesAcoes listarRoute="movimentacao.form.listar" editarRoute="movimentacao.form.editar" toggleRoute="movimentacao.form.toggle" :isAtivo="item.ativo" :id="item.id">
+            </BotoesAcoes>
           </th>
         </tr>
       </tbody>
@@ -89,7 +89,6 @@ export default defineComponent({
         .listarAll()
         .then(sucess => {
           this.movimentacoesList = sucess
-          console.log(this.movimentacoesList[0].dataSaida)
         })
         .catch(error => {
           console.log(error)
