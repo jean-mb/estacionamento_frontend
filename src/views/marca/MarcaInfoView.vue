@@ -23,7 +23,7 @@
       </div>
     </div>
 
-    <div class="row d-flex justify-content-center">
+    <div class="row d-flex justify-content-center mt-3">
       <div class="col-md-3">
         <div class="d-grid gap-2">
           <router-link type="button" class="btn btn-secondary" to="/marcas">Voltar
