@@ -2,10 +2,10 @@
   <div v-if="ativo" class="row">
     <div class="col-md-12 text-start">
       <div v-if="sucesso" class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong>Ok! </strong> {{ mensagem }}
+        <strong>Ok! </strong> <p>{{ mensagem }}</p>
       </div>
       <div v-if="!sucesso" class="alert alert-danger alert-dismissible fade show" role="alert">
-        <strong>Erro: </strong> {{ mensagem }}
+        <strong>Erro: </strong>{{ mensagem }}
       </div>
     </div>
   </div>
@@ -43,4 +43,8 @@ $theme-colors: (
   'danger': #dc3545
 );
 @import 'node_modules/bootstrap/scss/bootstrap.scss';
+
+p {
+  white-space: pre-wrap;
+}
 </style>

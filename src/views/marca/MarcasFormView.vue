@@ -50,7 +50,7 @@
       <div class="mb-3 mt-3 w-50 text-start">
         <label for="nome" class="form-label">Nome da Marca</label>
         <input id="nome" type="text" :disabled="this.form === 'toggle' ? '' : disabled" class="form-control"
-          v-model="marca.nome" />
+        v-on:keyup.enter="onClickCadastrar()" v-model="marca.nome" />
       </div>
     </div>
     <div class="row d-flex justify-content-center">

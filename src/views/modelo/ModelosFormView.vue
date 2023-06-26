@@ -13,7 +13,7 @@
       <div class="mb-3 mt-3 w-50 text-start">
         <label class="form-label">Nome do Modelo</label>
         <input type="text" :disabled="this.form === 'toggle' ? '' : disabled" class="form-control"
-          v-model="modelo.nome" />
+        v-on:keyup.enter="onClickCadastrar()" v-model="modelo.nome" />
       </div>
       <div class="mb-3 mt-3 w-50 text-start">
         <label for="categoria" class="form-label">Marca</label>

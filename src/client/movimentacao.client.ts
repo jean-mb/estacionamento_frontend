@@ -50,9 +50,9 @@ export class MovimentacaoClient {
     }
   }
 
-  public async editarMovimentacao(movimentacao: Movimentacao): Promise<Movimentacao> {
+  public async editarMovimentacao(movimentacao: Movimentacao): Promise<string> {
     try {
-      const response = await this.axiosClient.put<Movimentacao>(
+      const response = await this.axiosClient.put<string>(
         `/movimentacao/editar?id=${movimentacao.id}`,
         movimentacao
       )

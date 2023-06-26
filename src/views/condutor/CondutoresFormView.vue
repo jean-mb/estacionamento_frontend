@@ -13,19 +13,19 @@
       <div class="mb-3 mt-3 w-50 text-start">
         <label for="nome" class="form-label">Nome do Condutor</label>
         <input id="nome" type="text" :disabled="this.form === 'toggle' ? '' : disabled" class="form-control"
-          v-model="condutor.nome" />
+          v-on:keyup.enter="onClickCadastrar()" v-model="condutor.nome" />
       </div>
       <div class="mb-3 mt-3 w-50 text-start">
         <label for="telefone" class="form-label">Telefone</label>
         <input id="telefone" type="text" :disabled="this.form === 'toggle' ? '' : disabled" class="form-control" v-maska
-          data-maska="(##) # ####-####" v-model="condutor.telefone" />
+          v-on:keyup.enter="onClickCadastrar()" data-maska="(##) # ####-####" v-model="condutor.telefone" />
       </div>
     </div>
     <div class="row w-100 d-flex justify-content-center m-0 mb-2">
       <div class="mb-3 mt-3 w-50 text-start">
         <label for="cpf" class="form-label">CPF do Condutor</label>
         <input id="cpf" type="text" :disabled="this.form === 'toggle' ? '' : disabled" class="form-control" v-maska
-          data-maska="###.###.###-##" v-model="condutor.cpf" />
+          v-on:keyup.enter="onClickCadastrar()" data-maska="###.###.###-##" v-model="condutor.cpf" />
       </div>
     </div>
 
@@ -44,10 +44,12 @@
           <button v-if="this.form === 'editar'" type="button" class="btn btn-warning" @click="onClickEditar()">
             Editar
           </button>
-          <button v-if="this.form === 'toggle' && this.condutor.ativo === true" type="button" class="btn btn-danger" @click="onClickExcluir()">
+          <button v-if="this.form === 'toggle' && this.condutor.ativo === true" type="button" class="btn btn-danger"
+            @click="onClickExcluir()">
             Excluir
           </button>
-          <button v-if="this.form === 'toggle' && this.condutor.ativo === false" type="button" class="btn btn-success" @click="onClickAtivar()">
+          <button v-if="this.form === 'toggle' && this.condutor.ativo === false" type="button" class="btn btn-success"
+            @click="onClickAtivar()">
             Ativar
           </button>
         </div>

@@ -13,7 +13,7 @@
       <div class="mb-3 mt-3 w-50 text-start">
         <label for="placa" class="form-label">Placa do Veiculo</label>
         <input type="text" :disabled="this.form === 'toggle' ? '' : disabled" class="form-control" id="placa" v-maska
-          data-maska="***-****" v-model="veiculo.placa" v-on:change="formataPlaca()" />
+        v-on:keyup.enter="onClickCadastrar()" data-maska="***-****" v-model="veiculo.placa" v-on:change="formataPlaca()" />
       </div>
       <div class="mb-3 mt-3 w-50 text-start">
         <label for="categoria" class="form-label">Modelo</label>
@@ -30,7 +30,7 @@
       <div class="mb-3 mt-3 w-25 text-start">
         <label for="ano" class="form-label">Ano</label>
         <input type="number" id="ano" :disabled="this.form === 'toggle' ? '' : disabled" class="form-control"
-          v-model="veiculo.ano" />
+          v-model="veiculo.ano" v-on:keyup.enter="onClickCadastrar()" />
       </div>
       <div class="mb-3 mt-3 w-25 text-start">
         <label for="categoria" class="form-label">Cor</label>

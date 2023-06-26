@@ -63,6 +63,7 @@
   </div>
 </template>
 
+
 <script lang="ts">
 import AvisoComponent from '@/components/AvisoComponent.vue'
 import { CondutorClient } from '@/client/condutor.client'
@@ -138,6 +139,23 @@ export default defineComponent({
       }
       this.mensagem.ativo = false
     },
+    download() {
+      var element = document.getElementById("element-to-print");
+
+      var opt = {
+        margin: 0,
+        filename: "myfile.pdf",
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: {
+          unit: "mm",
+          format: [280, 350],
+          orientation: "portrait",
+        },
+      };
+
+      html2pdf().set(opt).from(element).save();
+    },
     procuraVeiculos() {
       const veiculosClient = new VeiculoClient()
       if (this.veiculo.trim() != '') {
@@ -209,7 +227,12 @@ export default defineComponent({
         .editarMovimentacao(this.movimentacao)
         .then(sucess => {
           this.movimentacao = new Movimentacao()
-          this.mensagem.mensagem = sucess
+          console.log(sucess)
+          if (sucess.includes('fechada')) {
+            this.mensagem.mensagem = sucess
+          } else {
+            this.mensagem.mensagem = sucess
+          }
           this.mensagem.status = true
           this.mensagem.ativo = true
         })
