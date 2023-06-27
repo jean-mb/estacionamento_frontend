@@ -30,7 +30,7 @@
       <div class="mb-3 mt-3 w-50 text-start">
         <label for="dataSaida" class="form-label">Data de Saída</label>
         <input type="datetime-local" :disabled="this.form === 'toggle' ? '' : disabled" class="form-control"
-          id="dataSaida" v-model="dataSaida" />
+          id="dataSaida" v-model="movimentacao.dataSaida" />
       </div>
     </div>
 
@@ -57,7 +57,7 @@
             @click="onClickAtivar()">
             Ativar
           </button>
-          <button v-if="this.form === 'confirmar' && movimentacao.ativo === false" type="button" class="btn btn-success"
+          <button v-if="this.form === 'confirmar'" type="button" class="btn btn-success"
             @click="onClickEditar()">
             Concluir
           </button>
@@ -106,20 +106,20 @@ export default defineComponent({
     if (this.id !== undefined) {
       this.findById(Number(this.id))
     }
-    if (this.form === undefined || this.form === 'confirmar') {
-      let hoje = new Date()
-      const timezone = hoje.getTimezoneOffset()
-      hoje.setMinutes(hoje.getMinutes() - timezone )
-      const dataHoje = hoje.toISOString().replace(/[TZ]/g, " ").trim().slice(0, -4)
+    // if (this.form === undefined || this.form === 'confirmar') {
+    //   let hoje = new Date()
+    //   const timezone = hoje.getTimezoneOffset()
+    //   hoje.setMinutes(hoje.getMinutes() - timezone )
+    //   const dataHoje = hoje.toISOString().replace(/[TZ]/g, " ").trim().slice(0, -4)
 
-      if(this.form === undefined){
-        this.movimentacao.dataEntrada = dataHoje
-      }else if(this.form === 'confirmar'){
-        this.dataSaida = dataHoje
-      }else{
-        this.dataSaida = this.movimentacao.dataSaida
-      }
-    }
+    //   if(this.form === undefined){
+    //     this.movimentacao.dataEntrada = dataHoje
+    //   }else if(this.form === 'confirmar'){
+    //     this.dataSaida = dataHoje
+    //   }else{
+    //     this.dataSaida = this.movimentacao.dataSaida
+    //   }
+    // }
   },
   methods: {
     procuraCondutor() {
@@ -188,16 +188,20 @@ export default defineComponent({
       this.mensagem.ativo = false
     },
     onClickCadastrar() {
-      this.movimentacao.dataSaida = this.dataSaida
       const movimentacaoClient = new MovimentacaoClient()
       movimentacaoClient
         .novaMovimentacao(this.movimentacao)
         .then(sucess => {
-          this.movimentacao = new Movimentacao()
-          this.condutor = this.veiculo = ''
-          this.mensagem.mensagem = sucess
-          this.mensagem.status = true
-          this.mensagem.ativo = true
+          this.movimentacao = sucess
+          console.log('' + sucess.dataEntrada)
+          console.log(sucess.dataSaida)
+          if(sucess.dataSaida != undefined){
+            this.onClickEditar()
+          }else{
+            this.mensagem.mensagem = 'Movimentação iniciada com sucesso!'
+            this.mensagem.status = true
+            this.mensagem.ativo = true
+          }
         })
         .catch(error => {
           if (typeof error.response.data == 'object') {
@@ -225,18 +229,12 @@ export default defineComponent({
         })
     },
     onClickEditar() {
-      this.movimentacao.dataSaida = this.dataSaida
+      console.log(this.movimentacao)
       const movimentacaoClient = new MovimentacaoClient()
       movimentacaoClient
         .editarMovimentacao(this.movimentacao)
         .then(sucess => {
-          this.movimentacao = new Movimentacao()
-          console.log(sucess)
-          if (sucess.includes('fechada')) {
-            this.mensagem.mensagem = sucess
-          } else {
-            this.mensagem.mensagem = sucess
-          }
+          this.mensagem.mensagem = sucess
           this.mensagem.status = true
           this.mensagem.ativo = true
         })

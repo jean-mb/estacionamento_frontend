@@ -76,9 +76,11 @@
     </div>
   </div>
 </template>
+
 <script lang="ts" setup>
 import { vMaska } from "maska"
 </script>
+
 <script lang="ts">
 import AvisoComponent from '@/components/AvisoComponent.vue'
 import { defineComponent } from 'vue'
