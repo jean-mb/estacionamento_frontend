@@ -148,17 +148,12 @@ export default defineComponent({
     contador(){
       var atual = new Date()
       var entrada = new Date(this.movimentacao.dataEntrada)
-      // atual.setHours(0, 0, 0, 0);
-      // entrada.setHours(0, 0, 0, 0);
-
-      // Calcular a diferença em milissegundos
       const diferenca: number = Math.abs(entrada.getTime() - atual.getTime());
 
       // Converter a diferença em horas e minutos
       const horas: number = Math.floor(diferenca / 3600000); // 1 hora = 3600000 milissegundos
       const minutos: number = Math.floor((diferenca % 3600000) / 60000); // 1 minuto = 60000 milissegundos
       const segundos: number = Math.floor((diferenca % 60000) / 1000); // 1 segundo = 1000 milissegundos
-
       // Retornar a diferença formatada
       this.tempoEstacionado = `${horas.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
 ;
