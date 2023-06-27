@@ -20,8 +20,7 @@
       <div class="w-100 text-start">
         <p v-if="movimentacao.tempoEstacionadoSegundos" class="fs-6"><span class="dado">Tempo Estacionado: </span> {{
           segundosParaHoras(movimentacao.tempoEstacionadoSegundos) }}h </p>
-        <p v-if="!movimentacao.tempoEstacionadoSegundos" class="fs-6"><span class="dado">Tempo Estacionado: </span> Não
-          calculado</p>
+        <p v-if="!movimentacao.tempoEstacionadoSegundos" class="fs-6"><span class="dado">Tempo Estacionado: </span> {{ tempoEstacionado }}</p>
       </div>
     </div>
     <div class="row w-100 d-flex justify-content-center m-0">
@@ -41,8 +40,21 @@
     </div>
     <div class="row w-100 d-flex justify-content-center m-0">
       <div class="w-100 text-start">
-        <p v-if="valorTotal" class="fs-6"><span class="dado">Valor total: </span>R$ {{ valorTotal.toFixed(2) }} </p>
-        <p v-if="!valorTotal" class="fs-6"><span class="dado">Valor total: </span> Não calculado </p>
+        <p v-if="valorTotal" class="fs-6"><span class="dado">Valor Estacionado: </span>R$ {{ valorEstacionado.toFixed(2)
+        }} </p>
+        <p v-if="!valorTotal" class="fs-6"><span class="dado">Valor Estacionado: </span> Não calculado </p>
+      </div>
+    </div>
+    <div class="row w-100 d-flex justify-content-center m-0">
+      <div class="w-100 text-start">
+        <p v-if="valorTotal" class="fs-6"><span class="dado">Valor Multa: </span>R$ {{ valorMulta.toFixed(2) }} </p>
+        <p v-if="!valorTotal" class="fs-6"><span class="dado">Valor Multa: </span> Não calculado </p>
+      </div>
+    </div>
+    <div class="row w-100 d-flex justify-content-center m-0">
+      <div class="w-100 text-start">
+        <p v-if="valorTotal" class="fs-6"><span class="dado">Valor Total: </span>R$ {{ valorTotal.toFixed(2) }} </p>
+        <p v-if="!valorTotal" class="fs-6"><span class="dado">Valor Total: </span> Não calculado </p>
       </div>
     </div>
     <div class="row w-100 d-flex justify-content-center m-0">
@@ -112,7 +124,9 @@ export default defineComponent({
       movimentacao: new Movimentacao(),
       condutor: new Condutor(),
       veiculo: new Veiculo(),
-      valorTotal: 0 as number
+      valorTotal: 0 as number,
+      valorMulta: 0 as number,
+      tempoEstacionado: 'Não calculado' as string
     }
   },
   computed: {
@@ -124,8 +138,32 @@ export default defineComponent({
     if (this.id !== undefined) {
       this.findById(Number(this.id))
     }
+    if (!this.movimentacao.dataSaida) {
+      setInterval(() => {
+        this.contador()
+      }, 1000);
+    }
   },
   methods: {
+    contador(){
+      var atual = new Date()
+      var entrada = new Date(this.movimentacao.dataEntrada)
+      // atual.setHours(0, 0, 0, 0);
+      // entrada.setHours(0, 0, 0, 0);
+
+      // Calcular a diferença em milissegundos
+      const diferenca: number = Math.abs(entrada.getTime() - atual.getTime());
+
+      // Converter a diferença em horas e minutos
+      const horas: number = Math.floor(diferenca / 3600000); // 1 hora = 3600000 milissegundos
+      const minutos: number = Math.floor((diferenca % 3600000) / 60000); // 1 minuto = 60000 milissegundos
+      const segundos: number = Math.floor((diferenca % 60000) / 1000); // 1 segundo = 1000 milissegundos
+
+      // Retornar a diferença formatada
+      this.tempoEstacionado = `${horas.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
+;
+      console.log(this.tempoEstacionado)
+    },
     segundosParaHoras(segundos: number) {
       const horas = Math.floor(segundos / 3600);
       const minutos = Math.floor((segundos % 3600) / 60);
@@ -155,6 +193,13 @@ export default defineComponent({
           this.condutor = sucess.condutor
           this.veiculo = sucess.veiculo
           this.valorTotal = sucess.valorTotal
+          console.log(sucess)
+          if (sucess.valorMulta) {
+            this.valorMulta = sucess.valorMulta
+            this.valorEstacionado = sucess.valorTotal - sucess.valorMulta
+          } else {
+            this.valorEstacionado = sucess.valorTotal
+          }
         })
         .catch(error => {
           this.mensagem.mensagem = error.response.data
