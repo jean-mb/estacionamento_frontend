@@ -92,6 +92,11 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "about" */ '../views/modelo/ModelosView.vue')
   },
   {
+    path: '/modelo/listar',
+    name: 'modelo.listar',
+    component: () => import(/* webpackChunkName: "about" */ '../views/modelo/ModeloInfoView.vue')
+  },
+  {
     path: '/modelo/formulario',
     name: 'modelo.form',
     component: () => import(/* webpackChunkName: "about" */ '../views/modelo/ModelosFormView.vue'),
@@ -131,11 +136,6 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: '/movimentacao/formulario',
         name: 'movimentacao.form.editar',
-        component: () => import(/* webpackChunkName: "about" */ '../views/movimentacao/MovimentacoesFormView.vue')
-      },
-      {
-        path: '/movimentacao/formulario',
-        name: 'movimentacao.form.listar',
         component: () => import(/* webpackChunkName: "about" */ '../views/movimentacao/MovimentacoesFormView.vue')
       },
       {

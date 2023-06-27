@@ -2,7 +2,10 @@
   <div class="container w-50">
     <div class="row mt-5">
       <div class="col-md-12 text-center">
-        <p class="fs-5">Cadastro de Modelo</p>
+        <p v-if="this.form == undefined" class="fs-5">Cadastro de Modelo</p>
+        <p v-if="this.form == 'editar'" class="fs-5">Editar Modelo</p>
+        <p v-if="this.form == 'toggle' && modelo.ativo" class="fs-5">Desativar Modelo</p>
+        <p v-if="this.form == 'toggle' && !modelo.ativo" class="fs-5">Ativar Modelo</p>
       </div>
       <div class="col-md-2"></div>
     </div>
