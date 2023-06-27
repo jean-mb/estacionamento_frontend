@@ -108,20 +108,13 @@ export default defineComponent({
     if (this.id !== undefined) {
       this.findById(Number(this.id))
     }
-    // if (this.form === undefined || this.form === 'confirmar') {
-    //   let hoje = new Date()
-    //   const timezone = hoje.getTimezoneOffset()
-    //   hoje.setMinutes(hoje.getMinutes() - timezone )
-    //   const dataHoje = hoje.toISOString().replace(/[TZ]/g, " ").trim().slice(0, -4)
-
-    //   if(this.form === undefined){
-    //     this.movimentacao.dataEntrada = dataHoje
-    //   }else if(this.form === 'confirmar'){
-    //     this.dataSaida = dataHoje
-    //   }else{
-    //     this.dataSaida = this.movimentacao.dataSaida
-    //   }
-    // }
+    if (this.form === undefined) {
+      let hoje = new Date()
+      const timezone = hoje.getTimezoneOffset()
+      hoje.setMinutes(hoje.getMinutes() - timezone )
+      const dataHoje = hoje.toISOString().replace(/[TZ]/g, " ").trim().slice(0, -7)
+      this.movimentacao.dataEntrada = dataHoje
+    }
   },
   methods: {
     procuraCondutor() {
@@ -189,14 +182,28 @@ export default defineComponent({
       }
       this.mensagem.ativo = false
     },
+    converteData(data: Date){
+      let hoje = new Date(data)
+      const timezone = hoje.getTimezoneOffset()
+      hoje.setMinutes(hoje.getMinutes() - timezone )
+      const dataHoje = hoje.toISOString()
+      return dataHoje
+    },
+    formataData(data: Date){
+      let hoje = new Date(data)
+      const timezone = hoje.getTimezoneOffset()
+      hoje.setMinutes(hoje.getMinutes() - timezone )
+      const dataHoje = hoje.toISOString().replace(/[TZ]/g, " ").trim().slice(0, -7)
+      return dataHoje
+    },
     onClickCadastrar() {
+      this.movimentacao.dataEntrada = this.converteData(this.movimentacao.dataEntrada)
       const movimentacaoClient = new MovimentacaoClient()
       movimentacaoClient
         .novaMovimentacao(this.movimentacao)
         .then(sucess => {
           this.movimentacao = sucess
-          console.log('' + sucess.dataEntrada)
-          console.log(sucess.dataSaida)
+
           if (sucess.dataSaida != undefined) {
             this.onClickEditar()
           } else {
@@ -221,6 +228,14 @@ export default defineComponent({
         .findById(id)
         .then(sucess => {
           this.movimentacao = sucess
+          this.movimentacao.dataEntrada = this.formataData(sucess.dataEntrada)
+          if(!sucess.dataSaida && this.form === 'confirmar'){
+            let hoje = new Date()
+            const timezone = hoje.getTimezoneOffset()
+            hoje.setMinutes(hoje.getMinutes() - timezone )
+            const dataHoje = hoje.toISOString().replace(/[TZ]/g, " ").trim().slice(0, -7)
+            this.movimentacao.dataSaida = dataHoje
+          }
           this.condutor = sucess.condutor.nome
           this.veiculo = sucess.veiculo.placa
         })
@@ -231,6 +246,10 @@ export default defineComponent({
         })
     },
     onClickEditar() {
+      this.movimentacao.dataEntrada = this.converteData(this.movimentacao.dataEntrada)
+      if(this.movimentacao.dataSaida){
+        this.movimentacao.dataSaida = this.converteData(this.movimentacao.dataSaida)
+      }
       const movimentacaoClient = new MovimentacaoClient()
       movimentacaoClient
         .editarMovimentacao(this.movimentacao)
