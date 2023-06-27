@@ -9,17 +9,35 @@
 
     <div class="row w-100 d-flex justify-content-center m-0">
       <div class="mt-3 w-100 text-start">
-        <p class="fs-6">Nome: <span class="dado">{{ marca.nome }}</span></p>
+        <p class="fs-6"><span class="dado">Nome: </span> {{ marca.nome }} </p>
       </div>
     </div>
     <div class="row w-100 d-flex justify-content-center m-0">
       <div class="w-100 text-start">
-        <p class="fs-6">Data de Cadastro: <span class="dado">{{ formatDate(marca.cadastro) }}</span></p>
+        <p class="fs-6"><span class="dado"> Status: </span>
+          <span v-if="marca.ativo" class="badge text-bg-success">
+            Ativo
+          </span>
+          <span v-if="!marca.ativo" class="badge text-bg-danger">
+            Desativado
+          </span>
+        </p>
+      </div>
+    </div>
+    <hr>
+    <div class="row mt-5">
+      <div class="col-md-12 text-start">
+        <p class="fs-5">Histórico</p>
       </div>
     </div>
     <div class="row w-100 d-flex justify-content-center m-0">
       <div class="w-100 text-start">
-        <p class="fs-6">Última edição: <span class="dado">{{ formatDate(marca.edicao) }}</span></p>
+        <p class="fs-6"><span class="dado">Data do Cadastro: </span>{{ formatDate(marca.cadastro) }}h</p>
+      </div>
+    </div>
+    <div class="row w-100 d-flex justify-content-center m-0">
+      <div class="w-100 text-start">
+        <p class="fs-6"><span class="dado">Última edição: </span> {{ formatDate(marca.edicao) }}h</p>
       </div>
     </div>
 
@@ -97,4 +115,5 @@ $theme-colors: (
   'warning': #ffc107,
   'danger': #dc3545
 );
-@import 'node_modules/bootstrap/scss/bootstrap.scss';</style>
+@import 'node_modules/bootstrap/scss/bootstrap.scss';
+</style>
