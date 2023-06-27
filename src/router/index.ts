@@ -28,11 +28,6 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: '/veiculo/formulario',
-        name: 'veiculo.form.listar',
-        component: () => import(/* webpackChunkName: "about" */ '../views/veiculo/VeiculosFormView.vue'),
-      },
-      {
-        path: '/veiculo/formulario',
         name: 'veiculo.form.toggle',
         component: () => import(/* webpackChunkName: "about" */ '../views/veiculo/VeiculosFormView.vue'),
       }
@@ -44,6 +39,11 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "about" */ '../views/condutor/CondutoresView.vue')
   },
   {
+    path: '/condutor',
+    name: 'condutor.listar',
+    component: () => import(/* webpackChunkName: "about" */ '../views/condutor/CondutorInfoView.vue')
+  },
+  {
     path: '/condutor/formulario',
     name: 'condutor.form',
     component: () => import(/* webpackChunkName: "about" */ '../views/condutor/CondutoresFormView.vue'),
@@ -51,11 +51,6 @@ const routes: Array<RouteRecordRaw> = [
     {
       path: '/condutor/formulario',
       name: 'condutor.form.editar',
-      component: () => import(/* webpackChunkName: "about" */ '../views/condutor/CondutoresFormView.vue'),
-    },
-    {
-      path: '/condutor/formulario',
-      name: 'condutor.form.listar',
       component: () => import(/* webpackChunkName: "about" */ '../views/condutor/CondutoresFormView.vue'),
     },
     {
@@ -109,11 +104,6 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: '/modelo/formulario',
         name: 'modelo.form.editar',
-        component: () => import(/* webpackChunkName: "about" */ '../views/modelo/ModelosFormView.vue')
-      },
-      {
-        path: '/modelo/formulario',
-        name: 'modelo.form.listar',
         component: () => import(/* webpackChunkName: "about" */ '../views/modelo/ModelosFormView.vue')
       },
       {

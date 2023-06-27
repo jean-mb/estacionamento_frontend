@@ -2,8 +2,10 @@
   <div class="container w-50">
     <div class="row mt-5">
       <div class="col-md-12 text-center">
-        <p class="fs-5">Cadastro de Condutor</p>
-      </div>
+        <p v-if="this.form == undefined" class="fs-5">Cadastrar Condutor</p>
+        <p v-if="this.form == 'editar'" class="fs-5">Editar Condutor</p>
+        <p v-if="this.form == 'toggle' && condutor.ativo" class="fs-5">Desativar Condutor</p>
+        <p v-if="this.form == 'toggle' && !condutor.ativo" class="fs-5">Ativar Condutor</p>      </div>
       <div class="col-md-2"></div>
     </div>
 
