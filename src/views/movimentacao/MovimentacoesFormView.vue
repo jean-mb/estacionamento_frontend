@@ -60,8 +60,7 @@
             @click="onClickAtivar()">
             Ativar
           </button>
-          <button v-if="this.form === 'confirmar'" type="button" class="btn btn-success"
-            @click="onClickEditar()">
+          <button v-if="this.form === 'confirmar'" type="button" class="btn btn-success" @click="onClickEditar()">
             Concluir
           </button>
         </div>
@@ -198,9 +197,9 @@ export default defineComponent({
           this.movimentacao = sucess
           console.log('' + sucess.dataEntrada)
           console.log(sucess.dataSaida)
-          if(sucess.dataSaida != undefined){
+          if (sucess.dataSaida != undefined) {
             this.onClickEditar()
-          }else{
+          } else {
             this.mensagem.mensagem = 'Movimentação iniciada com sucesso!'
             this.mensagem.status = true
             this.mensagem.ativo = true
@@ -232,12 +231,15 @@ export default defineComponent({
         })
     },
     onClickEditar() {
-      console.log(this.movimentacao)
       const movimentacaoClient = new MovimentacaoClient()
       movimentacaoClient
         .editarMovimentacao(this.movimentacao)
         .then(sucess => {
-          this.mensagem.mensagem = sucess
+          if (sucess.includes('fechada')) {
+            this.$router.push({ name: 'movimentacao.listar', query: { id: this.movimentacao.id } })
+          }else{
+            this.mensagem.mensagem = sucess
+          }
           this.mensagem.status = true
           this.mensagem.ativo = true
         })
