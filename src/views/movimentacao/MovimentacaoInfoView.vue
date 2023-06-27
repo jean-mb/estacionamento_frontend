@@ -18,51 +18,55 @@
     </div>
     <div class="row w-100 d-flex justify-content-center m-0">
       <div class="w-100 text-start">
-        <p class="fs-6"><span class="dado">Tempo Estacionado: </span> {{
+        <p v-if="movimentacao.tempoEstacionadoSegundos" class="fs-6"><span class="dado">Tempo Estacionado: </span> {{
           segundosParaHoras(movimentacao.tempoEstacionadoSegundos) }}h </p>
+        <p v-if="!movimentacao.tempoEstacionadoSegundos" class="fs-6"><span class="dado">Tempo Estacionado: </span> Não
+          calculado</p>
       </div>
     </div>
     <div class="row w-100 d-flex justify-content-center m-0">
       <div class="w-100 text-start">
-        <p class="fs-6"><span class="dado">Tempo de Multa: </span>  {{
+        <p class="fs-6"><span class="dado">Tempo de Multa: </span> {{
           segundosParaHoras(movimentacao.tempoMultaSegundos) }}h ( {{ Math.round(movimentacao.tempoMultaSegundos /
-          60) }} min. )</p>
+    60) }} min. )</p>
+
       </div>
     </div>
     <div class="row w-100 d-flex justify-content-center m-0">
       <div class="w-100 text-start">
         <p class="fs-6"><span class="dado">Tempo de Desconto: </span> {{
-          segundosParaHoras(movimentacao.tempoDescontoSegundos) }}h ( 
+          segundosParaHoras(movimentacao.tempoDescontoSegundos) }}h (
           {{ Math.round(movimentacao.tempoDescontoSegundos / 60) }} min. )</p>
       </div>
     </div>
     <div class="row w-100 d-flex justify-content-center m-0">
       <div class="w-100 text-start">
-        <p class="fs-6"><span class="dado">Valor total: </span>R$ {{ valorTotal.toFixed(2) }} </p>
+        <p v-if="valorTotal" class="fs-6"><span class="dado">Valor total: </span>R$ {{ valorTotal.toFixed(2) }} </p>
+        <p v-if="!valorTotal" class="fs-6"><span class="dado">Valor total: </span> Não calculado </p>
       </div>
     </div>
     <div class="row w-100 d-flex justify-content-center m-0">
       <div class="w-100 text-start">
-        <p class="fs-6"><span class="dado">Entrada: </span>{{ formatDate(movimentacao.dataEntrada) }}h</p>
+        <p class="fs-6"><span class="dado">Entrada: </span>{{ formatDate(movimentacao.dataEntrada) }}</p>
       </div>
     </div>
     <div class="row w-100 d-flex justify-content-center m-0">
       <div class="w-100 text-start">
-        <p class="fs-6"><span class="dado">Saída: </span>{{ formatDate(movimentacao.dataSaida) }}h</p>
+        <p class="fs-6"><span class="dado">Saída: </span>{{ formatDate(movimentacao.dataSaida) }}</p>
       </div>
     </div>
     <div class="row w-100 d-flex justify-content-center m-0">
       <div class="w-100 text-start">
-        <p class="fs-6"><span class="dado"> Status: </span> 
-            <span v-if="movimentacao.ativo && movimentacao.dataSaida == null" class="badge text-bg-success">
-              Ativo
-            </span>
-            <span v-if="movimentacao.ativo && movimentacao.dataSaida != null" class="badge text-bg-success">
-              Concluído
-            </span>
-            <span v-if="!movimentacao.ativo" class="badge text-bg-danger">
-              Cancelado
-            </span>
+        <p class="fs-6"><span class="dado"> Status: </span>
+          <span v-if="movimentacao.ativo && movimentacao.dataSaida == null" class="badge text-bg-success">
+            Ativo
+          </span>
+          <span v-if="movimentacao.ativo && movimentacao.dataSaida != null" class="badge text-bg-success">
+            Concluído
+          </span>
+          <span v-if="!movimentacao.ativo" class="badge text-bg-danger">
+            Cancelado
+          </span>
         </p>
       </div>
     </div>
@@ -74,12 +78,12 @@
     </div>
     <div class="row w-100 d-flex justify-content-center m-0">
       <div class="w-100 text-start">
-        <p class="fs-6"><span class="dado">Data de Criação: </span>{{ formatDate(movimentacao.cadastro) }}h</p>
+        <p class="fs-6"><span class="dado">Data de Criação: </span>{{ formatDate(movimentacao.cadastro) }}</p>
       </div>
     </div>
     <div class="row w-100 d-flex justify-content-center m-0">
       <div class="w-100 text-start">
-        <p class="fs-6"><span class="dado">Data de Edição: </span>{{ formatDate(movimentacao.edicao) }}h</p>
+        <p class="fs-6"><span class="dado">Data de Edição: </span>{{ formatDate(movimentacao.edicao) }}</p>
       </div>
     </div>
 

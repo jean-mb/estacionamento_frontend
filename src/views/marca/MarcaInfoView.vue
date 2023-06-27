@@ -32,12 +32,12 @@
     </div>
     <div class="row w-100 d-flex justify-content-center m-0">
       <div class="w-100 text-start">
-        <p class="fs-6"><span class="dado">Data do Cadastro: </span>{{ formatDate(marca.cadastro) }}h</p>
+        <p class="fs-6"><span class="dado">Data do Cadastro: </span>{{ formatDate(marca.cadastro) }}</p>
       </div>
     </div>
     <div class="row w-100 d-flex justify-content-center m-0">
       <div class="w-100 text-start">
-        <p class="fs-6"><span class="dado">Última edição: </span> {{ formatDate(marca.edicao) }}h</p>
+        <p class="fs-6"><span class="dado">Última edição: </span> {{ formatDate(marca.edicao) }}</p>
       </div>
     </div>
 
