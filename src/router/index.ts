@@ -12,6 +12,11 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "about" */ '../views/veiculo/VeiculosView.vue')
   },
   {
+    path: '/veiculo',
+    name: 'veiculo.listar',
+    component: () => import(/* webpackChunkName: "about" */ '../views/veiculo/VeiculoInfoView.vue')
+  },
+  {
     path: '/veiculo/formulario',
     name: 'veiculo.form',
     component: () => import(/* webpackChunkName: "about" */ '../views/veiculo/VeiculosFormView.vue'),

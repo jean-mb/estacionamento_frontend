@@ -2,78 +2,84 @@
   <div class="container w-50">
     <div class="row mt-5">
       <div class="col-md-12 text-center">
-        <p class="fs-5">Cadastro de Veiculo</p>
+        <p v-if="this.form == undefined" class="fs-5">Cadastro de Veículo</p>
+        <p v-if="this.form == 'editar'" class="fs-5">Editar Veículo</p>
+        <p v-if="this.form == 'toggle' && veiculo.ativo" class="fs-5">Desativar Veículo</p>
+        <p v-if="this.form == 'toggle' && !veiculo.ativo" class="fs-5">Ativar Veículo</p>
+        <div class="col-md-2"></div>
       </div>
-      <div class="col-md-2"></div>
-    </div>
 
-    <AvisoComponent :ativo="mensagem.ativo" :sucesso="mensagem.status" :mensagem="mensagem.mensagem"></AvisoComponent>
+      <AvisoComponent :ativo="mensagem.ativo" :sucesso="mensagem.status" :mensagem="mensagem.mensagem"></AvisoComponent>
 
-    <div class="row w-100 d-flex justify-content-center m-0 mb-2">
-      <div class="mb-3 mt-3 w-50 text-start">
-        <label for="placa" class="form-label">Placa do Veiculo</label>
-        <input type="text" :disabled="this.form === 'toggle' ? '' : disabled" class="form-control" id="placa" v-maska
-        v-on:keyup.enter="onClickCadastrar()" data-maska="***-****" v-model="veiculo.placa" v-on:change="formataPlaca()" />
-      </div>
-      <div class="mb-3 mt-3 w-50 text-start">
-        <label for="categoria" class="form-label">Modelo</label>
-        <select :disabled="this.form === 'toggle' ? '' : disabled" class="form-select" id="categoria"
-          v-model="veiculo.modelo">
-          <option value="" selected>Selecione um modelo</option>
-          <option v-for="modelo in modelos" :value="modelo">
-            {{ modelo.nome }} - {{ modelo.marca.nome }}
-          </option>
-        </select>
-      </div>
-    </div>
-    <div class="row w-100 d-flex justify-content-center m-0 mb-2">
-      <div class="mb-3 mt-3 w-25 text-start">
-        <label for="ano" class="form-label">Ano</label>
-        <input type="number" id="ano" :disabled="this.form === 'toggle' ? '' : disabled" class="form-control"
-          v-model="veiculo.ano" v-on:keyup.enter="onClickCadastrar()" />
-      </div>
-      <div class="mb-3 mt-3 w-25 text-start">
-        <label for="categoria" class="form-label">Cor</label>
-        <select :disabled="this.form === 'toggle' ? '' : disabled" class="form-select" id="categoria"
-          v-model="veiculo.cor">
-          <option value="" selected>Selecione uma cor</option>
-          <option v-for="cor in cores" :value="cor">
-            {{ cor }}
-          </option>
-        </select>
-      </div>
-      <div class="mb-3 mt-3 w-25 text-start">
-        <label for="tipo" class="form-label">Tipo</label>
-        <select :disabled="this.form === 'toggle' ? '' : disabled" class="form-select" id="tipo" v-model="veiculo.tipo">
-          <option value="" selected>Selecione um tipo</option>
-          <option v-for="tipo in tipos" :value="tipo">
-            {{ tipo }}
-          </option>
-        </select>
-      </div>
-    </div>
-
-    <div class="row d-flex justify-content-center">
-      <div class="col-md-3">
-        <div class="d-grid gap-2">
-          <router-link type="button" class="btn btn-secondary" to="/veiculos">Voltar
-          </router-link>
+      <div class="row w-100 d-flex justify-content-center m-0 mb-2">
+        <div class="mb-3 mt-3 w-50 text-start">
+          <label for="placa" class="form-label">Placa do Veiculo</label>
+          <input type="text" :disabled="this.form === 'toggle' ? '' : disabled" class="form-control" id="placa" v-maska
+            v-on:keyup.enter="onClickCadastrar()" data-maska="***-****" v-model="veiculo.placa"
+            v-on:change="formataPlaca()" />
+        </div>
+        <div class="mb-3 mt-3 w-50 text-start">
+          <label for="categoria" class="form-label">Modelo</label>
+          <select :disabled="this.form === 'toggle' ? '' : disabled" class="form-select" id="categoria"
+            v-model="veiculo.modelo">
+            <option value="" selected>Selecione um modelo</option>
+            <option v-for="modelo in modelos" :value="modelo">
+              {{ modelo.nome }} - {{ modelo.marca.nome }}
+            </option>
+          </select>
         </div>
       </div>
-      <div class="col-md-3">
-        <div class="d-grid gap-2">
-          <button v-if="this.form === undefined" type="button" class="btn btn-primary" @click="onClickCadastrar()">
-            Cadastrar
-          </button>
-          <button v-if="this.form === 'editar'" type="button" class="btn btn-warning" @click="onClickEditar()">
-            Editar
-          </button>
-          <button v-if="this.form === 'toggle' && veiculo.ativo === true" type="button" class="btn btn-danger" @click="onClickExcluir()">
-            Excluir
-          </button>
-          <button v-if="this.form === 'toggle' && veiculo.ativo === false" type="button" class="btn btn-success" @click="onClickAtivar()">
-            Ativar
-          </button>
+      <div class="row w-100 d-flex justify-content-center m-0 mb-2">
+        <div class="mb-3 mt-3 w-25 text-start">
+          <label for="ano" class="form-label">Ano</label>
+          <input type="number" id="ano" :disabled="this.form === 'toggle' ? '' : disabled" class="form-control"
+            v-model="veiculo.ano" v-on:keyup.enter="onClickCadastrar()" />
+        </div>
+        <div class="mb-3 mt-3 w-25 text-start">
+          <label for="categoria" class="form-label">Cor</label>
+          <select :disabled="this.form === 'toggle' ? '' : disabled" class="form-select" id="categoria"
+            v-model="veiculo.cor">
+            <option value="" selected>Selecione uma cor</option>
+            <option v-for="cor in cores" :value="cor">
+              {{ cor }}
+            </option>
+          </select>
+        </div>
+        <div class="mb-3 mt-3 w-25 text-start">
+          <label for="tipo" class="form-label">Tipo</label>
+          <select :disabled="this.form === 'toggle' ? '' : disabled" class="form-select" id="tipo" v-model="veiculo.tipo">
+            <option value="" selected>Selecione um tipo</option>
+            <option v-for="tipo in tipos" :value="tipo">
+              {{ tipo }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-3">
+          <div class="d-grid gap-2">
+            <router-link type="button" class="btn btn-secondary" to="/veiculos">Voltar
+            </router-link>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="d-grid gap-2">
+            <button v-if="this.form === undefined" type="button" class="btn btn-primary" @click="onClickCadastrar()">
+              Cadastrar
+            </button>
+            <button v-if="this.form === 'editar'" type="button" class="btn btn-warning" @click="onClickEditar()">
+              Editar
+            </button>
+            <button v-if="this.form === 'toggle' && veiculo.ativo === true" type="button" class="btn btn-danger"
+              @click="onClickExcluir()">
+              Excluir
+            </button>
+            <button v-if="this.form === 'toggle' && veiculo.ativo === false" type="button" class="btn btn-success"
+              @click="onClickAtivar()">
+              Ativar
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -244,5 +250,4 @@ $theme-colors: (
   'warning': #ffc107,
   'danger': #dc3545
 );
-@import 'node_modules/bootstrap/scss/bootstrap.scss';
-</style>
+@import 'node_modules/bootstrap/scss/bootstrap.scss';</style>
