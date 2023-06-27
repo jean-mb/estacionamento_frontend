@@ -100,7 +100,7 @@ export default defineComponent({
       condutorClient
         .cadastrarCondutor(this.condutor)
         .then(sucess => {
-          this.marca = new Condutor()
+          this.condutor = new Condutor()
           this.mensagem.mensagem = sucess
           this.mensagem.status = true
           this.mensagem.ativo = true

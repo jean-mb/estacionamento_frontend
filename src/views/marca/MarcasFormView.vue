@@ -2,7 +2,10 @@
   <div v-if="this.form == 'listar'" class="container w-50">
     <div class="row mt-5">
       <div class="col-md-12 text-start">
-        <p v-if="this.form == 'listar'" class="fs-5">Detalhes da Marca</p>
+        <p v-if="this.form == undefined" class="fs-5">Cadastrar Marca</p>
+        <p v-if="this.form == 'editar'" class="fs-5">Editar Marca</p>
+        <p v-if="this.form == 'toggle' && marca.ativo" class="fs-5">Desativar Marca</p>
+        <p v-if="this.form == 'toggle' && !marca.ativo" class="fs-5">Ativar Marca</p>
       </div>
       <div class="col-md-2"></div>
     </div>
@@ -141,7 +144,11 @@ export default defineComponent({
           this.mensagem.ativo = true
         })
         .catch(error => {
-          this.mensagem.mensagem = error.response.data
+          if (typeof error.response.data == 'object') {
+            this.mensagem.mensagem = Object.values(error.response.data)[0]
+          } else {
+            this.mensagem.mensagem = error.response.data
+          }
           this.mensagem.status = false
           this.mensagem.ativo = true
         })
@@ -154,6 +161,7 @@ export default defineComponent({
           this.marca = sucess
         })
         .catch(error => {
+
           this.mensagem.mensagem = error.response.data
           this.mensagem.status = false
           this.mensagem.ativo = true
@@ -169,7 +177,11 @@ export default defineComponent({
           this.mensagem.ativo = true
         })
         .catch(error => {
-          this.mensagem.mensagem = error.response.data
+          if (typeof error.response.data == 'object') {
+            this.mensagem.mensagem = Object.values(error.response.data)[0]
+          } else {
+            this.mensagem.mensagem = error.response.data
+          }
           this.mensagem.status = false
           this.mensagem.ativo = true
         })

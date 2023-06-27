@@ -15,8 +15,8 @@
       <thead class="table-dark">
         <tr>
           <th class="text-center">ID</th>
-          <th>Nome</th>
-          <th>CPF</th>
+          <th class="text-center">Nome</th>
+          <th class="text-center">CPF</th>
           <th class="text-center">Status</th>
           <th class="text-center">Opções</th>
         </tr>
@@ -24,8 +24,8 @@
       <tbody>
         <tr v-for="item in condutoresList" :key="item.id">
           <th class="align-middle text-center col-md-1">{{ item.id }}</th>
-          <th class="align-middle col-md-2">{{ item.nome }}</th>
-          <th class="align-middle col-md-2">{{ item.cpf }}</th>
+          <th class="align-middle text-center col-md-2">{{ item.nome }}</th>
+          <th class="align-middle text-center col-md-2">{{ item.cpf }}</th>
           <th class="align-middle text-center col-md-2">
             <span v-if="item.ativo" class="badge text-bg-success"> Ativo </span>
             <span v-if="!item.ativo" class="badge text-bg-danger">

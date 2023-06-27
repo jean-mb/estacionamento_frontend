@@ -2,7 +2,10 @@
   <div class="container w-50">
     <div class="row mt-5">
       <div class="col-md-10 text-start">
-        <p class="fs-5">Nova Movimentação</p>
+        <p v-if="this.form === undefined" class="fs-5">Nova Movimentação</p>
+        <p v-if="this.form === 'editar'" class="fs-5">Editar Movimentação</p>
+        <p v-if="this.form === 'toggle' && movimentacao.ativo" class="fs-5">Cancelar Movimentação</p>
+        <p v-if="this.form === 'toggle' && !movimentacao.ativo" class="fs-5">Ativar Movimentação</p>
       </div>
       <div class="col-md-2"></div>
     </div>
