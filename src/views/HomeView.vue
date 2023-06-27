@@ -33,7 +33,7 @@
             {{ formatDate(item.dataEntrada) }}
           </th>
           <th class="align-middle text-center col-md-3">
-            <BotoesAcoes confirmarRoute="movimentacao.form.confirmar" listarRoute="movimentacao.form.listar"
+            <BotoesAcoes confirmarRoute="movimentacao.form.confirmar" listarRoute="movimentacao.listar"
               :id="item.id"></BotoesAcoes>
           </th>
         </tr>
