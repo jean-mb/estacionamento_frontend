@@ -42,19 +42,19 @@
       <div class="w-100 text-start">
         <p v-if="valorTotal" class="fs-6"><span class="dado">Valor Estacionado: </span>R$ {{ valorEstacionado.toFixed(2)
         }} </p>
-        <p v-if="!valorTotal" class="fs-6"><span class="dado">Valor Estacionado: </span> Não calculado </p>
+        <p v-if="!valorTotal" class="fs-6"><span class="dado">Valor Estacionado: </span> R$ 00.00 </p>
       </div>
     </div>
     <div class="row w-100 d-flex justify-content-center m-0">
       <div class="w-100 text-start">
         <p v-if="valorTotal" class="fs-6"><span class="dado">Valor Multa: </span>R$ {{ valorMulta.toFixed(2) }} </p>
-        <p v-if="!valorTotal" class="fs-6"><span class="dado">Valor Multa: </span> Não calculado </p>
+        <p v-if="!valorTotal" class="fs-6"><span class="dado">Valor Multa: </span> R$ 00.00 </p>
       </div>
     </div>
     <div class="row w-100 d-flex justify-content-center m-0">
       <div class="w-100 text-start">
         <p v-if="valorTotal" class="fs-6"><span class="dado">Valor Total: </span>R$ {{ valorTotal.toFixed(2) }} </p>
-        <p v-if="!valorTotal" class="fs-6"><span class="dado">Valor Total: </span> Não calculado </p>
+        <p v-if="!valorTotal" class="fs-6"><span class="dado">Valor Total: </span> R$ 00.00 </p>
       </div>
     </div>
     <div class="row w-100 d-flex justify-content-center m-0">

@@ -43,7 +43,7 @@
     <div class="row w-100 d-flex justify-content-center m-0">
       <div class="w-100 text-start">
         <p class="fs-6"><span class="dado">Total Tempo Estacionado: </span> {{
-          segundosParaHoras(condutor.tempoDescontoUsadoSegundos + condutor.tempoDescontoSegundos + condutor.tempoPagoSegundos) }}h</p>
+          segundosParaHoras(condutor.tempoDescontoUsadoSegundos + condutor.tempoPagoSegundos) }}h</p>
       </div>
     </div>
     <div class="row w-100 d-flex justify-content-center m-0">
