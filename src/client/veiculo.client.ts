@@ -6,7 +6,7 @@ export class VeiculoClient {
 
   constructor() {
     this.axiosClient = axios.create({
-      baseURL: 'http://localhost:8080/api',
+      baseURL: `http://${process.env.VUE_APP_BACKEND_HOST}:${process.env.VUE_APP_BACKEND_PORT}/api`,
       headers: { 'Content-type': 'application/json' }
     })
   }

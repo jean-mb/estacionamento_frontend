@@ -1,12 +1,11 @@
 import { Condutor } from '@/model/condutor'
 import axios, { AxiosInstance } from 'axios'
-
 export class CondutorClient {
   private axiosClient: AxiosInstance
 
   constructor() {
     this.axiosClient = axios.create({
-      baseURL: 'http://localhost:8080/api',
+      baseURL: `http://${process.env.VUE_APP_BACKEND_HOST}:${process.env.VUE_APP_BACKEND_PORT}/api`,
       headers: { 'Content-type': 'application/json' }
     })
   }
@@ -23,6 +22,7 @@ export class CondutorClient {
 
   public async lista(): Promise<Condutor[]> {
     try {
+      console.log(this.axiosClient.defaults.baseURL)
       const response = await this.axiosClient.get<Condutor[]>('/condutor/lista')
       return response.data
     } catch (error) {
