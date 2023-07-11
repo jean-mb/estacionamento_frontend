@@ -1,5 +1,8 @@
 FROM node:lts-alpine as build-stage
 WORKDIR /app
+ENV WEB_PORT=3000
+ENV BACKEND_HOST=estacionamento-backend
+ENV DB_PORT=8080
 COPY package*.json ./
 RUN npm install
 COPY . .
