@@ -1,5 +1,6 @@
 import { Configuracao } from '@/model/configuracao'
 import { Movimentacao } from '@/model/movimentacao'
+import { Tipo } from '@/model/tipo'
 import axios, { AxiosInstance } from 'axios'
 
 export class MovimentacaoClient {
@@ -34,6 +35,15 @@ export class MovimentacaoClient {
   public async listarAbertas(): Promise<Movimentacao[]> {
     try {
       const response = await this.axiosClient.get<Movimentacao[]>('/movimentacao/lista/abertas')
+      return response.data
+    } catch (error) {
+      console.error(error)
+      return []
+    }
+  }
+  public async getVagas(tipo: Tipo): Promise<Movimentacao[]> {
+    try {
+      const response = await this.axiosClient.get<Movimentacao[]>(`/movimentacao/lista/vagas?tipo=${tipo}`)
       return response.data
     } catch (error) {
       console.error(error)
