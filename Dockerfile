@@ -1,11 +1,11 @@
 FROM node:lts-alpine as build-stage
 WORKDIR /app
-ENV PORT=4000
-ENV BACKEND_HOST=estacionamento-backend
-ENV BACKEND_PORT=8080
 COPY package*.json ./
 RUN npm install
 COPY . .
+ENV PORT=4000
+ENV BACKEND_HOST=estacionamento-backend
+ENV BACKEND_PORT=8080
 RUN npm run build
 
 # estágio de produção
