@@ -77,11 +77,8 @@
   </div>
 </template>
 
-<script lang="ts" setup>
-import { vMaska } from "maska"
-</script>
-
 <script lang="ts">
+import { MaskInput, vMaska } from "maska"
 import AvisoComponent from '@/components/AvisoComponent.vue'
 import { defineComponent } from 'vue'
 import { Configuracao } from "@/model/configuracao"
@@ -104,6 +101,7 @@ export default defineComponent({
     AvisoComponent
   },
   mounted() {
+    new MaskInput("[data-maska]")
     this.getConfiguracao()
   },
   methods: {
