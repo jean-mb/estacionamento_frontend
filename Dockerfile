@@ -1,6 +1,6 @@
 FROM node:lts-alpine as build-stage
 WORKDIR /app
-ENV WEB_PORT=3000
+ENV PORT=4000
 ENV BACKEND_HOST=estacionamento-backend
 ENV BACKEND_PORT=8080
 COPY package*.json ./
