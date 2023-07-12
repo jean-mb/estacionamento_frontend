@@ -99,7 +99,6 @@ export default defineComponent({
 
         movsClient.getVagas(Tipo.CARRO).then(sucTipo =>{
           this.carro -= sucTipo.length
-          console.log(sucTipo.length)
         })
         movsClient.getVagas(Tipo.MOTO).then(sucTipo =>{
           this.moto -= sucTipo.length
@@ -108,7 +107,9 @@ export default defineComponent({
           this.van -= sucTipo.length
         })
       }).catch(err => {
-          console.log(err)
+          this.carro=0
+          this.van=0
+          this.moto=0
         })
     },
     findAll() {
@@ -119,7 +120,7 @@ export default defineComponent({
           this.movimentacoesList = sucess
         })
         .catch(error => {
-          console.log(error)
+          
         })
     },
     formatDate(dateString: string | number | Date) {

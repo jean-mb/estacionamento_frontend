@@ -1,0 +1,39 @@
+version: '3'
+name: estacionamento
+services:
+  frontend:
+    image: ghcr.io/jean-mb/estacionamento_frontend:main
+    ports:
+      - '80:80'
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - estacionamento
+  backend:
+    image: ghcr.io/jean-mb/estacionamento_backend:main
+    ports:
+      - '8080:8080'
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    networks:
+      - estacionamento
+  postgres:
+    image: postgres
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=estacionamento
+    volumes:
+      - ~/estacionamento-db:/var/lib/postgresql/data
+    restart: unless-stopped
+    networks:
+      - estacionamento
+networks:
+  estacionamento:
+    name: estacionamento
+    ipam:
+      driver: default

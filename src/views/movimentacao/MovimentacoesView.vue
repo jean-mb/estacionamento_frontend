@@ -50,7 +50,8 @@
             </span>
           </th>
           <th class="align-middle text-center col-md-2">
-            <BotoesAcoes listarRoute="movimentacao.listar" editarRoute="movimentacao.form.editar" toggleRoute="movimentacao.form.toggle" :isAtivo="item.ativo" :id="item.id">
+            <BotoesAcoes listarRoute="movimentacao.listar" editarRoute="movimentacao.form.editar"
+              toggleRoute="movimentacao.form.toggle" :isAtivo="item.ativo" :id="item.id">
             </BotoesAcoes>
           </th>
         </tr>
@@ -91,7 +92,7 @@ export default defineComponent({
           this.movimentacoesList = sucess
         })
         .catch(error => {
-          console.log(error)
+          
         })
     },
     formatDate(dateString: string | number | Date) {

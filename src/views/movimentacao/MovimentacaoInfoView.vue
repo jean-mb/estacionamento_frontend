@@ -157,7 +157,6 @@ export default defineComponent({
       // Retornar a diferença formatada
       this.tempoEstacionado = `${horas.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
 ;
-      console.log(this.tempoEstacionado)
     },
     segundosParaHoras(segundos: number) {
       const horas = Math.floor(segundos / 3600);
@@ -188,7 +187,6 @@ export default defineComponent({
           this.condutor = sucess.condutor
           this.veiculo = sucess.veiculo
           this.valorTotal = sucess.valorTotal
-          console.log(sucess)
           if (sucess.valorMulta) {
             this.valorMulta = sucess.valorMulta
             this.valorEstacionado = sucess.valorTotal - sucess.valorMulta

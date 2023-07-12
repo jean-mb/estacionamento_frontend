@@ -33,7 +33,8 @@
             </span>
           </th>
           <th class="align-middle text-center col-md-2">
-            <BotoesAcoes listarRoute="condutor.listar" editarRoute="condutor.form.editar" toggleRoute="condutor.form.toggle" :isAtivo="item.ativo" :id="item.id">
+            <BotoesAcoes listarRoute="condutor.listar" editarRoute="condutor.form.editar"
+              toggleRoute="condutor.form.toggle" :isAtivo="item.ativo" :id="item.id">
             </BotoesAcoes>
           </th>
         </tr>
@@ -73,7 +74,7 @@ export default defineComponent({
           this.condutoresList = sucess
         })
         .catch(error => {
-          console.log(error)
+
         })
     }
   }

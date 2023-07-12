@@ -15,14 +15,12 @@ export class CondutorClient {
       const response = await this.axiosClient.get<Condutor>(`/condutor?id=${id}`)
       return response.data
     } catch (error) {
-      console.log(error)
       return Promise.reject(error)
     }
   }
 
   public async lista(): Promise<Condutor[]> {
     try {
-      console.log(this.axiosClient.defaults.baseURL)
       const response = await this.axiosClient.get<Condutor[]>('/condutor/lista')
       return response.data
     } catch (error) {

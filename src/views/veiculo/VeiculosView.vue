@@ -38,8 +38,8 @@
             </span>
           </th>
           <th class="align-middle text-center col-md-2">
-            <BotoesAcoes listarRoute="veiculo.listar" editarRoute="veiculo.form.editar"
-              toggleRoute="veiculo.form.toggle" :id="item.id" :isAtivo="item.ativo">
+            <BotoesAcoes listarRoute="veiculo.listar" editarRoute="veiculo.form.editar" toggleRoute="veiculo.form.toggle"
+              :id="item.id" :isAtivo="item.ativo">
             </BotoesAcoes>
           </th>
         </tr>
@@ -79,7 +79,7 @@ export default defineComponent({
           this.veiculosList = sucess
         })
         .catch(error => {
-          console.log(error)
+          
         })
     }
   }
