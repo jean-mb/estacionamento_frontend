@@ -5,7 +5,7 @@ export class CondutorClient {
 
   constructor() {
     this.axiosClient = axios.create({
-      baseURL: `http://${process.env.VUE_APP_BACKEND_HOST}:${process.env.VUE_APP_BACKEND_PORT}/api`,
+      baseURL: `${process.env.VUE_APP_BACKEND_URL}`,
       headers: { 'Content-type': 'application/json' }
     })
   }
