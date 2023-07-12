@@ -3,8 +3,6 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
-ENV BACKEND_HOST=
-ENV BACKEND_PORT=
 RUN npm run build
 
 # estágio de produção
