@@ -9,7 +9,7 @@ server {
     }
     
     location /estacionamento/api {
-        proxy_pass http://backend:8080/api;
+        proxy_pass http://estacionamentobackend.railway.internal:8080/api;
     }
 
     error_page   500 502 503 504  /50x.html;
